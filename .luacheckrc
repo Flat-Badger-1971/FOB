@@ -108,6 +108,7 @@ read_globals = {
     "unpack",
     --API
     "DoesUnitExist",
+    "EndInteraction",
     "GetActiveCollectibleByType",
     "GetActiveCompanionDefId",
     "GetActiveCompanionLevelInfo",
@@ -122,6 +123,7 @@ read_globals = {
     "GetFishingLureInfo",
     "GetGameCameraInteractableActionInfo",
     "GetGameCameraPickpocketingBonusInfo",
+    "GetInteractionType",
     "GetItemLinkName",
     "GetMaximumRapport",
     "GetMinimumRapport",
@@ -155,7 +157,7 @@ read_globals = {
         }
     },
     "ZO_min",
-    "ZO_PreHookHandler",
+    "ZO_PreHook",
     ["ZO_SavedVars"] = {
         fields = {
             NewAccountWide = {read_only = true}

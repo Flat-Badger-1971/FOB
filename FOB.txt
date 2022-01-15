@@ -1,9 +1,10 @@
-## Title: FOB
+## Title: |cdc143cFOB|r
 ## Author: Flat Badger
 ## APIVersion: 101032
 ## AddOnVersion: 100001
-## Version: 1.0.0
+## Version: 1.0.1
 ## OptionalDependsOn: LibDebugLogger>=217
+## DependsOn: LibChatMessage>=105
 
 # DISCLAIMER:
 #

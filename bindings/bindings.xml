@@ -4,6 +4,9 @@
             <Action name="FOB_COMPANION_MENU">
                 <Down>FOB.ShowCompanionMenu()</Down>
             </Action>
+             <Action name="FOB_TOGGLE">
+                <Down>FOB.ToggleDefaultInteraction()</Down>
+            </Action>
             <Action name="FOB_DISMISS_COMPANION">
                 <Down>FOB.DismissCompanion()</Down>
             </Action>
