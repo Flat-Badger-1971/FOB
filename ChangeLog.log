@@ -1,3 +1,24 @@
+[color=#ff9900][b]Version: 2.0.2 ---------------[/b][/color]
+Localisation improvement - thanks again Baertram
+
+[color=#ff9900][b]Version: 2.0.1 ---------------[/b][/color]
+Russian translations added - thanks Bolsen945
+French translations added
+
+[color=#ff9900][b]Version: 2.0.0 ---------------[/b][/color]
+Added option to ignore flying insects when Mirri is summoned (requires translations)
+Added option to prevent criminal interactions when Bastian is summoned
+Added German translations for flying insects
+Correct localisation issue for Companion detection in non-English languages
+Added /fob
+
+[color=#ff9900][b]Version: 1.0.3 ---------------[/b][/color]
+Corrected localisation issue
+
+[color=#ff9900][b]Version: 1.0.2 ---------------[/b][/color]
+German translations added (thanks again Baertram)
+Companion ids obtained through different method
+
 [color=#ff9900][b]Version: 1.0.1 ---------------[/b][/color]
 Various code improvements (thanks Baertram)
 Added a keybind to toggle the default interaction behaviour

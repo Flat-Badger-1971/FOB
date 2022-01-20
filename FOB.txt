@@ -1,10 +1,11 @@
-## Title: |cdc143cFOB|r
+## Title: |cdc143cFOB|r - Companion Helper
 ## Author: Flat Badger
 ## APIVersion: 101032
-## AddOnVersion: 100001
-## Version: 1.0.1
+## AddOnVersion: 202
+## Version: 2.0.2
+## SavedVariables: FOBSavedVars
 ## OptionalDependsOn: LibDebugLogger>=217
-## DependsOn: LibChatMessage>=105
+## DependsOn: LibChatMessage>=105, LibSavedVars>=60005
 
 # DISCLAIMER:
 #
@@ -17,7 +18,10 @@
 # https://account.elderscrollsonline.com/add-on-terms
 
 languages/en.lua
-languages/${language}.lua
+languages/$(language).lua
+
+data/flying-insects.lua
+settings/settings.lua
 
 FOB.lua
 

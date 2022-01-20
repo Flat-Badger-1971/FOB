@@ -144,6 +144,7 @@ read_globals = {
     "UseCollectible",
     -- Zenimax objects
     "HUD_SCENE",
+    "ZO_CachedStrFormat",
     "ZO_CreateStringId",
     "ZO_strformat",
     ["ZO_HiddenReasons"] = {
