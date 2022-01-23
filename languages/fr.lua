@@ -4,6 +4,14 @@ ZO_CreateStringId("FOB_COMPANION_MENU", "Ouvrir le menu compagnon")
 ZO_CreateStringId("FOB_TOGGLE", "Activer / Désactiver temporairement FOB")
 ZO_CreateStringId("FOB_DISABLED", "FOB est temporairement désactivé")
 ZO_CreateStringId("FOB_ENABLED", "FOB est activé")
+ZO_CreateStringId("FOB_CHEESE_WARNING", "Alertes fromages")
+ZO_CreateStringId("FOB_CHEESE_ALERT", "Alerte fromage!")
+ZO_CreateStringId("FOB_ALERT_FONT", "Police d'alerte")
+ZO_CreateStringId("FOB_ALERT_COLOUR", "Couleur de la police d'alerte")
+ZO_CreateStringId("FOB_ALERT_SIZE", "Taille de la police d'alerte")
+ZO_CreateStringId("FOB_ALERT_SHADOW", "Ombre de police d'alerte")
+ZO_CreateStringId("FOB_ALERT_ICON", "Icône d'alerte")
+
 
 -- actions
 ZO_CreateStringId("FOB_TALK", "Parler")
@@ -11,17 +19,20 @@ ZO_CreateStringId("FOB_TAKE", "Prendre")
 ZO_CreateStringId("FOB_CATCH", "Prise")
 
 -- settings
-ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignorez les insectes volants avec Mirri")
-ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Empêcher les interactions criminelles avec Bastian")
+ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignorez les insectes volants")
+ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Autoriser les insectes qui ne diminuent pas le rapport")
+ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Ignorer les insectes volants tout le temps")
+ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Empêcher les interactions criminelles")
 
 -- flying insects
-ZO_CreateStringId("FOB_BLACKREACH_JELLY","Gelée de Griffenoire")
+ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Gelée de Griffenoire")
 ZO_CreateStringId("FOB_BRIGHT_MOONS_LUNAR_MOTH", "Phalène lunaire vives-lunes")
 ZO_CreateStringId("FOB_BUTTERFLY", "Papillon")
 ZO_CreateStringId("FOB_DRAGONFLY", "Libellule")
 ZO_CreateStringId("FOB_FETCHERFLY", "Mouche chercheuse")
 ZO_CreateStringId("FOB_FLESHFLIES", "Mouches à viande")
 ZO_CreateStringId("FOB_NETCH_CALF", "Jeune netch")
+ZO_CreateStringId("FOB_SEHTS_DOVAH_FLY", "Mouche dovah de Seht")
 ZO_CreateStringId("FOB_SWAMP_JELLY", "Gelée du marais")
 ZO_CreateStringId("FOB_TORCHBUG", "Flammouche")
 ZO_CreateStringId("FOB_WASP", "Guêpe")

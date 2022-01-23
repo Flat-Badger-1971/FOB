@@ -11,5 +11,10 @@ _G.FOB = {
         [GetString(_G.FOB_TORCHBUG)] = true,
         [GetString(_G.FOB_WASP)] = true,
         [GetString(_G.FOB_WINTER_MOTH)] = true
+    },
+
+    MIRRI_INSECTS = {
+        [GetString(_G.FOB_BUTTERFLY)] = true,
+        [GetString(_G.FOB_TORCHBUG)] = true,
     }
 }

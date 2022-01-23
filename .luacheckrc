@@ -4,6 +4,11 @@ max_line_length = 160
 -- globals used within the Companion Frame addon
 globals = {"CF"}
 read_globals = {
+    ["CALLBACK_MANAGER"] = {
+        fields = {
+            FireCallbacks = {read_only = true}
+        }
+    },
     ["EVENT_MANAGER"] = {
         fields = {
             RegisterForEvent = {read_only = true},
@@ -107,6 +112,7 @@ read_globals = {
     "GuiRoot",
     "unpack",
     --API
+    "CreateSimpleAnimation",
     "DoesUnitExist",
     "EndInteraction",
     "GetActiveCollectibleByType",
@@ -115,21 +121,25 @@ read_globals = {
     "GetActiveCompanionRapport",
     "GetActiveCompanionRapportLevel",
     "GetActiveCompanionRapportLevelDescription",
+    "GetAnimationManager",
     "GetCollectibleCooldownAndDuration",
     "GetCollectibleInfo",
     "GetCompanionCollectibleId",
     "GetCompanionName",
     "GetFishingLure",
     "GetFishingLureInfo",
+    "GetFrameTimeMilliseconds",
     "GetGameCameraInteractableActionInfo",
     "GetGameCameraPickpocketingBonusInfo",
     "GetInteractionType",
     "GetItemLinkName",
     "GetMaximumRapport",
+    "GetMaxRecipeIngredients",
     "GetMinimumRapport",
     "GetNumExperiencePointsInCompanionLevel",
     "GetPendingCompanionDefId",
-    "GetFrameTimeMilliseconds",
+    "GetPulseTimeline",
+    "GetRecipeIngredientItemInfo",
     "GetUnitName",
     "GetUnitPower",
     "HasActiveCompanion",
@@ -159,6 +169,7 @@ read_globals = {
     },
     "ZO_min",
     "ZO_PreHook",
+    "ZO_Provisioner",
     ["ZO_SavedVars"] = {
         fields = {
             NewAccountWide = {read_only = true}
