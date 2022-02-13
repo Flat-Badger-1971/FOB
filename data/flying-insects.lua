@@ -6,9 +6,12 @@ _G.FOB = {
         [GetString(_G.FOB_DRAGONFLY)] = true,
         [GetString(_G.FOB_FETCHERFLY)] = true,
         [GetString(_G.FOB_FLESHFLIES)] = true,
+        [GetString(_G.FOB_MOON_KISSED_JELLY)] = true,
         [GetString(_G.FOB_NETCH_CALF)] = true,
+        [GetString(_G.FOB_SEHTS_DOVAH_FLY)] = true,
         [GetString(_G.FOB_SWAMP_JELLY)] = true,
         [GetString(_G.FOB_TORCHBUG)] = true,
+        [GetString(_G.FOB_WAFT)] = true,
         [GetString(_G.FOB_WASP)] = true,
         [GetString(_G.FOB_WINTER_MOTH)] = true
     },

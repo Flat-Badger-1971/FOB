@@ -20,6 +20,7 @@ read_globals = {
             GetCurrentScene = {read_only = true},
             GetScene = {read_only = true},
             GetSceneGroup = { read_only = true },
+            RegisterCallback = { read_only = true },
             Show = { read_only = true }
         }
     },

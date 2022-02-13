@@ -1,3 +1,30 @@
+[color=#ff9900][b]Version: 2.4.1 ---------------[/b][/color]
+Try to handle 'Steal From', 'Trespass' and 'Pickpocket' for Bastian
+
+[color=#ff9900][b]Version: 2.4.0 ---------------[/b][/color]
+Changed dismiss companion to toggle companion
+Added alternate summoning message frame
+
+[color=#ff9900][b]Version: 2.3.2 ---------------[/b][/color]
+Functionality disabled in irrelevant scenes to prevent unintended interference
+
+[color=#ff9900][b]Version: 2.3.1 ---------------[/b][/color]
+Russian translations correction
+Insects updated
+
+[color=#ff9900][b]Version: 2.3.0 ---------------[/b][/color]
+Added compatibility with the RuEso addon
+
+[color=#ff9900][b]Version: 2.2.3 ---------------[/b][/color]
+Russian translations updated - thanks Bolsen945
+
+[color=#ff9900][b]Version: 2.2.2 ---------------[/b][/color]
+Opening the Companion Menu outside ESO code does not correctly enable all
+functionality - disabling this for now
+
+[color=#ff9900][b]Version: 2.2.1 ---------------[/b][/color]
+Bugfix for ignoring insects when Bastian is out
+
 [color=#ff9900][b]Version: 2.2.0 ---------------[/b][/color]
 Added new option to warn when you're about to craft something with cheese
 

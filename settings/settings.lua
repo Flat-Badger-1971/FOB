@@ -1,6 +1,6 @@
 local FOB = _G.FOB
-local BASTIAN = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(1)))
-local MIRRI = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(2)))
+FOB.BASTIAN = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(1)))
+FOB.MIRRI = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(2)))
 
 local fonts = {
     "Standard",
@@ -30,7 +30,8 @@ FOB.Defaults = {
     CheeseFont = "ESO Bold",
     CheeseFontSize = 24,
     CheeseFontShadow = true,
-    CheeseIcon = "/esoui/art/icons/housing_bre_inc_cheese001.dds"
+    CheeseIcon = "/esoui/art/icons/housing_bre_inc_cheese001.dds",
+    UseCompanionSummmoningFrame = true
 }
 
 FOB.LAM = _G.LibAddonMenu2
@@ -40,7 +41,7 @@ local panel = {
     name = "FOB - Companion Helper",
     displayName = "|cdc143cFOB|r - Companion Helper",
     author = "Flat Badger",
-    version = "2.2.0",
+    version = "2.4.1",
     slashCommand = "/fob",
     registerForRefresh = true
 }
@@ -57,17 +58,37 @@ local options = {
 
             if (value) then
                 FOB.Vars.IgnoreInsects = false
+                FOB.Vars.IgnoreMirriInsects = false
                 CALLBACK_MANAGER:FireCallbacks("LAM-RefreshPanel", FOB.OptionsPanel)
             end
         end,
         width = "full"
     },
     [2] = {
-        type = "header",
-        name = "|c9d840d" .. MIRRI .. "|r",
+        type = "checkbox",
+        name = GetString(_G.FOB_SHOWSUMMONING),
+        getFunc = function()
+            return FOB.Vars.UseCompanionSummmoningFrame
+        end,
+        setFunc = function(value)
+            FOB.Vars.UseCompanionSummmoningFrame = value
+
+            if (value == true) then
+                FOB.CreateCompanionSummoningFrame()
+                EVENT_MANAGER:RegisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED, FOB.OnCompanionStateChanged)
+            else
+                EVENT_MANAGER:UnregisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED)
+                UNIT_FRAMES:GetFrame("companion"):SetHiddenForReason("disabled", false)
+            end
+        end,
         width = "full"
     },
-    [3] = {
+    [4] = {
+        type = "header",
+        name = "|c9d840d" .. FOB.MIRRI .. "|r",
+        width = "full"
+    },
+    [5] = {
         type = "checkbox",
         name = GetString(_G.FOB_IGNORE_INSECTS),
         getFunc = function()
@@ -75,6 +96,11 @@ local options = {
         end,
         setFunc = function(value)
             FOB.Vars.IgnoreInsects = value
+
+            if (value) then
+                FOB.Vars.IgnoreAllInsects = false
+            end
+
             CALLBACK_MANAGER:FireCallbacks("LAM-RefreshPanel", FOB.OptionsPanel)
         end,
         disabled = function()
@@ -82,7 +108,7 @@ local options = {
         end,
         width = "full"
     },
-    [4] = {
+    [6] = {
         type = "checkbox",
         name = GetString(_G.FOB_IGNORE_MIRRI_INSECTS),
         getFunc = function()
@@ -96,12 +122,12 @@ local options = {
         end,
         width = "full"
     },
-    [5] = {
+    [7] = {
         type = "header",
-        name = "|c9d840d" .. BASTIAN .. "|r",
+        name = "|c9d840d" .. FOB.BASTIAN .. "|r",
         width = "full"
     },
-    [6] = {
+    [8] = {
         type = "checkbox",
         name = GetString(_G.FOB_PREVENT_CRIMINAL),
         getFunc = function()
@@ -112,7 +138,7 @@ local options = {
         end,
         width = "full"
     },
-    [7] = {
+    [9] = {
         type = "checkbox",
         name = GetString(_G.FOB_CHEESE_WARNING),
         getFunc = function()
@@ -124,7 +150,7 @@ local options = {
         end,
         width = "full"
     },
-    [8] = {
+    [10] = {
         type = "dropdown",
         name = GetString(_G.FOB_ALERT_FONT),
         choices = fonts,
@@ -141,7 +167,7 @@ local options = {
         end,
         width = "full"
     },
-    [9] = {
+    [11] = {
         type = "colorpicker",
         name = GetString(_G.FOB_ALERT_COLOUR),
         getFunc = function()
@@ -156,7 +182,7 @@ local options = {
         end,
         width = "full"
     },
-    [10] = {
+    [12] = {
         type = "checkbox",
         name = GetString(_G.FOB_ALERT_SHADOW),
         getFunc = function()
@@ -172,7 +198,7 @@ local options = {
         end,
         width = "full"
     },
-    [11] = {
+    [13] = {
         type = "iconpicker",
         name = GetString(_G.FOB_ALERT_ICON),
         getFunc = function()

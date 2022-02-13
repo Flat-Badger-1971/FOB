@@ -1,5 +1,6 @@
 -- English localisation
 ZO_CreateStringId("FOB_DISMISS_COMPANION", "Ignorer le compagnon actif")
+ZO_CreateStringId("FOB_TOGGLE_COMPANION", "Alterner le compagnon")
 ZO_CreateStringId("FOB_COMPANION_MENU", "Ouvrir le menu compagnon")
 ZO_CreateStringId("FOB_TOGGLE", "Activer / Désactiver temporairement FOB")
 ZO_CreateStringId("FOB_DISABLED", "FOB est temporairement désactivé")
@@ -11,7 +12,6 @@ ZO_CreateStringId("FOB_ALERT_COLOUR", "Couleur de la police d'alerte")
 ZO_CreateStringId("FOB_ALERT_SIZE", "Taille de la police d'alerte")
 ZO_CreateStringId("FOB_ALERT_SHADOW", "Ombre de police d'alerte")
 ZO_CreateStringId("FOB_ALERT_ICON", "Icône d'alerte")
-
 
 -- actions
 ZO_CreateStringId("FOB_TALK", "Parler")
@@ -31,9 +31,11 @@ ZO_CreateStringId("FOB_BUTTERFLY", "Papillon")
 ZO_CreateStringId("FOB_DRAGONFLY", "Libellule")
 ZO_CreateStringId("FOB_FETCHERFLY", "Mouche chercheuse")
 ZO_CreateStringId("FOB_FLESHFLIES", "Mouches à viande")
+ZO_CreateStringId("FOB_MOON_KISSED_JELLY", "Gelée aimée-des-Lunes")
 ZO_CreateStringId("FOB_NETCH_CALF", "Jeune netch")
-ZO_CreateStringId("FOB_SEHTS_DOVAH_FLY", "Mouche dovah de Seht")
+ZO_CreateStringId("FOB_SEHTS_DOVAH_FLY", "Mouche Dovah de Seht")
 ZO_CreateStringId("FOB_SWAMP_JELLY", "Gelée du marais")
 ZO_CreateStringId("FOB_TORCHBUG", "Flammouche")
+ZO_CreateStringId("FOB_WAFT", "Scintèlme")
 ZO_CreateStringId("FOB_WASP", "Guêpe")
 ZO_CreateStringId("FOB_WINTER_MOTH", "Phalène d'hiver")

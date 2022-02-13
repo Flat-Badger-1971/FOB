@@ -2,15 +2,22 @@ _G.FOB.Name = "FOB"
 
 local FOB = _G.FOB
 local enabled = true
+local enabledForScene = true
+local enabledScenes = {
+    ["hud"] = true,
+    ["provisioner"] = true
+}
 local take = GetString(_G.FOB_TAKE)
 local talk = GetString(_G.FOB_TALK)
 local catch = GetString(_G.FOB_CATCH)
-local BASTIAN = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(1)))
-local MIRRI = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(2)))
 local companions = {
-    [BASTIAN] = true,
-    [MIRRI] = true
+    [FOB.BASTIAN] = true,
+    [FOB.MIRRI] = true
 }
+
+local BASTIAN = 1 -- Bastian's Def Id
+local MIRRI = 2 -- Mirri's Def Id
+
 local fonts = {
     ["Standard"] = "EsoUi/Common/Fonts/Univers57.otf",
     ["ESO Bold"] = "EsoUi/Common/Fonts/Univers67.otf",
@@ -21,17 +28,47 @@ local fonts = {
     ["Futura Bold"] = "EsoUI/Common/Fonts/FuturaStd-Condensed.otf"
 }
 
+local PENDING_COMPANION_STATES = {
+    [_G.COMPANION_STATE_PENDING] = true,
+    [_G.COMPANION_STATE_INITIALIZED_PENDING] = true
+}
+
+local ACTIVE_COMPANION_STATES = {
+    [_G.COMPANION_STATE_ACTIVE] = true
+}
+
+local ILLEGAL = {
+    [GetString(_G.SI_GAMECAMERAACTIONTYPE20)] = true, -- Steal From
+    [GetString(_G.SI_GAMECAMERAACTIONTYPE21)] = true, -- Pickpocket
+    [GetString(_G.SI_GAMECAMERAACTIONTYPE23)] = true -- Trespass
+}
+
+-- slower matcher for users of RuEso
+-- RuEso modifies the text so a direct comparison is not possible
+-- have to check if the string contains the expected text instead
+local function PartialMatch(inputString, compareList)
+    for key, value in pairs(compareList) do
+        if (string.find(inputString, key)) then
+            return value
+        end
+    end
+
+    return false
+end
+
 local function FOBHandler(interactionPossible, _)
-    if (interactionPossible and enabled and HasActiveCompanion()) then
+    if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
         local action, interactableName, _, _, _, _, _, isCriminalInteract = GetGameCameraInteractableActionInfo()
 
         -- are we trying to talk to someone?
         if (action == talk) then
             --FOB.Log("talk","warn")
-            -- remove any gender assignments from the string
-
             -- is it a companion?
             local isCompanionAction = companions[interactableName] or false
+
+            if (FOB.UsingRuEso) then
+                isCompanionAction = PartialMatch(interactableName, companions)
+            end
 
             if (isCompanionAction) then
                 -- companion detected - we don't want to talk to you, cancel the interaction
@@ -51,14 +88,22 @@ local function FOBHandler(interactionPossible, _)
                 if (FOB.Vars.IgnoreInsects) then
                     local activeCompanion = GetActiveCompanionDefId()
 
-                    if (activeCompanion == 2) then --MIRRI
+                    if (activeCompanion == MIRRI) then
                         if (FOB.Vars.IgnoreMirriInsects) then
                             insectList = FOB.MIRRI_INSECTS
                         end
+                    else
+                        return false
                     end
                 end
 
-                if (insectList[interactableName] or false) then
+                local ignoreInsects = insectList[interactableName] or false
+
+                if (FOB.UsingRuEso) then
+                    ignoreInsects = PartialMatch(interactableName, insectList)
+                end
+
+                if (ignoreInsects) then
                     --FOB.Log("Flying insect", "info")
                     local interactionType = GetInteractionType()
                     EndInteraction(interactionType)
@@ -68,9 +113,19 @@ local function FOBHandler(interactionPossible, _)
         end
 
         -- disable criminal interactions if Bastian is summoned
-        if (isCriminalInteract and FOB.Vars.PreventCriminal) then
+        --FOB.Log(isCriminalInteract, "warn")
+        if (FOB.Vars.PreventCriminal) then
             local activeCompanion = GetActiveCompanionDefId()
-            if (activeCompanion == 1) then
+
+            if (activeCompanion ~= BASTIAN) then
+                return false
+            end
+
+            if (isCriminalInteract ~= true and action) then
+                isCriminalInteract = PartialMatch(action, ILLEGAL)
+            end
+
+            if (isCriminalInteract) then
                 local interactionType = GetInteractionType()
                 EndInteraction(interactionType)
                 return true
@@ -217,6 +272,72 @@ local function SetupCheeseAlert()
     FOB.Alert = alert
 end
 
+-- disable FOB in irrelevant scenes
+local function sceneHandler(_, newState)
+    local scene = SCENE_MANAGER:GetCurrentScene():GetName()
+
+    if (newState == "showing") then
+        enabledForScene = enabledScenes[scene] or false
+    --FOB.Log(enabledForScene, "warn")
+    end
+end
+-- companion summoning frame
+function FOB.CreateCompanionSummoningFrame()
+    local name = FOB.Name .. "_CompanionSummoningFrame"
+
+    FOB.SummoningFrame = _G[name] or WINDOW_MANAGER:CreateTopLevelWindow(name)
+    FOB.SummoningFrame:SetDimensions(GuiRoot:GetWidth() / 3, 30)
+    FOB.SummoningFrame:SetAnchor(CENTER, GuiRoot, CENTER)
+    FOB.SummoningFrame:SetDrawTier(DT_HIGH)
+
+    FOB.SummoningFrame.Message = WINDOW_MANAGER:CreateControl(name .. "_Message", FOB.SummoningFrame, CT_LABEL)
+    FOB.SummoningFrame.Message:SetDimensions(400, 30)
+    FOB.SummoningFrame.Message:SetAnchor(CENTER, FOB.SummoningFrame, CENTER, 0, (GuiRoot:GetHeight() / 4) * -1)
+    FOB.SummoningFrame.Message:SetFont(FOB.GetFont("ESO Bold", 28, true))
+    FOB.SummoningFrame.Message:SetHorizontalAlignment(CENTER)
+    FOB.SummoningFrame.Message:SetVerticalAlignment(CENTER)
+    FOB.SummoningFrame.Message:SetColor(157 / 255, 132 / 255, 13 / 255, 1)
+end
+
+local function DismissCompanion()
+    local defId = GetActiveCompanionDefId()
+    FOB.Vars.LastActiveCompanionId = GetCompanionCollectibleId(defId)
+    UseCollectible(FOB.Vars.LastActiveCompanionId)
+end
+
+local function SummonCompanion()
+    if (FOB.Vars.LastActiveCompanionId or 0 ~= 0) then
+        UseCollectible(FOB.Vars.LastActiveCompanionId)
+    end
+end
+
+local function HideDefaultCompanionFrame()
+    if (not IsUnitGrouped("player") and UNIT_FRAMES:GetFrame("companion") ~= nil) then
+        UNIT_FRAMES:GetFrame("companion"):SetHiddenForReason("disabled", true)
+    end
+end
+
+function FOB.OnCompanionStateChanged(_, newState, _)
+    if (ACTIVE_COMPANION_STATES[newState]) then
+        FOB.SummoningFrame:SetHidden(true)
+    end
+
+    if (PENDING_COMPANION_STATES[newState]) then
+        HideDefaultCompanionFrame()
+
+        if (HasPendingCompanion()) and not IsCollectibleBlocked(GetCompanionCollectibleId(GetActiveCompanionDefId())) then
+            local pendingCompanionDefId = GetPendingCompanionDefId()
+            local pendingCompanionName = GetCompanionName(pendingCompanionDefId)
+            local companionName = zo_strformat(_G.SI_COMPANION_NAME_FORMATTER, pendingCompanionName)
+            local summoning = GetString(_G.SI_UNIT_FRAME_STATUS_SUMMONING)
+            local summoningText = companionName .. ". " .. summoning
+
+            FOB.SummoningFrame.Message:SetText(summoningText)
+            FOB.SummoningFrame:SetHidden(false)
+        end
+    end
+end
+
 function FOB.GetFont(fontName, fontSize, fontShadow)
     local hasShadow = fontShadow and "|soft-shadow-thick" or ""
     return fonts[fontName] .. "|" .. fontSize .. hasShadow
@@ -236,8 +357,13 @@ function FOB.ShowCheeseAlert()
         750
     )
 end
+
+--
 ---- End Cheese Alert ----
 
+-- unfortunately this doesn't correctly enable all functionality
+-- when not called by ESO - disabling for now
+--[[
 function FOB.ShowCompanionMenu()
     if (HasActiveCompanion()) then
         if (not IsInGamepadPreferredMode()) then
@@ -247,18 +373,18 @@ function FOB.ShowCompanionMenu()
         end
     end
 end
-
+--]]
 function FOB.ToggleDefaultInteraction()
     enabled = not enabled
     local message = GetString(enabled and _G.FOB_ENABLED or _G.FOB_DISABLED)
     FOB.Chat:SetTagColor("dc143c"):Print(message)
 end
 
-function FOB.DismissCompanion()
+function FOB.ToggleCompanion()
     if (HasActiveCompanion()) then
-        local defId = GetActiveCompanionDefId()
-        local collId = GetCompanionCollectibleId(defId)
-        UseCollectible(collId)
+        DismissCompanion()
+    else
+        SummonCompanion()
     end
 end
 
@@ -287,8 +413,15 @@ function FOB.OnAddonLoaded(_, addonName)
         FOB.Chat = _G.LibChatMessage(FOB.Name, "FOB")
     end
 
+    if (_G.RuEsoVariables ~= nil) then
+        FOB.UsingRuEso = true
+    end
+
     --FOB.Log("Loaded", "info")
     EVENT_MANAGER:UnregisterForEvent(FOB.Name, EVENT_ADD_ON_LOADED)
+
+    -- monitor scene changes
+    SCENE_MANAGER:RegisterCallback("SceneStateChanged", sceneHandler)
 
     -- saved variables
     FOB.Vars =
@@ -310,6 +443,12 @@ function FOB.OnAddonLoaded(_, addonName)
     end
 
     SetupCheeseAlert()
+
+    -- if Companion Frame is installed, let it handle the summoning frame
+    if (not _G.CF and FOB.Vars.UseCompanionSummmoningFrame) then
+        FOB.CreateCompanionSummoningFrame()
+        EVENT_MANAGER:RegisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED, FOB.OnCompanionStateChanged)
+    end
 
     -- utiltity
     if (_G.SLASH_COMMANDS["/rl"] == nil) then
