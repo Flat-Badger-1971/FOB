@@ -31,7 +31,8 @@ FOB.Defaults = {
     CheeseFontSize = 24,
     CheeseFontShadow = true,
     CheeseIcon = "/esoui/art/icons/housing_bre_inc_cheese001.dds",
-    UseCompanionSummmoningFrame = true
+    UseCompanionSummmoningFrame = true,
+    LastActiveCompanionId = {}
 }
 
 FOB.LAM = _G.LibAddonMenu2
@@ -41,7 +42,7 @@ local panel = {
     name = "FOB - Companion Helper",
     displayName = "|cdc143cFOB|r - Companion Helper",
     author = "Flat Badger",
-    version = "2.4.1",
+    version = "2.5.1",
     slashCommand = "/fob",
     registerForRefresh = true
 }
@@ -74,12 +75,18 @@ local options = {
             FOB.Vars.UseCompanionSummmoningFrame = value
 
             if (value == true) then
-                FOB.CreateCompanionSummoningFrame()
-                EVENT_MANAGER:RegisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED, FOB.OnCompanionStateChanged)
+                EVENT_MANAGER:RegisterForEvent(
+                    FOB.Name,
+                    EVENT_ACTIVE_COMPANION_STATE_CHANGED,
+                    FOB.OnCompanionStateChanged
+                )
             else
                 EVENT_MANAGER:UnregisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED)
                 UNIT_FRAMES:GetFrame("companion"):SetHiddenForReason("disabled", false)
             end
+        end,
+        disabled = function()
+            return _G.CF ~= nil
         end,
         width = "full"
     },

@@ -1,3 +1,10 @@
+[color=#ff9900][b]Version: 2.5.1 ---------------[/b][/color]
+Fixed summoning frame issue reported by LoneStart2911
+Companion resummoning variables moved from account-wide to character specific
+
+[color=#ff9900][b]Version: 2.5.0 ---------------[/b][/color]
+Updated for Ascending Tide
+
 [color=#ff9900][b]Version: 2.4.1 ---------------[/b][/color]
 Try to handle 'Steal From', 'Trespass' and 'Pickpocket' for Bastian
 

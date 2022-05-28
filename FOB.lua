@@ -281,6 +281,7 @@ local function sceneHandler(_, newState)
     --FOB.Log(enabledForScene, "warn")
     end
 end
+
 -- companion summoning frame
 function FOB.CreateCompanionSummoningFrame()
     local name = FOB.Name .. "_CompanionSummoningFrame"
@@ -301,13 +302,15 @@ end
 
 local function DismissCompanion()
     local defId = GetActiveCompanionDefId()
-    FOB.Vars.LastActiveCompanionId = GetCompanionCollectibleId(defId)
-    UseCollectible(FOB.Vars.LastActiveCompanionId)
+    local character = GetUnitName("player")
+    FOB.Vars.LastActiveCompanionId[character] = GetCompanionCollectibleId(defId)
+    UseCollectible(FOB.Vars.LastActiveCompanionId[character])
 end
 
 local function SummonCompanion()
-    if (FOB.Vars.LastActiveCompanionId or 0 ~= 0) then
-        UseCollectible(FOB.Vars.LastActiveCompanionId)
+    local character = GetUnitName("player")
+    if (FOB.Vars.LastActiveCompanionId[character] or 0 ~= 0) then
+        UseCollectible(FOB.Vars.LastActiveCompanionId[character])
     end
 end
 
@@ -318,6 +321,10 @@ local function HideDefaultCompanionFrame()
 end
 
 function FOB.OnCompanionStateChanged(_, newState, _)
+    if (_G.CF ~= nil) then
+        return
+    end
+
     if (ACTIVE_COMPANION_STATES[newState]) then
         FOB.SummoningFrame:SetHidden(true)
     end
@@ -357,9 +364,6 @@ function FOB.ShowCheeseAlert()
         750
     )
 end
-
---
----- End Cheese Alert ----
 
 -- unfortunately this doesn't correctly enable all functionality
 -- when not called by ESO - disabling for now
@@ -430,6 +434,14 @@ function FOB.OnAddonLoaded(_, addonName)
         "Characters"
     )
 
+    -- reset the old account-wide companion information
+    if (type(FOB.Vars.LastActiveCompanionId) == "number") then
+        local character = GetUnitName("player")
+        local id = FOB.Vars.LastActiveCompanionId
+        FOB.Vars.LastActiveCompanionId = {}
+        FOB.Vars.LastActiveCompanionId[character] = id
+    end
+
     -- settings
     FOB.RegisterSettings()
 
@@ -445,8 +457,11 @@ function FOB.OnAddonLoaded(_, addonName)
     SetupCheeseAlert()
 
     -- if Companion Frame is installed, let it handle the summoning frame
-    if (not _G.CF and FOB.Vars.UseCompanionSummmoningFrame) then
+    if (not _G.CF) then
         FOB.CreateCompanionSummoningFrame()
+    end
+
+    if (FOB.Vars.UseCompanionSummmoningFrame) then
         EVENT_MANAGER:RegisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED, FOB.OnCompanionStateChanged)
     end
 
