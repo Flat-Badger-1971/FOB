@@ -12,11 +12,15 @@ local talk = GetString(_G.FOB_TALK)
 local catch = GetString(_G.FOB_CATCH)
 local companions = {
     [FOB.BASTIAN] = true,
-    [FOB.MIRRI] = true
+    [FOB.MIRRI] = true,
+    [FOB.EMBER] = true,
+    [FOB.ISOBEL] = true
 }
 
 local BASTIAN = 1 -- Bastian's Def Id
 local MIRRI = 2 -- Mirri's Def Id
+local EMBER = 5 -- Ember's Def Id
+local ISOBEL = 6 -- Isobel's Def Id
 
 local fonts = {
     ["Standard"] = "EsoUi/Common/Fonts/Univers57.otf",

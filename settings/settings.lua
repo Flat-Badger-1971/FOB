@@ -1,6 +1,8 @@
 local FOB = _G.FOB
 FOB.BASTIAN = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(1)))
 FOB.MIRRI = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(2)))
+FOB.EMBER = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetActiveCompanionDefId(5)))
+FOB.ISOBEL = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetActiveCompanionDefId(6)))
 
 local fonts = {
     "Standard",
@@ -42,7 +44,7 @@ local panel = {
     name = "FOB - Companion Helper",
     displayName = "|cdc143cFOB|r - Companion Helper",
     author = "Flat Badger",
-    version = "2.5.1",
+    version = "2.6.0",
     slashCommand = "/fob",
     registerForRefresh = true
 }
