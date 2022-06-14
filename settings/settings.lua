@@ -1,8 +1,8 @@
 local FOB = _G.FOB
 FOB.BASTIAN = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(1)))
 FOB.MIRRI = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(2)))
-FOB.EMBER = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetActiveCompanionDefId(5)))
-FOB.ISOBEL = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetActiveCompanionDefId(6)))
+FOB.EMBER = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(5)))
+FOB.ISOBEL = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(6)))
 
 local fonts = {
     "Standard",
@@ -26,7 +26,9 @@ FOB.Defaults = {
     IgnoreInsects = false,
     IgnoreAllInsects = false,
     IgnoreMirriInsects = false,
-    PreventCriminal = false,
+    PreventCriminalBastian = false,
+    PreventCriminalIsobel = false,
+    PreventFishing = false,
     CheeseWarning = false,
     CheeseFontColour = {r = 0.9, g = 0.8, b = 0.2, a = 1},
     CheeseFont = "ESO Bold",
@@ -44,7 +46,7 @@ local panel = {
     name = "FOB - Companion Helper",
     displayName = "|cdc143cFOB|r - Companion Helper",
     author = "Flat Badger",
-    version = "2.6.0",
+    version = "2.6.2",
     slashCommand = "/fob",
     registerForRefresh = true
 }
@@ -92,12 +94,12 @@ local options = {
         end,
         width = "full"
     },
-    [4] = {
+    [3] = {
         type = "header",
         name = "|c9d840d" .. FOB.MIRRI .. "|r",
         width = "full"
     },
-    [5] = {
+    [4] = {
         type = "checkbox",
         name = GetString(_G.FOB_IGNORE_INSECTS),
         getFunc = function()
@@ -117,7 +119,7 @@ local options = {
         end,
         width = "full"
     },
-    [6] = {
+    [5] = {
         type = "checkbox",
         name = GetString(_G.FOB_IGNORE_MIRRI_INSECTS),
         getFunc = function()
@@ -131,23 +133,23 @@ local options = {
         end,
         width = "full"
     },
-    [7] = {
+    [6] = {
         type = "header",
         name = "|c9d840d" .. FOB.BASTIAN .. "|r",
         width = "full"
     },
-    [8] = {
+    [7] = {
         type = "checkbox",
         name = GetString(_G.FOB_PREVENT_CRIMINAL),
         getFunc = function()
-            return FOB.Vars.PreventCriminal
+            return FOB.Vars.PreventCriminalBastian
         end,
         setFunc = function(value)
-            FOB.Vars.PreventCriminal = value
+            FOB.Vars.PreventCriminalBastian = value
         end,
         width = "full"
     },
-    [9] = {
+    [8] = {
         type = "checkbox",
         name = GetString(_G.FOB_CHEESE_WARNING),
         getFunc = function()
@@ -159,7 +161,7 @@ local options = {
         end,
         width = "full"
     },
-    [10] = {
+    [9] = {
         type = "dropdown",
         name = GetString(_G.FOB_ALERT_FONT),
         choices = fonts,
@@ -176,7 +178,7 @@ local options = {
         end,
         width = "full"
     },
-    [11] = {
+    [10] = {
         type = "colorpicker",
         name = GetString(_G.FOB_ALERT_COLOUR),
         getFunc = function()
@@ -191,7 +193,7 @@ local options = {
         end,
         width = "full"
     },
-    [12] = {
+    [11] = {
         type = "checkbox",
         name = GetString(_G.FOB_ALERT_SHADOW),
         getFunc = function()
@@ -207,7 +209,7 @@ local options = {
         end,
         width = "full"
     },
-    [13] = {
+    [12] = {
         type = "iconpicker",
         name = GetString(_G.FOB_ALERT_ICON),
         getFunc = function()
@@ -223,7 +225,39 @@ local options = {
         end,
         iconSize = 48,
         width = "full"
-    }
+    },
+    [13] = {
+        type = "header",
+        name = "|c9d840d" .. FOB.EMBER .. "|r",
+        width = "full"
+    },
+    [14] = {
+        type = "checkbox",
+        name = GetString(_G.FOB_PREVENT_FISHING),
+        getFunc = function()
+            return FOB.Vars.PreventFishing
+        end,
+        setFunc = function(value)
+            FOB.Vars.PreventFishing = value
+        end,
+        width = "full"
+    },
+    [15] = {
+        type = "header",
+        name = "|c9d840d" .. FOB.ISOBEL .. "|r",
+        width = "full"
+    },
+    [16] = {
+        type = "checkbox",
+        name = GetString(_G.FOB_PREVENT_CRIMINAL),
+        getFunc = function()
+            return FOB.Vars.PreventCriminalIsobel
+        end,
+        setFunc = function(value)
+            FOB.Vars.PreventCriminalIsobel = value
+        end,
+        width = "full"
+    },
 }
 
 function FOB.RegisterSettings()

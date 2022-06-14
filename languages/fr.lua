@@ -17,6 +17,7 @@ ZO_CreateStringId("FOB_ALERT_ICON", "Icône d'alerte")
 ZO_CreateStringId("FOB_TALK", "Parler")
 ZO_CreateStringId("FOB_TAKE", "Prendre")
 ZO_CreateStringId("FOB_CATCH", "Prise")
+ZO_CreateStringId("FOB_FISH", "Pêcher")
 
 -- settings
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignorez les insectes volants")

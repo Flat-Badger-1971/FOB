@@ -10,6 +10,7 @@ local enabledScenes = {
 local take = GetString(_G.FOB_TAKE)
 local talk = GetString(_G.FOB_TALK)
 local catch = GetString(_G.FOB_CATCH)
+local fish = GetString(_G.FOB_FISH)
 local companions = {
     [FOB.BASTIAN] = true,
     [FOB.MIRRI] = true,
@@ -64,6 +65,19 @@ local function FOBHandler(interactionPossible, _)
     if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
         local action, interactableName, _, _, _, _, _, isCriminalInteract = GetGameCameraInteractableActionInfo()
 
+        -- prevent fishing is Ember is out
+        if (action == fish) then
+            if (FOB.Vars.PreventFishing) then
+                local activeCompanion = GetActiveCompanionDefId()
+
+                if (activeCompanion == EMBER) then
+                    local interactionType = GetInteractionType()
+                    EndInteraction(interactionType)
+                    return true
+                end
+            end
+        end
+
         -- are we trying to talk to someone?
         if (action == talk) then
             --FOB.Log("talk","warn")
@@ -116,15 +130,13 @@ local function FOBHandler(interactionPossible, _)
             end
         end
 
-        -- disable criminal interactions if Bastian is summoned
+        -- disable criminal interactions if Bastian or Isobel is summoned
         --FOB.Log(isCriminalInteract, "warn")
-        if (FOB.Vars.PreventCriminal) then
-            local activeCompanion = GetActiveCompanionDefId()
-
-            if (activeCompanion ~= BASTIAN) then
-                return false
-            end
-
+        local activeCompanion = GetActiveCompanionDefId()
+        if
+            ((FOB.Vars.PreventCriminalBastian and activeCompanion == BASTIAN) or
+                (FOB.Vars.PreventCriminalIsobel and activeCompanion == ISOBEL))
+         then
             if (isCriminalInteract ~= true and action) then
                 isCriminalInteract = PartialMatch(action, ILLEGAL)
             end
@@ -211,9 +223,8 @@ local function DailyProvisioningOverride()
     return false
 end
 
----- Cheese Alert! ----
-local function SetupCheeseAlert()
-    local name = "FOB_Cheese_Alert"
+---- Alerts ----
+local function SetupAlert(name, icon, fontInfo, text)
     local alert = WINDOW_MANAGER:CreateTopLevelWindow(name)
 
     -- main window
@@ -223,24 +234,19 @@ local function SetupCheeseAlert()
 
     -- icon
     alert.Texture = WINDOW_MANAGER:CreateControl(name .. "_Texture", alert, CT_TEXTURE)
-    alert.Texture:SetTexture(FOB.Vars.CheeseIcon)
+    alert.Texture:SetTexture(icon)
     alert.Texture:SetAnchor(LEFT, alert, LEFT)
     alert.Texture:SetDimensions(64, 64)
 
     -- label
-    local font = FOB.GetFont(FOB.Vars.CheeseFont, FOB.Vars.CheeseFontSize, FOB.Vars.CheeseFontShadow)
+    local font = FOB.GetFont(fontInfo.font, fontInfo.size, fontInfo.shadow)
 
     alert.Label = WINDOW_MANAGER:CreateControl(name .. "_Label", alert, CT_LABEL)
     alert.Label:SetFont(font)
-    alert.Label:SetColor(
-        FOB.Vars.CheeseFontColour.r,
-        FOB.Vars.CheeseFontColour.g,
-        FOB.Vars.CheeseFontColour.b,
-        FOB.Vars.CheeseFontColour.a
-    )
+    alert.Label:SetColor(fontInfo.colour.r, fontInfo.colour.g, fontInfo.colour.b, fontInfo.colour.a)
     alert.Label:SetHorizontalAlignment(_G.TEXT_ALIGN_CENTER)
     alert.Label:SetVerticalAlignment(_G.TEXT_ALIGN_CENTER)
-    alert.Label:SetText(GetString(_G.FOB_CHEESE_ALERT))
+    alert.Label:SetText(GetString(text))
     alert.Label:SetDimensions(184, 64)
     alert.Label:SetAnchor(LEFT, alert.Texture, RIGHT)
     alert.Label:SetHidden(false)
@@ -253,7 +259,7 @@ local function SetupCheeseAlert()
     fadeAnimation:SetHandler(
         "OnStop",
         function()
-            FOB.Alert:SetHidden(true)
+            FOB.Alerts[name]:SetHidden(true)
         end
     )
 
@@ -273,7 +279,20 @@ local function SetupCheeseAlert()
     alert.Animation = timeline
     alert.FadeAnimation = fadeTimeline
 
-    FOB.Alert = alert
+    FOB.Alerts[name] = alert
+end
+
+FOB.Alerts = {}
+
+local function SetupCheeseAlert()
+    local font = {
+        font = FOB.Vars.CheeseFont,
+        size = FOB.Vars.CheeseFontSize,
+        shadow = FOB.Vars.CheeseFontShadow,
+        colour = FOB.Vars.CheeseFontColour
+    }
+
+    SetupAlert("FOB_Cheese_Alert", FOB.Vars.CheeseIcon, font, _G.FOB_CHEESE_ALERT)
 end
 
 -- disable FOB in irrelevant scenes
@@ -355,15 +374,16 @@ function FOB.GetFont(fontName, fontSize, fontShadow)
 end
 
 function FOB.ShowCheeseAlert()
-    FOB.Alert:SetAlpha(1)
-    FOB.Alert:SetHidden(false)
-    FOB.Alert.Animation:PlayFromStart()
+    local alert = FOB.Alerts.FOB_Cheese_Alert
+    alert:SetAlpha(1)
+    alert:SetHidden(false)
+    alert.Animation:PlayFromStart()
 
     PlaySound(_G.SOUNDS.QUEST_ABANDONED)
 
     zo_callLater(
         function()
-            FOB.Alert.FadeAnimation:PlayFromStart()
+            alert.FadeAnimation:PlayFromStart()
         end,
         750
     )
@@ -437,6 +457,12 @@ function FOB.OnAddonLoaded(_, addonName)
         "FOBSavedVars",
         "Characters"
     )
+
+    -- update deprecated variable
+    if (FOB.Vars.PreventCriminal) then
+        FOB.Vars.PreventCriminalBastian = FOB.Vars.PreventCriminal
+        FOB.Vars.PreventCriminal = nil
+    end
 
     -- reset the old account-wide companion information
     if (type(FOB.Vars.LastActiveCompanionId) == "number") then

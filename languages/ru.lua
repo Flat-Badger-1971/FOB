@@ -17,6 +17,7 @@ ZO_CreateStringId("FOB_ALERT_ICON", "Значок предупреждения")
 ZO_CreateStringId("FOB_TALK", "Поговорить")
 ZO_CreateStringId("FOB_TAKE", "Взять")
 ZO_CreateStringId("FOB_CATCH", "Поймать")
+ZO_CreateStringId("FOB_FISH", "Повить")
 
 -- settings / настройки
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Игнорировать летающих насекомых")
