@@ -18,12 +18,18 @@ ZO_CreateStringId("FOB_TALK", "Reden")
 ZO_CreateStringId("FOB_CATCH", "Einfangen")
 ZO_CreateStringId("FOB_TAKE", "Nehmen")
 ZO_CreateStringId("FOB_FISH", "Fischen")
+ZO_CreateStringId("FOB_OPEN", "Öffnen")
 
 -- settings
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignoriere Insekten")
 ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Lassen Sie Insekten zu, die den Rapport nicht verringern")
 ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Ignorieren Sie ständig fliegende Insekten")
 ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Verhindere kriminelle Interaktionen")
+ZO_CreateStringId("FOB_PREVENT_OUTLAW", "Zutritt zu Untershlupf verhindern")
+
+-- interactable names
+ZO_CreateStringId("FOB_THIEVES_DEN", "Diebesnest")
+ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Untershlupf")
 
 -- flying insects
 ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Schwarzenweite-Qualle")

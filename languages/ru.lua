@@ -18,12 +18,17 @@ ZO_CreateStringId("FOB_TALK", "Поговорить")
 ZO_CreateStringId("FOB_TAKE", "Взять")
 ZO_CreateStringId("FOB_CATCH", "Поймать")
 ZO_CreateStringId("FOB_FISH", "Повить")
+ZO_CreateStringId("FOB_OPEN", "Открыть")
 
 -- settings / настройки
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Игнорировать летающих насекомых")
 ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Собирать насекомых не влияющих на уровень отношений")
 ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Игнорируйте летающих насекомых все время")
 ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Блокировать преступную активность")
+
+-- interactable names
+ZO_CreateStringId("FOB_THIEVES_DEN", "Логово воров")
+ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Убежище")
 
 -- flying insects / летающие насекомые (translations req.)
 ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Медуза черного предела")

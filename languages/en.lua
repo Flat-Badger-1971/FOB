@@ -20,6 +20,11 @@ ZO_CreateStringId("FOB_TALK", "Talk")
 ZO_CreateStringId("FOB_TAKE", "Take")
 ZO_CreateStringId("FOB_CATCH", "Catch")
 ZO_CreateStringId("FOB_FISH", "Fish")
+ZO_CreateStringId("FOB_OPEN", "Open")
+
+-- interactable names
+ZO_CreateStringId("FOB_THIEVES_DEN", "Thieves Den")
+ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Outlaws Refuge")
 
 -- settings
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignore flying insects")
@@ -27,6 +32,7 @@ ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Allow insects that don't decrease
 ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Ignore flying insects all the time")
 ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Prevent criminal interactions")
 ZO_CreateStringId("FOB_PREVENT_FISHING", "Prevent fishing")
+ZO_CreateStringId("FOB_PREVENT_OUTLAW", "Prevent entry to Outlaw's Refuges")
 
 -- flying insects
 ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Blackreach Jelly")

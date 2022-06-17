@@ -29,6 +29,7 @@ FOB.Defaults = {
     PreventCriminalBastian = false,
     PreventCriminalIsobel = false,
     PreventFishing = false,
+    PreventOutlawsRefuge = false,
     CheeseWarning = false,
     CheeseFontColour = {r = 0.9, g = 0.8, b = 0.2, a = 1},
     CheeseFont = "ESO Bold",
@@ -46,7 +47,7 @@ local panel = {
     name = "FOB - Companion Helper",
     displayName = "|cdc143cFOB|r - Companion Helper",
     author = "Flat Badger",
-    version = "2.6.2",
+    version = "2.6.5",
     slashCommand = "/fob",
     registerForRefresh = true
 }
@@ -258,6 +259,17 @@ local options = {
         end,
         width = "full"
     },
+    [17] = {
+        type = "checkbox",
+        name = GetString(_G.FOB_PREVENT_OUTLAW),
+        getFunc = function()
+            return FOB.Vars.PreventOutlawsRefuge
+        end,
+        setFunc = function(value)
+            FOB.Vars.PreventOutlawsRefuge = value
+        end,
+        width = "full"
+    }
 }
 
 function FOB.RegisterSettings()

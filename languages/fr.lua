@@ -18,6 +18,11 @@ ZO_CreateStringId("FOB_TALK", "Parler")
 ZO_CreateStringId("FOB_TAKE", "Prendre")
 ZO_CreateStringId("FOB_CATCH", "Prise")
 ZO_CreateStringId("FOB_FISH", "Pêcher")
+ZO_CreateStringId("FOB_OPEN", "Ouvrir")
+
+-- interactable names
+ZO_CreateStringId("FOB_THIEVES_DEN", "L'Antre des voleurs.")
+ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Refuge de hors-la-loi")
 
 -- settings
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignorez les insectes volants")

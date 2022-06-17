@@ -48,6 +48,11 @@ local ILLEGAL = {
     [GetString(_G.SI_GAMECAMERAACTIONTYPE23)] = true -- Trespass
 }
 
+local OUTLAWS_REFUGE = {
+    [GetString(_G.FOB_OUTLAWS_REFUGE)] = true,
+    [GetString(_G.FOB_THIEVES_DEN)] = true
+}
+
 -- slower matcher for users of RuEso
 -- RuEso modifies the text so a direct comparison is not possible
 -- have to check if the string contains the expected text instead
@@ -64,6 +69,20 @@ end
 local function FOBHandler(interactionPossible, _)
     if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
         local action, interactableName, _, _, _, _, _, isCriminalInteract = GetGameCameraInteractableActionInfo()
+
+        if (action == "Open") then
+            if (FOB.Vars.PreventOutlawsRefuge) then
+                if (PartialMatch(interactableName, OUTLAWS_REFUGE)) then
+                    local activeCompanion = GetActiveCompanionDefId()
+
+                    if (activeCompanion == ISOBEL) then
+                        local interactionType = GetInteractionType()
+                        EndInteraction(interactionType)
+                        return true
+                    end
+                end
+            end
+        end
 
         -- prevent fishing is Ember is out
         if (action == fish) then
@@ -259,7 +278,7 @@ local function SetupAlert(name, icon, fontInfo, text)
     fadeAnimation:SetHandler(
         "OnStop",
         function()
-            FOB.Alerts[name]:SetHidden(true)
+            FOB.Alert:SetHidden(true)
         end
     )
 
@@ -279,10 +298,8 @@ local function SetupAlert(name, icon, fontInfo, text)
     alert.Animation = timeline
     alert.FadeAnimation = fadeTimeline
 
-    FOB.Alerts[name] = alert
+    FOB.Alert = alert
 end
-
-FOB.Alerts = {}
 
 local function SetupCheeseAlert()
     local font = {
@@ -374,7 +391,7 @@ function FOB.GetFont(fontName, fontSize, fontShadow)
 end
 
 function FOB.ShowCheeseAlert()
-    local alert = FOB.Alerts.FOB_Cheese_Alert
+    local alert = FOB.Alert
     alert:SetAlpha(1)
     alert:SetHidden(false)
     alert.Animation:PlayFromStart()
