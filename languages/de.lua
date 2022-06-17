@@ -1,17 +1,20 @@
 -- German localisation
-ZO_CreateStringId("FOB_DISMISS_COMPANION", "Aktiven Gefähten wegschicken")
-ZO_CreateStringId("FOB_TOGGLE_COMPANION", "Gefähten wechseln")
+ZO_CreateStringId("FOB_DISMISS_COMPANION", "Aktiven Gefährten wegschicken")
+ZO_CreateStringId("FOB_TOGGLE_COMPANION", "Gefährten wechseln")
 ZO_CreateStringId("FOB_COMPANION_MENU", "Öffne Gefährten Menü")
 ZO_CreateStringId("FOB_TOGGLE", "De- / Aktiviere FOB temporär")
 ZO_CreateStringId("FOB_DISABLED", "FOB ist temporär deaktiviert")
 ZO_CreateStringId("FOB_ENABLED", "FOB ist temporär aktiviert")
-ZO_CreateStringId("FOB_CHEESE_WARNING", "Käsewarnungen")
+ZO_CreateStringId("FOB_CHEESE_WARNING", "Käsealarm")
 ZO_CreateStringId("FOB_CHEESE_ALERT", "Käse-Alarm!")
-ZO_CreateStringId("FOB_ALERT_FONT", "Alert-Schriftart")
-ZO_CreateStringId("FOB_ALERT_COLOUR", "Farbe der Benachrichtigungsschrift")
-ZO_CreateStringId("FOB_ALERT_SIZE", "Schriftgröße warnen")
-ZO_CreateStringId("FOB_ALERT_SHADOW", "Alert-Schriftschatten")
-ZO_CreateStringId("FOB_ALERT_ICON", "Warnsymbol")
+ZO_CreateStringId("FOB_ALERT_FONT", "Alarm-Schriftart")
+ZO_CreateStringId("FOB_ALERT_COLOUR", "Alarm-Schriftfarbe")
+ZO_CreateStringId("FOB_ALERT_SIZE", "Alarm-Schriftgröße")
+ZO_CreateStringId("FOB_ALERT_SHADOW", "Alarm-Schriftschatten")
+ZO_CreateStringId("FOB_ALERT_ICON", "Alarmsymbol")
+ZO_CreateStringId("FOB_SUMMONING", "Herbeirufen Benachrichtigung")
+ZO_CreateStringId("FOB_SHOWSUMMONING", "Herbeirufen Benachrichtigung anzeigen")
+ZO_CreateStringId("FOB_SUMMONINGCOLOUR", "Herbeirufen Benachrichtigungsfarbe")
 
 -- actions
 ZO_CreateStringId("FOB_TALK", "Reden")
@@ -21,15 +24,16 @@ ZO_CreateStringId("FOB_FISH", "Fischen")
 ZO_CreateStringId("FOB_OPEN", "Öffnen")
 
 -- settings
-ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignoriere Insekten")
-ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Lassen Sie Insekten zu, die den Rapport nicht verringern")
-ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Ignorieren Sie ständig fliegende Insekten")
-ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Verhindere kriminelle Interaktionen")
-ZO_CreateStringId("FOB_PREVENT_OUTLAW", "Zutritt zu Untershlupf verhindern")
+ZO_CreateStringId("FOB_IGNORE_INSECTS", "Insekten ignorieren")
+ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Rapport irrelevante Insekten zulassen")
+ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Fliegende Insekten immer ignorieren")
+ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Kriminelle Interaktionen verhindern")
+ZO_CreateStringId("FOB_PREVENT_OUTLAW", "Zutritt zu Unterschlupf verhindern")
 
 -- interactable names
 ZO_CreateStringId("FOB_THIEVES_DEN", "Diebesnest")
 ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Untershlupf")
+ZO_CreateStringId("FOB_PREVENT_FISHING", "Fischen verhindern")
 
 -- flying insects
 ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Schwarzenweite-Qualle")
