@@ -15,7 +15,7 @@ ZO_CreateStringId("FOB_ALERT_ICON", "Alarmsymbol")
 ZO_CreateStringId("FOB_SUMMONING", "Herbeirufen Benachrichtigung")
 ZO_CreateStringId("FOB_SHOWSUMMONING", "Herbeirufen Benachrichtigung anzeigen")
 ZO_CreateStringId("FOB_SUMMONINGCOLOUR", "Herbeirufen Benachrichtigungsfarbe")
-ZO_CreateStringId("FOB_DISABLE_COMPANION_INTERACTION", "Disable companion interaction")
+ZO_CreateStringId("FOB_DISABLE_COMPANION_INTERACTION", "Gefährten Interaktion ausschalten")
 
 -- actions
 ZO_CreateStringId("FOB_TALK", "Reden")
