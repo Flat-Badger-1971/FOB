@@ -10,7 +10,6 @@ local enabledScenes = {
 local take = GetString(_G.FOB_TAKE)
 local talk = GetString(_G.FOB_TALK)
 local catch = GetString(_G.FOB_CATCH)
-local fish = GetString(_G.FOB_FISH)
 local companions = {
     [FOB.BASTIAN] = true,
     [FOB.MIRRI] = true,
@@ -53,6 +52,12 @@ local OUTLAWS_REFUGE = {
     [GetString(_G.FOB_THIEVES_DEN)] = true
 }
 
+local INTERACTION_TYPES = {
+    _G.INTERACTION_NONE,
+    _G.INTERACTION_FISH,
+    _G.INTERACTION_HARVEST
+}
+
 -- slower matcher for users of RuEso
 -- RuEso modifies the text so a direct comparison is not possible
 -- have to check if the string contains the expected text instead
@@ -66,9 +71,19 @@ local function PartialMatch(inputString, compareList)
     return false
 end
 
+local function endInteraction()
+    for _, interactionType in ipairs(INTERACTION_TYPES) do
+        EndInteraction(interactionType)
+    end
+
+    EndPendingInteraction()
+
+    return true
+end
+
 local function FOBHandler(interactionPossible, _)
     if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
-        local action, interactableName, _, _, _, _, _, isCriminalInteract = GetGameCameraInteractableActionInfo()
+        local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract = GetGameCameraInteractableActionInfo()
 
         if (action == "Open") then
             if (FOB.Vars.PreventOutlawsRefuge) then
@@ -76,30 +91,26 @@ local function FOBHandler(interactionPossible, _)
                     local activeCompanion = GetActiveCompanionDefId()
 
                     if (activeCompanion == ISOBEL) then
-                        local interactionType = GetInteractionType()
-                        EndInteraction(interactionType)
-                        return true
+                        return endInteraction()
                     end
                 end
             end
         end
 
         -- prevent fishing is Ember is out
-        if (action == fish) then
+        if (additionalInfo == _G.ADDITIONAL_INTERACT_INFO_FISHING_NODE) then
             if (FOB.Vars.PreventFishing) then
                 local activeCompanion = GetActiveCompanionDefId()
 
                 if (activeCompanion == EMBER) then
-                    local interactionType = GetInteractionType()
-                    EndInteraction(interactionType)
-                    return true
+                    FISHING_MANAGER:StopInteraction()
+                    return endInteraction()
                 end
             end
         end
 
         -- are we trying to talk to someone?
-        if (action == talk) then
-            --FOB.Log("talk","warn")
+        if (action == talk and FOB.Vars.DisableCompanionInteraction) then
             -- is it a companion?
             local isCompanionAction = companions[interactableName] or false
 
@@ -109,16 +120,11 @@ local function FOBHandler(interactionPossible, _)
 
             if (isCompanionAction) then
                 -- companion detected - we don't want to talk to you, cancel the interaction
-                --FOB.Log("Companion", "info")
-                local interactionType = GetInteractionType()
-                EndInteraction(interactionType)
-                return true
+                return endInteraction()
             end
         end
 
         if (action == take or action == catch) then
-            --FOB.Log("take","warn")
-
             if (FOB.Vars.IgnoreInsects or FOB.Vars.IgnoreAllInsects) then
                 local insectList = FOB.FLYING_INSECTS
 
@@ -141,10 +147,7 @@ local function FOBHandler(interactionPossible, _)
                 end
 
                 if (ignoreInsects) then
-                    --FOB.Log("Flying insect", "info")
-                    local interactionType = GetInteractionType()
-                    EndInteraction(interactionType)
-                    return true
+                   return endInteraction()
                 end
             end
         end
@@ -161,9 +164,7 @@ local function FOBHandler(interactionPossible, _)
             end
 
             if (isCriminalInteract) then
-                local interactionType = GetInteractionType()
-                EndInteraction(interactionType)
-                return true
+                return endInteraction()
             end
         end
 
@@ -463,7 +464,7 @@ function FOB.OnAddonLoaded(_, addonName)
     end
 
     --FOB.Log("Loaded", "info")
-    EVENT_MANAGER:UnregisterForEvent(FOB.Name, EVENT_ADD_ON_LOADED)
+    EVENT_MANAGER:UnregisterForEvent(FOB.Name, _G.EVENT_ADD_ON_LOADED)
 
     -- monitor scene changes
     SCENE_MANAGER:RegisterCallback("SceneStateChanged", sceneHandler)
@@ -509,7 +510,7 @@ function FOB.OnAddonLoaded(_, addonName)
     end
 
     if (FOB.Vars.UseCompanionSummmoningFrame) then
-        EVENT_MANAGER:RegisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED, FOB.OnCompanionStateChanged)
+        EVENT_MANAGER:RegisterForEvent(FOB.Name, _G.EVENT_ACTIVE_COMPANION_STATE_CHANGED, FOB.OnCompanionStateChanged)
     end
 
     -- utiltity
@@ -520,4 +521,4 @@ function FOB.OnAddonLoaded(_, addonName)
     end
 end
 
-EVENT_MANAGER:RegisterForEvent(FOB.Name, EVENT_ADD_ON_LOADED, FOB.OnAddonLoaded)
+EVENT_MANAGER:RegisterForEvent(FOB.Name, _G.EVENT_ADD_ON_LOADED, FOB.OnAddonLoaded)

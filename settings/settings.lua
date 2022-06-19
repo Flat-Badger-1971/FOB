@@ -37,7 +37,8 @@ FOB.Defaults = {
     CheeseFontShadow = true,
     CheeseIcon = "/esoui/art/icons/housing_bre_inc_cheese001.dds",
     UseCompanionSummmoningFrame = true,
-    LastActiveCompanionId = {}
+    LastActiveCompanionId = {},
+    DisableCompanionInteraction = true
 }
 
 FOB.LAM = _G.LibAddonMenu2
@@ -47,13 +48,24 @@ local panel = {
     name = "FOB - Companion Helper",
     displayName = "|cdc143cFOB|r - Companion Helper",
     author = "Flat Badger",
-    version = "2.6.6",
+    version = "2.6.7",
     slashCommand = "/fob",
     registerForRefresh = true
 }
 
 local options = {
     [1] = {
+        type = "checkbox",
+        name = GetString(_G.FOB_DISABLE_COMPANION_INTERACTION),
+        getFunc = function()
+            return FOB.Vars.DisableCompanionInteraction
+        end,
+        setFunc = function(value)
+            FOB.Vars.DisableCompanionInteraction = value
+        end,
+        width = "full"
+    },
+    [2] = {
         type = "checkbox",
         name = GetString(_G.FOB_IGNORE_ALL_INSECTS),
         getFunc = function()
@@ -70,7 +82,7 @@ local options = {
         end,
         width = "full"
     },
-    [2] = {
+    [3] = {
         type = "checkbox",
         name = GetString(_G.FOB_SHOWSUMMONING),
         getFunc = function()
@@ -95,12 +107,12 @@ local options = {
         end,
         width = "full"
     },
-    [3] = {
+    [4] = {
         type = "header",
         name = "|c9d840d" .. FOB.MIRRI .. "|r",
         width = "full"
     },
-    [4] = {
+    [5] = {
         type = "checkbox",
         name = GetString(_G.FOB_IGNORE_INSECTS),
         getFunc = function()
@@ -120,7 +132,7 @@ local options = {
         end,
         width = "full"
     },
-    [5] = {
+    [6] = {
         type = "checkbox",
         name = GetString(_G.FOB_IGNORE_MIRRI_INSECTS),
         getFunc = function()
@@ -134,12 +146,12 @@ local options = {
         end,
         width = "full"
     },
-    [6] = {
+    [7] = {
         type = "header",
         name = "|c9d840d" .. FOB.BASTIAN .. "|r",
         width = "full"
     },
-    [7] = {
+    [8] = {
         type = "checkbox",
         name = GetString(_G.FOB_PREVENT_CRIMINAL),
         getFunc = function()
@@ -150,7 +162,7 @@ local options = {
         end,
         width = "full"
     },
-    [8] = {
+    [9] = {
         type = "checkbox",
         name = GetString(_G.FOB_CHEESE_WARNING),
         getFunc = function()
@@ -162,7 +174,7 @@ local options = {
         end,
         width = "full"
     },
-    [9] = {
+    [10] = {
         type = "dropdown",
         name = GetString(_G.FOB_ALERT_FONT),
         choices = fonts,
@@ -179,7 +191,7 @@ local options = {
         end,
         width = "full"
     },
-    [10] = {
+    [11] = {
         type = "colorpicker",
         name = GetString(_G.FOB_ALERT_COLOUR),
         getFunc = function()
@@ -194,7 +206,7 @@ local options = {
         end,
         width = "full"
     },
-    [11] = {
+    [12] = {
         type = "checkbox",
         name = GetString(_G.FOB_ALERT_SHADOW),
         getFunc = function()
@@ -210,7 +222,7 @@ local options = {
         end,
         width = "full"
     },
-    [12] = {
+    [13] = {
         type = "iconpicker",
         name = GetString(_G.FOB_ALERT_ICON),
         getFunc = function()
@@ -227,12 +239,12 @@ local options = {
         iconSize = 48,
         width = "full"
     },
-    [13] = {
+    [14] = {
         type = "header",
         name = "|c9d840d" .. FOB.EMBER .. "|r",
         width = "full"
     },
-    [14] = {
+    [15] = {
         type = "checkbox",
         name = GetString(_G.FOB_PREVENT_FISHING),
         getFunc = function()
@@ -243,12 +255,12 @@ local options = {
         end,
         width = "full"
     },
-    [15] = {
+    [16] = {
         type = "header",
         name = "|c9d840d" .. FOB.ISOBEL .. "|r",
         width = "full"
     },
-    [16] = {
+    [17] = {
         type = "checkbox",
         name = GetString(_G.FOB_PREVENT_CRIMINAL),
         getFunc = function()
@@ -259,7 +271,7 @@ local options = {
         end,
         width = "full"
     },
-    [17] = {
+    [18] = {
         type = "checkbox",
         name = GetString(_G.FOB_PREVENT_OUTLAW),
         getFunc = function()

@@ -17,7 +17,6 @@ ZO_CreateStringId("FOB_ALERT_ICON", "Icône d'alerte")
 ZO_CreateStringId("FOB_TALK", "Parler")
 ZO_CreateStringId("FOB_TAKE", "Prendre")
 ZO_CreateStringId("FOB_CATCH", "Prise")
-ZO_CreateStringId("FOB_FISH", "Pêcher")
 ZO_CreateStringId("FOB_OPEN", "Ouvrir")
 
 -- interactable names

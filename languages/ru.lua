@@ -17,7 +17,6 @@ ZO_CreateStringId("FOB_ALERT_ICON", "Значок предупреждения")
 ZO_CreateStringId("FOB_TALK", "Поговорить")
 ZO_CreateStringId("FOB_TAKE", "Взять")
 ZO_CreateStringId("FOB_CATCH", "Поймать")
-ZO_CreateStringId("FOB_FISH", "Повить")
 ZO_CreateStringId("FOB_OPEN", "Открыть")
 
 -- settings / настройки

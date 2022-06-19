@@ -1,83 +1,97 @@
 std = "min"
 max_line_length = 160
 
--- globals used within the Companion Frame addon
-globals = {"CF"}
+-- globals used within addons
+--globals = {"CF"}
 read_globals = {
     ["CALLBACK_MANAGER"] = {
         fields = {
             FireCallbacks = {read_only = true}
         }
     },
-    ["EVENT_MANAGER"] = {
+	["CENTER_SCREEN_ANNOUNCE"] = {
+		fields = {
+			CreateMessageParams = {read_only = true},
+			AddMessageWithParams = {read_only = true}
+		}
+	},
+    ["CHAMPION_DATA_MANAGER"] = {
         fields = {
-            RegisterForEvent = {read_only = true},
-            UnregisterForEvent = {read_only = true}
+            FindChampionDisciplineDataById = {read_only = true},
+            FindChampionDisciplineDataByType = {read_only = true}
         }
     },
+    ["EVENT_MANAGER"] = {
+        fields = {
+            AddFilterForEvent = {read_only = true},
+            RegisterForEvent = {read_only = true},
+            RegisterForUpdate = {read_only = true},
+            UnregisterForEvent = {read_only = true},
+            UnregisterForUpdate = {read_only = true}
+        }
+    },
+	["FISHING_MANAGER"] = {
+		fields = {
+			StopInteraction = {read_only = true}
+		}
+	},
+	["FRIENDS_LIST_MANAGER"] = {
+		fields = {
+			GetMasterList = {read_only = true}
+		}
+	},
+	["REWARDS_MANAGER"] = {
+		fields = {
+			GetInfoForReward = {read_only = true}
+		}
+	},
     ["SCENE_MANAGER"] = {
         fields = {
             GetCurrentScene = {read_only = true},
             GetScene = {read_only = true},
-            GetSceneGroup = { read_only = true },
-            RegisterCallback = { read_only = true },
-            Show = { read_only = true }
+            GetSceneGroup = {read_only = true},
+            IsInUIMode = {read_only = true},
+            RegisterCallback = {read_only = true},
+            SetInUIMode = {read_only = true},
+            Show = {read_only = true}
         }
     },
     ["WINDOW_MANAGER"] = {
         fields = {
             CreateTopLevelWindow = {read_only = true},
-            CreateControl = {read_only = true}
+            CreateControl = {read_only = true},
+            CreateControlFromVirtual = {read_only = true},
+            IsSecureRenderModeEnabled = {read_only = true}
         }
     },
-    -- events
-    "EVENT_ACTION_LAYER_POPPED",
-    "EVENT_ACTION_LAYER_PUSHED",
-    "EVENT_ACTIVE_COMPANION_STATE_CHANGED",
-    "EVENT_ADD_ON_LOADED",
-    "EVENT_COMPANION_ACTIVATED",
-    "EVENT_COMPANION_DEACTIVATED",
-    "EVENT_COMPANION_EXPERIENCE_GAIN",
-    "EVENT_COMPANION_RAPPORT_UPDATE",
-    "EVENT_INVENTORY_SINGLE_SLOT_UPDATE",
-    "EVENT_PLAYER_ACTIVATED",
-    "EVENT_POWER_UPDATE",
-    "EVENT_UNIT_CREATED",
-    "EVENT_UNIT_DESTROYED",
-    "EVENT_ZONE_CHANGED",
-    -- Flat Badger's translations
-    "COMPANIONFRAME_COMPANIONBUTTONS",
-    "COMPANIONFRAME_EXPERIENCEBARCOLOUR",
-    "COMPANIONFRAME_FONTCOLOUR",
-    "COMPANIONFRAME_FONTNAME",
-    "COMPANIONFRAME_FONTSIZE",
-    "COMPANIONFRAME_HEALTHBARCOLOUR",
-    "COMPANIONFRAME_HIDEWHENGROUPED",
-    "COMPANIONFRAME_HIDEWHENGROUPEDTOOLTIP",
-    "COMPANIONFRAME_LOCKCOMPANIONBUTTONS",
-    "COMPANIONFRAME_LOCKPOSITION",
-    "COMPANIONFRAME_RAPPORTDISLIKE",
-    "COMPANIONFRAME_RAPPORTLIKE",
-    "COMPANIONFRAME_RAPPORTMODERATE",
-    "COMPANIONFRAME_RELOAD",
-    "COMPANIONFRAME_RESUMMON",
-    "COMPANIONFRAME_RESUMMONTOOLTIP",
-    "COMPANIONFRAME_SHOWCOMPANIONBUTTONS",
-    "COMPANIONFRAME_SHOWDISMISS",
-    "COMPANIONFRAME_SHOWEXPERIENCE",
-    "COMPANIONFRAME_SHOWLEVEL",
-    "COMPANIONFRAME_SHOWNAME",
-    "COMPANIONFRAME_SHOWRAPPORT",
-    "COMPANIONFRAME_SHOWRAPPORTICON",
-    "COMPANIONFRAME_UNITFRAMEHEIGHT",
-    "COMPANIONFRAME_UNITFRAMEWIDTH",
-    "COMPANIONFRAME_RAPPORTTOOLTIP",
-    "COMPANIONFRAME_SHOWSUMMONING",
-    "COMPANIONFRAME_SUMMONING",
-    "COMPANIONFRAME_SUMMONINGCOLOUR",
+    ["ZO_ComboBox"] = {
+        fields = {
+            CreateItemEntry = {read_only = true}
+        }
+    },
+    ["ZO_CompassFrame"] = {
+        fields = {
+            GetTop = {read_only = true},
+            ClearAnchors = {read_only = true},
+            SetAnchor = {read_only = true}
+        }
+    },
+    ["ZO_Object"] = {
+        fields = {
+            New = {read_only = true},
+            Subclass = {read_only = true}
+        }
+    },
+    ["ZO_TargetUnitFramereticleover"] = {
+        fields = {
+            ClearAnchors = {read_only = true},
+            SetAnchor = {read_only = true}
+        }
+    },
     -- constants
     "BOTTOM",
     "BOTTOMLEFT",
+    "BOTTOMRIGHT",
     "BSTATE_NORMAL",
     "CD_TYPE_RADIAL",
     "CD_TYPE_VERTICAL",
@@ -98,6 +112,7 @@ read_globals = {
     "POWERTYPE_HEALTH",
     "RETICLE",
     "RIGHT",
+    "TEXT_ALIGN_CENTER",
     "TOP",
     "TOPLEFT",
     "TOPRIGHT",
@@ -107,57 +122,129 @@ read_globals = {
         }
     },
     -- lua
+	"EndPendingInteraction",
     "FormatIntegerWithDigitGrouping",
+    "GetBagSize",
+    "GetNumBagUsedSlots",
     "GetCVar",
     "GetString",
     "GuiRoot",
     "unpack",
     --API
     "CreateSimpleAnimation",
+    "DoesAntiquityHaveLead",
     "DoesUnitExist",
     "EndInteraction",
+    "GetAbilityIcon",
+    "GetAbilityName",
     "GetActiveCollectibleByType",
     "GetActiveCompanionDefId",
     "GetActiveCompanionLevelInfo",
     "GetActiveCompanionRapport",
     "GetActiveCompanionRapportLevel",
     "GetActiveCompanionRapportLevelDescription",
+    "GetAllianceColor",
+    "GetAllianceName",
     "GetAnimationManager",
+    "GetAntiquityDifficulty",
+    "GetAntiquityLeadIcon",
+    "GetAntiquityLeadTimeRemainingSeconds",
+    "GetAntiquityName",
+    "GetAntiquityQuality",
+    "GetAntiquityZoneId",
+    "GetChampionDisciplineId",
+    "GetChampionDisciplineName",
+    "GetChampionPointPoolForRank",
+    "GetClassIcon",
     "GetCollectibleCooldownAndDuration",
     "GetCollectibleInfo",
     "GetCompanionCollectibleId",
     "GetCompanionName",
+    "GetCurrencyAmount",
+    "GetFenceLaunderTransactionInfo",
     "GetFishingLure",
     "GetFishingLureInfo",
+    "GetFramerate",
     "GetFrameTimeMilliseconds",
+	"GetFriendInfo",
     "GetGameCameraInteractableActionInfo",
     "GetGameCameraPickpocketingBonusInfo",
     "GetInteractionType",
+    "GetItemCondition",
     "GetItemLinkName",
+    "GetItemName",
+    "GetItemType",
+    "GetLatency",
+    "GetMapContentType",
     "GetMaximumRapport",
     "GetMaxRecipeIngredients",
+    "GetMaxSimultaneousSmithingResearch",
     "GetMinimumRapport",
+    "GetNextAntiquityId",
+    "GetNonCombatBonus",
+    "GetNumBuffs",
+    "GetNumChampionDisciplines",
+    "GetNumChampionXPInChampionPoint",
     "GetNumExperiencePointsInCompanionLevel",
+	"GetNumFriends",
+    "GetNumSmithingResearchLines",
+	"GetNumTimedActivityRewards",
     "GetPendingCompanionDefId",
+    "GetPlayerChampionPointsEarned",
+    "GetPlayerChampionXP",
     "GetPulseTimeline",
+    "GetRecallCooldown",
     "GetRecipeIngredientItemInfo",
+    "GetRepairAllCost",
+    "GetRidingStats",
+    "GetSlotStackSize",
+    "GetSmithingResearchLineInfo",
+    "GetSmithingResearchLineTraitInfo",
+    "GetSmithingResearchLineTraitTimes",
+	"GetSoulGemInfo",
+    "GetTimedActivityMaxProgress",
+    "GetTimedActivityName",
+    "GetTimedActivityProgress",
+	"GetTimedActivityRewardInfo",
+    "GetTimedActivityType",
+    "GetTimedActivityTypeLimit",
+    "GetTimeString",
+    "GetTimeUntilCanBeTrained",
+    "GetUnitAlliance",
+    "GetUnitBuffInfo",
+    "GetUnitClass",
+    "GetUnitClassId",
+	"GetUnitEffectiveLevel",
     "GetUnitName",
     "GetUnitPower",
+    "GetUnitRace",
+    "GetUnitZone",
+    "GetZoneNameById",
     "HasActiveCompanion",
     "HasPendingCompanion",
     "IsCollectibleBlocked",
     "IsCollectibleUsable",
+    "IsESOPlusSubscriber",
     "IsInGamepadPreferredMode",
+    "IsItemRepairKit",
+    "IsItemStolen",
     "IsUnitGrouped",
+    "IsUnitPvPFlagged",
+	"PlayEmoteByIndex",
     "PlaySound",
     "ReloadUI",
+	"SetGameCameraUIMode",
     "TriggerTutorial",
     "UseCollectible",
     -- Zenimax objects
     "HUD_SCENE",
     "ZO_CachedStrFormat",
     "ZO_CreateStringId",
-    "ZO_strformat",
+	"ZO_DeepTableCopy",
+	"ZO_Dialogs_RegisterCustomDialog",
+    "ZO_Dialogs_ShowDialog",
+	"ZO_FormatUserFacingDisplayName",
+    "ZO_GetAllianceIcon",
     ["ZO_HiddenReasons"] = {
         fields = {
             New = {read_only = true}
@@ -169,20 +256,37 @@ read_globals = {
         }
     },
     "ZO_min",
+	"ZO_PostHook",
     "ZO_PreHook",
+	"ZO_PreHookHandler",
     "ZO_Provisioner",
-    ["ZO_SavedVars"] = {
+	["ZO_SavedVars"] = {
         fields = {
             NewAccountWide = {read_only = true}
         }
     },
+	"ZO_SceneManager_ToggleHUDUIBinding",
+	"ZO_ScrollList_AddDataType",
+	"ZO_ScrollList_Clear",
+	"ZO_ScrollList_Commit",
+	"ZO_ScrollList_CreateDataEntry",
+	"ZO_ScrollList_EnableSelection",
+	"ZO_ScrollList_GetDataList",
     "ZO_SmallGroupAnchorFrame",
+	"ZO_SocialList_GetPlatformTextureFunctions",
+	"ZO_SocialList_GetRowColors",
+	"ZO_strformat",
     "ZO_TimerBar",
     "ZO_Tooltips_HideTextTooltip",
     "ZO_Tooltips_ShowTextTooltip",
     -- Zenimax functions
     "zo_callLater",
+    "zo_iconFormat",
     "zo_roundToNearest",
+	"zo_strfind",
     "zo_strformat",
-    "zo_strsplit"
+	"zo_strlen",
+    "zo_strsplit",
+    -- luacheck misses this one for some reason
+    "math.log10"
 }
