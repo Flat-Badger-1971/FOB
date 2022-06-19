@@ -48,7 +48,7 @@ local panel = {
     name = "FOB - Companion Helper",
     displayName = "|cdc143cFOB|r - Companion Helper",
     author = "Flat Badger",
-    version = "2.6.7",
+    version = "2.6.8",
     slashCommand = "/fob",
     registerForRefresh = true
 }
@@ -94,11 +94,11 @@ local options = {
             if (value == true) then
                 EVENT_MANAGER:RegisterForEvent(
                     FOB.Name,
-                    EVENT_ACTIVE_COMPANION_STATE_CHANGED,
+                    _G.EVENT_ACTIVE_COMPANION_STATE_CHANGED,
                     FOB.OnCompanionStateChanged
                 )
             else
-                EVENT_MANAGER:UnregisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED)
+                EVENT_MANAGER:UnregisterForEvent(FOB.Name, _G.EVENT_ACTIVE_COMPANION_STATE_CHANGED)
                 UNIT_FRAMES:GetFrame("companion"):SetHiddenForReason("disabled", false)
             end
         end,
