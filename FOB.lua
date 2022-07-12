@@ -72,11 +72,11 @@ local function PartialMatch(inputString, compareList)
 end
 
 local function endInteraction()
+    EndPendingInteraction()
+
     for _, interactionType in ipairs(INTERACTION_TYPES) do
         EndInteraction(interactionType)
     end
-
-    EndPendingInteraction()
 
     return true
 end
@@ -91,6 +91,7 @@ local function FOBHandler(interactionPossible, _)
                     local activeCompanion = GetActiveCompanionDefId()
 
                     if (activeCompanion == ISOBEL) then
+                        EndPendingInteraction()
                         return endInteraction()
                     end
                 end
@@ -104,6 +105,7 @@ local function FOBHandler(interactionPossible, _)
 
                 if (activeCompanion == EMBER) then
                     FISHING_MANAGER:StopInteraction()
+                    EndPendingInteraction()
                     return endInteraction()
                 end
             end
@@ -120,6 +122,7 @@ local function FOBHandler(interactionPossible, _)
 
             if (isCompanionAction) then
                 -- companion detected - we don't want to talk to you, cancel the interaction
+                EndPendingInteraction()
                 return endInteraction()
             end
         end
@@ -147,6 +150,7 @@ local function FOBHandler(interactionPossible, _)
                 end
 
                 if (ignoreInsects) then
+                    EndPendingInteraction()
                    return endInteraction()
                 end
             end
@@ -164,6 +168,7 @@ local function FOBHandler(interactionPossible, _)
             end
 
             if (isCriminalInteract) then
+                EndPendingInteraction()
                 return endInteraction()
             end
         end
