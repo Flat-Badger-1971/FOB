@@ -32,20 +32,20 @@ ZO_CreateStringId("FOB_PREVENT_OUTLAW", "Zutritt zum Gesetzlosenunterschlupf ver
 
 -- interactable names
 ZO_CreateStringId("FOB_THIEVES_DEN", "Diebesnest")
-ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Untershlupf")
+ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Unterschlupf")
 ZO_CreateStringId("FOB_PREVENT_FISHING", "Fischen verhindern")
 
 -- flying insects
-ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Schwarzenweite-Qualle")
+ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Schwarzweite-Qualle")
 ZO_CreateStringId("FOB_BRIGHT_MOONS_LUNAR_MOTH", "Mondmotte der Hellen Monde")
 ZO_CreateStringId("FOB_BUTTERFLY", "Schmetterling")
 ZO_CreateStringId("FOB_DRAGONFLY", "Libelle")
 ZO_CreateStringId("FOB_FETCHERFLY", "Zunderfliege")
 ZO_CreateStringId("FOB_FLESHFLIES", "Fleischfliegen")
 ZO_CreateStringId("FOB_MOON_KISSED_JELLY", "Mondgeküsste Qualle")
-ZO_CreateStringId("FOB_NETCH_CALF", "Netchkalbw")
+ZO_CreateStringId("FOB_NETCH_CALF", "Netchkalb")
 ZO_CreateStringId("FOB_SEHTS_DOVAH_FLY", "Sehts Dovahviin")
-ZO_CreateStringId("FOB_SWAMP_JELLY", "Sumpfquallew")
+ZO_CreateStringId("FOB_SWAMP_JELLY", "Sumpfqualle")
 ZO_CreateStringId("FOB_TORCHBUG", "Fackelkäfer")
 ZO_CreateStringId("FOB_WAFT", "Hauch")
 ZO_CreateStringId("FOB_WASP", "Wespe")
