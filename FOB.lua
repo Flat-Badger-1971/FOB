@@ -10,6 +10,7 @@ local enabledScenes = {
 local take = GetString(_G.FOB_TAKE)
 local talk = GetString(_G.FOB_TALK)
 local catch = GetString(_G.FOB_CATCH)
+local open = GetString(_G.FOB_OPEN)
 local companions = {
     [FOB.BASTIAN] = true,
     [FOB.MIRRI] = true,
@@ -85,7 +86,7 @@ local function FOBHandler(interactionPossible, _)
     if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract = GetGameCameraInteractableActionInfo()
 
-        if (action == "Open") then
+        if (action == open) then
             if (FOB.Vars.PreventOutlawsRefuge) then
                 if (PartialMatch(interactableName, OUTLAWS_REFUGE)) then
                     local activeCompanion = GetActiveCompanionDefId()
