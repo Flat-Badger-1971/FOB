@@ -33,6 +33,9 @@ ZO_CreateStringId("FOB_PREVENT_OUTLAW", "Zutritt zum Gesetzlosenunterschlupf ver
 -- interactable names
 ZO_CreateStringId("FOB_THIEVES_DEN", "Diebesnest")
 ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Unterschlupf")
+ZO_CreateStringId("FOB_OUTLAWS_REFUGE2", "Gesetzlosenunterschlupf")
+ZO_CreateStringId("FOB_LADY_LLARELS_SHELTER", "Fürstin Llarels Unterschlupf")
+ZO_CreateStringId("FOB_BLACKHEART_HAVEN", "Der Schwarzherz-Unterschlupf")
 ZO_CreateStringId("FOB_PREVENT_FISHING", "Fischen verhindern")
 
 -- flying insects
