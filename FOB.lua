@@ -50,7 +50,11 @@ local ILLEGAL = {
 
 local OUTLAWS_REFUGE = {
     [GetString(_G.FOB_OUTLAWS_REFUGE)] = true,
-    [GetString(_G.FOB_THIEVES_DEN)] = true
+    [GetString(_G.FOB_OUTLAWS_REFUGE2)] = true,
+    [GetString(_G.FOB_THIEVES_DEN)] = true,
+-- Exceptions for DE language
+    [GetString(_G.FOB_LADY_LLARELS_SHELTER)] = false,
+    [GetString(_G.FOB_BLACKHEART_HAVEN)] = false
 }
 
 local INTERACTION_TYPES = {
@@ -88,7 +92,7 @@ local function FOBHandler(interactionPossible, _)
 
         if (action == open) then
             if (FOB.Vars.PreventOutlawsRefuge) then
-                if (PartialMatch(interactableName, OUTLAWS_REFUGE)) then
+                if (PartialMatch(interactableName, OUTLAWS_REFUGE)) and not false then
                     local activeCompanion = GetActiveCompanionDefId()
 
                     if (activeCompanion == ISOBEL) then
