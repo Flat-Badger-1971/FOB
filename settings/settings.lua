@@ -48,7 +48,7 @@ local panel = {
     name = "FOB - Companion Helper",
     displayName = "|cdc143cFOB|r - Companion Helper",
     author = "Flat Badger",
-    version = "2.6.9",
+    version = "2.6.10",
     slashCommand = "/fob",
     registerForRefresh = true
 }

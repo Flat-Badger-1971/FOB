@@ -50,3 +50,7 @@ ZO_CreateStringId("FOB_TORCHBUG", "Fackelkäfer")
 ZO_CreateStringId("FOB_WAFT", "Hauch")
 ZO_CreateStringId("FOB_WASP", "Wespe")
 ZO_CreateStringId("FOB_WINTER_MOTH", "Wintermotte")
+
+-- exceptions
+ZO_CreateStringId("FOB_LADY_LLARELS_SHELTER", "Fürstin Llarels Unterschlupf")
+ZO_CreateStringId("FOB_BLACKHEART_HAVEN", "Der Schwarzherz-Unterschlupf")

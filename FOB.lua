@@ -22,6 +22,7 @@ local BASTIAN = 1 -- Bastian's Def Id
 local MIRRI = 2 -- Mirri's Def Id
 local EMBER = 5 -- Ember's Def Id
 local ISOBEL = 6 -- Isobel's Def Id
+local language = GetCVar("language.2")
 
 local fonts = {
     ["Standard"] = "EsoUi/Common/Fonts/Univers57.otf",
@@ -49,9 +50,18 @@ local ILLEGAL = {
 }
 
 local OUTLAWS_REFUGE = {
-    [GetString(_G.FOB_OUTLAWS_REFUGE)] = true,
-    [GetString(_G.FOB_THIEVES_DEN)] = true
+    [string.lower(GetString(_G.FOB_OUTLAWS_REFUGE))] = true,
+    [string.lower(GetString(_G.FOB_THIEVES_DEN))] = true
 }
+
+local EXCEPTIONS = {}
+
+do
+    if (language == "de") then
+        EXCEPTIONS[GetString(_G.FOB_LADY_LLARELS_SHELTER)] = true
+        EXCEPTIONS[GetString(_G.FOB_BLACKHEART_HAVEN)] = true
+    end
+end
 
 local INTERACTION_TYPES = {
     _G.INTERACTION_NONE,
@@ -84,11 +94,14 @@ end
 
 local function FOBHandler(interactionPossible, _)
     if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
-        local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract = GetGameCameraInteractableActionInfo()
+        local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
+            GetGameCameraInteractableActionInfo()
 
         if (action == open) then
             if (FOB.Vars.PreventOutlawsRefuge) then
-                if (PartialMatch(interactableName, OUTLAWS_REFUGE)) then
+                -- Exceptions to the rule
+
+                if (PartialMatch(string.lower(interactableName, OUTLAWS_REFUGE)) and (not EXCEPTIONS[interactableName])) then
                     local activeCompanion = GetActiveCompanionDefId()
 
                     if (activeCompanion == ISOBEL) then
@@ -152,7 +165,7 @@ local function FOBHandler(interactionPossible, _)
 
                 if (ignoreInsects) then
                     EndPendingInteraction()
-                   return endInteraction()
+                    return endInteraction()
                 end
             end
         end
