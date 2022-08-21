@@ -101,7 +101,7 @@ local function FOBHandler(interactionPossible, _)
             if (FOB.Vars.PreventOutlawsRefuge) then
                 -- Exceptions to the rule
 
-                if (PartialMatch(string.lower(interactableName, OUTLAWS_REFUGE)) and (not EXCEPTIONS[interactableName])) then
+                if (PartialMatch(string.lower(interactableName), OUTLAWS_REFUGE) and (not EXCEPTIONS[interactableName])) then
                     local activeCompanion = GetActiveCompanionDefId()
 
                     if (activeCompanion == ISOBEL) then
