@@ -1,3 +1,13 @@
+--TODO: prevent porting to Eyevea or Artaeum for Azandar
+--      complete mushroom list (Azandar)
+--      test coffee alter (Azandar)
+--      block outfit station (sharp)
+--      pickpocket beggar - possible? (sharp)
+--      prevent destroying items (sharp)
+--      check gear breaking (sharp)
+--      check enchant running out (sharp)
+--      settings
+
 _G.FOB.Name = "FOB"
 
 local FOB = _G.FOB
@@ -15,13 +25,18 @@ local companions = {
     [FOB.BASTIAN] = true,
     [FOB.MIRRI] = true,
     [FOB.EMBER] = true,
-    [FOB.ISOBEL] = true
+    [FOB.ISOBEL] = true,
+    [FOB.SHARPASNIGHT] = true,
+    [FOB.AZANDAR] = true
 }
 
 local BASTIAN = 1 -- Bastian's Def Id
 local MIRRI = 2 -- Mirri's Def Id
 local EMBER = 5 -- Ember's Def Id
 local ISOBEL = 6 -- Isobel's Def Id
+local SHARPASNIGHT = 8 -- Sharp as Night's Def Id
+local AZANDAR = 9 -- Azandar Al-Cybiades' Def Id
+
 local language = GetCVar("language.2")
 
 local fonts = {
@@ -191,7 +206,7 @@ local function FOBHandler(interactionPossible, _)
     end
 end
 
-local function CheckIngredients(recipeData)
+local function CheckIngredients(recipeData, companion)
     local maxIngredients = GetMaxRecipeIngredients()
 
     -- check the texture name, should be safe enough
@@ -199,9 +214,13 @@ local function CheckIngredients(recipeData)
         local name, texturename = GetRecipeIngredientItemInfo(recipeData.recipeListIndex, recipeData.recipeIndex, idx)
         if (name ~= "") then
             --FOB.Log(texturename, "info")
-            if (string.find(texturename, "quest_trollfat_001")) then
-                FOB.ShowCheeseAlert()
+            if (string.find(texturename, "quest_trollfat_001") and companion == BASTIAN) then
+                FOB.ShowAlert(FOB.Alert)
                 return true
+            end
+
+            if (string.find(texturename, "crafting_coffee_beans") and companion == AZANDAR) then
+                FOB.ShowAlert(FOB.CoffeeAlert)
             end
         end
     end
@@ -211,17 +230,29 @@ end
 
 -- handler for built in provisioning interface
 local function FOBProvisionerHandler()
-    if (FOB.Vars.CheeseWarning ~= true or GetActiveCompanionDefId() ~= 1) then
-        return false
+    local check = FOB.Vars.CheeseWarning == true and GetActiveCompanionDefId() == BASTIAN
+    local recipeData
+
+    if (check) then
+        recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
+        return CheckIngredients(recipeData, BASTIAN)
     end
 
-    local recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
-    return CheckIngredients(recipeData)
+    check = FOB.Vars.CoffeeWarning == true and GetActiveCompanionDefId() == AZANDAR
+
+    if (check) then
+        recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
+        return CheckIngredients(recipeData, AZANDAR)
+    end
 end
 
 -- handle for DailyProvisioning addon, based on original code from that
 local function DailyProvisioningOverride()
-    if (FOB.Vars.CheeseWarning ~= true or GetActiveCompanionDefId() ~= 1) then
+    local check = FOB.Vars.CheeseWarning == true and GetActiveCompanionDefId() == BASTIAN
+
+    check = check or (FOB.Vars.CoffeeWarning == true and GetActiveCompanionDefId() == AZANDAR)
+
+    if (not check) then
         return false
     end
 
@@ -254,7 +285,7 @@ local function DailyProvisioningOverride()
                     recipeIndex = parameter.recipeIndex
                 }
 
-                return CheckIngredients(recipeData)
+                return CheckIngredients(recipeData, GetActiveCompanionDefId())
             end
         end
     end
@@ -318,7 +349,7 @@ local function SetupAlert(name, icon, fontInfo, text)
     alert.Animation = timeline
     alert.FadeAnimation = fadeTimeline
 
-    FOB.Alert = alert
+    return alert
 end
 
 local function SetupCheeseAlert()
@@ -329,7 +360,18 @@ local function SetupCheeseAlert()
         colour = FOB.Vars.CheeseFontColour
     }
 
-    SetupAlert("FOB_Cheese_Alert", FOB.Vars.CheeseIcon, font, _G.FOB_CHEESE_ALERT)
+    FOB.Alert = SetupAlert("FOB_Cheese_Alert", FOB.Vars.CheeseIcon, font, _G.FOB_CHEESE_ALERT)
+end
+
+local function SetupCoffeeAlert()
+    local font = {
+        font = FOB.Vars.CoffeeFont,
+        size = FOB.Vars.CoffeeFontSize,
+        shadow = FOB.Vars.CoffeeFontShadow,
+        colour = FOB.Vars.CoffeeFontColour
+    }
+
+    FOB.CoffeeAlert = SetupAlert("FOB_Coffee_Alert", FOB.Vars.CoffeeIcon, font, _G.FOB_COFFEE_ALERT)
 end
 
 -- disable FOB in irrelevant scenes
@@ -410,8 +452,7 @@ function FOB.GetFont(fontName, fontSize, fontShadow)
     return fonts[fontName] .. "|" .. fontSize .. hasShadow
 end
 
-function FOB.ShowCheeseAlert()
-    local alert = FOB.Alert
+function FOB.ShowAlert(alert)
     alert:SetAlpha(1)
     alert:SetHidden(false)
     alert.Animation:PlayFromStart()
@@ -522,6 +563,7 @@ function FOB.OnAddonLoaded(_, addonName)
     end
 
     SetupCheeseAlert()
+    SetupCoffeeAlert()
 
     -- if Companion Frame is installed, let it handle the summoning frame
     if (not _G.CF) then

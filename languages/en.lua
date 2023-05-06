@@ -6,7 +6,9 @@ ZO_CreateStringId("FOB_TOGGLE", "Enable / Temporarily Disable FOB")
 ZO_CreateStringId("FOB_DISABLED", "FOB is temporarily disabled")
 ZO_CreateStringId("FOB_ENABLED", "FOB is enabled")
 ZO_CreateStringId("FOB_CHEESE_WARNING", "Cheese alerts")
+ZO_CreateStringId("FOB_COFFEE_WARNING", "Coffee alerts")
 ZO_CreateStringId("FOB_CHEESE_ALERT", "Cheese Alert!")
+ZO_CreateStringId("FOB_COFFEE_ALERT", "Coffee Alert!")
 ZO_CreateStringId("FOB_ALERT_FONT", "Alert font")
 ZO_CreateStringId("FOB_ALERT_COLOUR", "Alert font colour")
 ZO_CreateStringId("FOB_ALERT_SHADOW", "Alert font shadow")
@@ -21,10 +23,12 @@ ZO_CreateStringId("FOB_TALK", "Talk")
 ZO_CreateStringId("FOB_TAKE", "Take")
 ZO_CreateStringId("FOB_CATCH", "Catch")
 ZO_CreateStringId("FOB_OPEN", "Open")
+ZO_CreateStringId("FOB_USE", "Use") -- TODO: translate
 
 -- interactable names
 ZO_CreateStringId("FOB_THIEVES_DEN", "Thieves Den")
 ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Outlaws Refuge")
+ZO_CreateStringId("FOB_OUTFIT_STATION", "Outfit Station") -- TODO: translate
 
 -- settings
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignore flying insects")
@@ -51,3 +55,5 @@ ZO_CreateStringId("FOB_TORCHBUG", "Torchbug")
 ZO_CreateStringId("FOB_WAFT", "Waft")
 ZO_CreateStringId("FOB_WASP", "Wasp")
 ZO_CreateStringId("FOB_WINTER_MOTH", "Winter Moth")
+
+-- mushrooms
