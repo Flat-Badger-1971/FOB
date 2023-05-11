@@ -1,7 +1,4 @@
 --TODO: prevent porting to Eyevea or Artaeum for Azandar
---      complete mushroom list (Azandar)
---      test coffee alter (Azandar)
---      block outfit station (sharp)
 --      pickpocket beggar - possible? (sharp)
 --      prevent destroying items (sharp)
 --      check gear breaking (sharp)
@@ -21,14 +18,19 @@ local take = GetString(_G.FOB_TAKE)
 local talk = GetString(_G.FOB_TALK)
 local catch = GetString(_G.FOB_CATCH)
 local open = GetString(_G.FOB_OPEN)
+local collect = GetString(_G.FOB_COLLECT)
+local use = GetString(_G.FOB_USE)
 local companions = {
     [FOB.BASTIAN] = true,
     [FOB.MIRRI] = true,
     [FOB.EMBER] = true,
-    [FOB.ISOBEL] = true,
-    [FOB.SHARPASNIGHT] = true,
-    [FOB.AZANDAR] = true
+    [FOB.ISOBEL] = true
 }
+
+if (FOB.Necrom)then
+    companions[FOB.SHARPASNIGHT] = true
+    companions[FOB.AZANDAR] = true
+end
 
 local BASTIAN = 1 -- Bastian's Def Id
 local MIRRI = 2 -- Mirri's Def Id
@@ -112,6 +114,41 @@ local function FOBHandler(interactionPossible, _)
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
             GetGameCameraInteractableActionInfo()
 
+        -- prevent outfit station interaction
+        if (action == use) then
+            if (FOB.Vars.PreventOutfit) then
+                local activeCompanion = GetActiveCompanionDefId()
+
+                if (interactableName == ZO_CachedStrFormat("<<C:1>>", GetString(_G.SI_RESTYLE_STATION_MENU_ROOT_TITLE))) then
+                    if (activeCompanion == SHARPASNIGHT) then
+                        EndPendingInteraction()
+                        return endInteraction
+                    end
+                end
+            end
+        end
+
+        -- prevent mushroom gathering
+        if (action == collect) then
+            if (FOB.Vars.PreventMushroom) then
+                local activeCompanion = GetActiveCompanionDefId()
+
+                if (activeCompanion == AZANDAR) then
+                    local mushroomList = FOB.MUSHROOMS
+                    local ignoreMushrooms = mushroomList[interactableName] or false
+                    if (FOB.UsingRuEso) then
+                        ignoreMushrooms = PartialMatch(interactableName, mushroomList)
+                    end
+
+                    if (ignoreMushrooms) then
+                        EndPendingInteraction()
+                        return endInteraction
+                    end
+                end
+            end
+        end
+
+        -- prevent entry to the outlaw's refuge
         if (action == open) then
             if (FOB.Vars.PreventOutlawsRefuge) then
                 -- Exceptions to the rule
@@ -221,6 +258,7 @@ local function CheckIngredients(recipeData, companion)
 
             if (string.find(texturename, "crafting_coffee_beans") and companion == AZANDAR) then
                 FOB.ShowAlert(FOB.CoffeeAlert)
+                return true
             end
         end
     end
@@ -257,6 +295,7 @@ local function DailyProvisioningOverride()
     end
 
     local infos, hasMaster, hasDaily, hasEvent = _G.DailyProvisioning:GetQuestInfos()
+
     if (not infos) or #infos == 0 then
         return false
     end

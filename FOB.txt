@@ -21,6 +21,7 @@ languages/en.lua
 languages/$(language).lua
 
 data/flying-insects.lua
+data/mushrooms.lua
 settings/settings.lua
 
 FOB.lua
