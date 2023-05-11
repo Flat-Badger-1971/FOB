@@ -15,7 +15,7 @@ FOB.MIRRI = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionC
 FOB.EMBER = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(5)))
 FOB.ISOBEL = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(6)))
 
-FOB.Necrom = GetCompanionCollectibleId(8) ~= nil
+FOB.Necrom = GetCompanionCollectibleId(8) ~= 0
 
 if (FOB.Necrom) then
     FOB.SHARPASNIGHT = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(8)))
@@ -331,6 +331,18 @@ if (FOB.Necrom) then
         end,
         setFunc = function(value)
             FOB.Vars.PreventOutfit = value
+        end,
+        width = "full"
+    }
+
+    options[#options + 1] = {
+        type = "checkbox",
+        name = GetString(_G.FOB_WARN_BROKEN),
+        getFunc = function()
+            return FOB.Vars.CheckDamage
+        end,
+        setFunc = function(value)
+            FOB.Vars.CheckDamage = value
         end,
         width = "full"
     }

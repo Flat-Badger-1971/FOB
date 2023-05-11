@@ -27,7 +27,7 @@ local companions = {
     [FOB.ISOBEL] = true
 }
 
-if (FOB.Necrom)then
+if (FOB.Necrom) then
     companions[FOB.SHARPASNIGHT] = true
     companions[FOB.AZANDAR] = true
 end
@@ -533,6 +533,38 @@ function FOB.ToggleCompanion()
     end
 end
 
+local ignoreSlots = {
+    [_G.EQUIP_SLOT_NECK] = true,
+    [_G.EQUIP_SLOT_RING1] = true,
+    [_G.EQUIP_SLOT_RING2] = true,
+    [_G.EQUIP_SLOT_COSTUME] = true,
+    [_G.EQUIP_SLOT_POISON] = true,
+    [_G.EQUIP_SLOT_BACKUP_POISON] = true,
+    [_G.EQUIP_SLOT_MAIN_HAND] = true,
+    [_G.EQUIP_SLOT_BACKUP_MAIN] = true,
+    [_G.EQUIP_SLOT_BACKUP_OFF] = true
+}
+
+function FOB.CheckDurability()
+    local lowest = 100
+    local lowestName = ""
+
+    if (FOB.Vars.CheckDamage) then
+        for _, item in pairs(_G.SHARED_INVENTORY.bagCache[_G.BAG_WORN]) do
+            if (not ignoreSlots[item.slotIndex]) then
+                if (item.name ~= "") then
+                    if (lowest > item.condition) then
+                        lowest = item.condition
+                        lowestName = item.name
+                    end
+                end
+            end
+        end
+    end
+
+    return lowest, lowestName
+end
+
 function FOB.Log(message, severity)
     if (FOB.Logger) then
         if (severity == "info") then
@@ -543,6 +575,17 @@ function FOB.Log(message, severity)
             FOB.Logger:Debug(message)
         end
     end
+end
+
+function FOB.Announce(header, message)
+    local messageParams = CENTER_SCREEN_ANNOUNCE:CreateMessageParams(_G.CSA_CATEGORY_LARGE_TEXT)
+
+    messageParams:SetSound("Justice_NowKOS")
+    messageParams:SetText(header, message)
+    messageParams:SetLifespanMS(6000)
+    messageParams:SetCSAType(_G.CENTER_SCREEN_ANNOUNCE_TYPE_SYSTEM_BROADCAST)
+
+    CENTER_SCREEN_ANNOUNCE:AddMessageWithParams(messageParams)
 end
 
 function FOB.OnAddonLoaded(_, addonName)
@@ -603,6 +646,49 @@ function FOB.OnAddonLoaded(_, addonName)
 
     SetupCheeseAlert()
     SetupCoffeeAlert()
+
+    -- handle damaged item tracking
+    if (FOB.Necrom) then
+        _G.SHARED_INVENTORY:RegisterCallback(
+            "SingleSlotInventoryUpdate",
+            function()
+                if (FOB.Vars.CheckDamage) then
+                    local activeCompanion = GetActiveCompanionDefId()
+
+                    if (activeCompanion == SHARPASNIGHT) then
+                        local minDamage, itemName = FOB.CheckDamage()
+
+                        if (minDamage < 10) then
+                            local announce = true
+                            local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
+                            local debounceTime = 300
+
+                            if (os.time() - previousTime <= debounceTime) then
+                                announce = false
+                            end
+
+                            if (announce == true) then
+                                FOB.Vars.PreviousAnnounceTime = os.time()
+                                FOB.Announce(
+                                    GetString(_G.FOB_WARNING),
+                                    zo_strformat(
+                                        GetString(
+                                            _G.FOB_DAMAGED,
+                                            itemName,
+                                            ZO_CachedStrFormat(
+                                                _G.SI_UNIT_NAME,
+                                                GetCollectibleInfo(GetCompanionCollectibleId(AZANDAR))
+                                            )
+                                        )
+                                    )
+                                )
+                            end
+                        end
+                    end
+                end
+            end
+        )
+    end
 
     -- if Companion Frame is installed, let it handle the summoning frame
     if (not _G.CF) then
