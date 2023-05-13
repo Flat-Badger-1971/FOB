@@ -109,6 +109,9 @@ local function endInteraction()
     return true
 end
 
+-- Necrom removed the Fishing Manager
+local interactionManager = _G.FISHING_MANAGER or _G.INTERACTIVE_WHEEL_MANAGER
+
 local function FOBHandler(interactionPossible, _)
     if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
@@ -170,7 +173,7 @@ local function FOBHandler(interactionPossible, _)
                 local activeCompanion = GetActiveCompanionDefId()
 
                 if (activeCompanion == EMBER) then
-                    FISHING_MANAGER:StopInteraction()
+                    interactionManager:StopInteraction()
                     EndPendingInteraction()
                     return endInteraction()
                 end
