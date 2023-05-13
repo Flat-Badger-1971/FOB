@@ -670,11 +670,11 @@ function FOB.OnAddonLoaded(_, addonName)
                             if (announce == true) then
                                 FOB.Vars.PreviousAnnounceTime = os.time()
                                 FOB.Announce(
-                                    GetString(_G.FOB_WARNING),
+                                    "|cff0000" .. GetString(_G.FOB_WARNING) .. "|r",
                                     zo_strformat(
                                         GetString(
                                             _G.FOB_DAMAGED,
-                                            itemName,
+                                            "|cffd700" ..  itemName .. "|r",
                                             ZO_CachedStrFormat(
                                                 _G.SI_UNIT_NAME,
                                                 GetCollectibleInfo(GetCompanionCollectibleId(AZANDAR))
