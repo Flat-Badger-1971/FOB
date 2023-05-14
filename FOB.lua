@@ -100,6 +100,10 @@ local function PartialMatch(inputString, compareList)
 end
 
 local function endInteraction()
+    if (_G.INTERACTIVE_WHEEL_MANAGER) then
+        _G.INTERACTIVE_WHEEL_MANAGER:StopInteraction(_G.ZO_INTERACTIVE_WHEEL_TYPE_UTILITY )
+    end
+
     EndPendingInteraction()
 
     for _, interactionType in ipairs(INTERACTION_TYPES) do
@@ -173,7 +177,7 @@ local function FOBHandler(interactionPossible, _)
                     if (_G.FISHING_MANAGER) then
                         _G.FISHING_MANAGER:StopInteraction()
                     else
-                        _G.INTERACTIVE_WHEEL_MANAGER:StopInteraction(_G.ZO_INTERACTIVE_TYPE_FISHING)
+                        _G.INTERACTIVE_WHEEL_MANAGER:StopInteraction(_G.ZO_INTERACTIVE_WHEEL_TYPE_FISHING)
                     end
 
                     EndPendingInteraction()
