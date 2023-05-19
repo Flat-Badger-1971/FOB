@@ -39,7 +39,7 @@ ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Fliegende Insekten immer ignorieren
 ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Kriminelle Interaktionen verhindern")
 ZO_CreateStringId("FOB_PREVENT_FISHING", "Fischen verhindern")
 ZO_CreateStringId("FOB_PREVENT_MUSHROOM", "Pilzesammeln verhindern")
-ZO_CreateStringId("FOB_PREVENT_OUTFIT", "Interaktion mit Outfit-Stationen verhindern")
+ZO_CreateStringId("FOB_PREVENT_OUTFIT", "Interaktion mit Monturtischen verhindern")
 ZO_CreateStringId("FOB_PREVENT_OUTLAW", "Zutritt zum Gesetzlosenunterschlupf verhindern")
 ZO_CreateStringId("FOB_WARN_BROKEN", "Warnen, wenn ein Gegenstand fast zerstört ist")
 
