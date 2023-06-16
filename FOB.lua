@@ -665,7 +665,7 @@ function FOB.OnAddonLoaded(_, addonName)
                     local activeCompanion = GetActiveCompanionDefId()
 
                     if (activeCompanion == SHARPASNIGHT) then
-                        local minDamage, itemName = FOB.CheckDamage()
+                        local minDamage, itemName = FOB.CheckDurability()
 
                         if (minDamage < 10) then
                             local announce = true
