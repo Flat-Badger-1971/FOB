@@ -25,7 +25,7 @@ ZO_CreateStringId("FOB_TAKE", "Nehmen")
 ZO_CreateStringId("FOB_CATCH", "Einfangen")
 ZO_CreateStringId("FOB_OPEN", "Öffnen")
 ZO_CreateStringId("FOB_USE", "Benutzen")
-ZO_CreateStringId("FOR_COLLECT", "Nehmen")
+ZO_CreateStringId("FOB_COLLECT", "Nehmen")
 
 -- interactable names
 ZO_CreateStringId("FOB_THIEVES_DEN", "Diebesnest")
@@ -85,7 +85,7 @@ ZO_CreateStringId("FOB_LUMINOUS_RUSSULA", "Leuchttäubling")
 ZO_CreateStringId("FOB_NAMIRAS_ROT", "Namiras Fäulnis")
 --ZO_CreateStringId("FOB_PARASOL_LICHEN", "Parasol Lichen")
 --ZO_CreateStringId("FOB_PRUNE_MOREL_MUSHROOM", "Prune Morel Mushroom")
---ZO_CreateStringId("FOB_STINKHORN", "Stinkhorn")
+ZO_CreateStringId("FOB_STINKHORN", "Stinkmorchel")
 ZO_CreateStringId("FOB_VIOLET_COPRINUS", "Violetter Tintling")
 ZO_CreateStringId("FOB_WHITE_CAP", "Weißkappe")
 
