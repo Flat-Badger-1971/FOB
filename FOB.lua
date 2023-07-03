@@ -1,10 +1,3 @@
---TODO: prevent porting to Eyevea or Artaeum for Azandar
---      pickpocket beggar - possible? (sharp)
---      prevent destroying items (sharp)
---      check gear breaking (sharp)
---      check enchant running out (sharp)
---      settings
-
 _G.FOB.Name = "FOB"
 
 local FOB = _G.FOB
@@ -101,7 +94,7 @@ end
 
 local function endInteraction()
     if (_G.INTERACTIVE_WHEEL_MANAGER) then
-        _G.INTERACTIVE_WHEEL_MANAGER:StopInteraction(_G.ZO_INTERACTIVE_WHEEL_TYPE_UTILITY )
+        _G.INTERACTIVE_WHEEL_MANAGER:StopInteraction(_G.ZO_INTERACTIVE_WHEEL_TYPE_UTILITY)
     end
 
     EndPendingInteraction()
@@ -681,13 +674,11 @@ function FOB.OnAddonLoaded(_, addonName)
                                 FOB.Announce(
                                     "|cff0000" .. GetString(_G.FOB_WARNING) .. "|r",
                                     zo_strformat(
-                                        GetString(
-                                            _G.FOB_DAMAGED,
-                                            "|cffd700" ..  itemName .. "|r",
-                                            ZO_CachedStrFormat(
-                                                _G.SI_UNIT_NAME,
-                                                GetCollectibleInfo(GetCompanionCollectibleId(AZANDAR))
-                                            )
+                                        GetString(_G.FOB_DAMAGED),
+                                        "|cffd700" .. itemName .. "|r",
+                                        ZO_CachedStrFormat(
+                                            _G.SI_UNIT_NAME,
+                                            GetCollectibleInfo(GetCompanionCollectibleId(SHARPASNIGHT))
                                         )
                                     )
                                 )
