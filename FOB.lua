@@ -660,7 +660,7 @@ function FOB.OnAddonLoaded(_, addonName)
                     if (activeCompanion == SHARPASNIGHT) then
                         local minDamage, itemName = FOB.CheckDurability()
 
-                        if (minDamage < 10) then
+                        if (minDamage < 5) then
                             local announce = true
                             local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
                             local debounceTime = 300
