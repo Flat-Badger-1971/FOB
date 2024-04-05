@@ -35,13 +35,13 @@ local AZANDAR = 9 -- Azandar Al-Cybiades' Def Id
 local language = GetCVar("language.2")
 
 local fonts = {
-    ["Standard"] = "EsoUi/Common/Fonts/Univers57.otf",
-    ["ESO Bold"] = "EsoUi/Common/Fonts/Univers67.otf",
-    ["Antique"] = "EsoUI/Common/Fonts/ProseAntiquePSMT.otf",
-    ["Handwritten"] = "EsoUI/Common/Fonts/Handwritten_Bold.otf",
-    ["Trajan"] = "EsoUI/Common/Fonts/TrajanPro-Regular.otf",
-    ["Futura"] = "EsoUI/Common/Fonts/FuturaStd-CondensedLight.otf",
-    ["Futura Bold"] = "EsoUI/Common/Fonts/FuturaStd-Condensed.otf"
+    ["Standard"] = "$(MEDIUM_FONT)",
+    ["ESO Bold"] = "$(BOLD_FONT)",
+    ["Antique"] = "$(ANTIQUE_FONT)",
+    ["Handwritten"] = "$(HANDWRITTEN_FONT)",
+    ["Trajan"] = "$(STONE_TABLET_FONT)",
+    ["Futura"] = "EsoUI/Common/Fonts/FuturaStd-CondensedLight.slug",
+    ["Futura Bold"] = "EsoUI/Common/Fonts/FuturaStd-Condensed.slug"
 }
 
 local PENDING_COMPANION_STATES = {
