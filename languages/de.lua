@@ -34,7 +34,7 @@ ZO_CreateStringId("FOB_OUTFIT_STATION", "Monturtisch")
 
 -- settings
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Insekten ignorieren")
-ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Rapport irrelevante Insekten zulassen")
+ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Für die Beziehung irrelevante Insekten zulassen")
 ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Fliegende Insekten immer ignorieren")
 ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Kriminelle Interaktionen verhindern")
 ZO_CreateStringId("FOB_PREVENT_FISHING", "Fischen verhindern")
