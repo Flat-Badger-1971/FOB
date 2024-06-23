@@ -28,15 +28,17 @@ ZO_CreateStringId("FOB_USE", "Use")
 ZO_CreateStringId("FOB_COLLECT", "Collect")
 
 -- interactable names
+ZO_CreateStringId("FOB_DARK_BROTHERHOOD", "Dark Brotherhood Sanctuary")
 ZO_CreateStringId("FOB_THIEVES_DEN", "Thieves Den")
 ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Outlaws Refuge")
-ZO_CreateStringId("FOB_OUTFIT_STATION", "Outfit Station") -- TODO: translate
+ZO_CreateStringId("FOB_OUTFIT_STATION", "Outfit Station")
 
 -- settings
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignore flying insects")
 ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Allow insects that don't decrease rapport")
 ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Ignore flying insects all the time")
 ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Prevent criminal interactions")
+ZO_CreateStringId("FOB_PREVENT_DARK_BROTHERHOOD", "Prevent entry to Dark Brotherhood Sanctuary")
 ZO_CreateStringId("FOB_PREVENT_FISHING", "Prevent fishing")
 ZO_CreateStringId("FOB_PREVENT_MUSHROOM", "Prevent mushroom gathering")
 ZO_CreateStringId("FOB_PREVENT_OUTFIT", "Prevent interaction with Outfit Stations")

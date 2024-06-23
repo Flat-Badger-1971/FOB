@@ -22,14 +22,17 @@ ZO_CreateStringId("FOB_USE", "Use")
 ZO_CreateStringId("FOB_COLLECT", "Ramasser")
 
 -- interactable names
+ZO_CreateStringId("FOB_DARK_BROTHERHOOD", "Sanctuaire de la Confrérie noire")
 ZO_CreateStringId("FOB_THIEVES_DEN", "L'Antre des voleurs.")
 ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Refuge de hors-la-loi")
+ZO_CreateStringId("FOB_OUTFIT_STATION", "Atelier de tenue")
 
 -- settings
 ZO_CreateStringId("FOB_IGNORE_INSECTS", "Ignorez les insectes volants")
 ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Autoriser les insectes qui ne diminuent pas le rapport")
 ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Ignorer les insectes volants tout le temps")
 ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Empêcher les interactions criminelles")
+ZO_CreateStringId("FOB_PREVENT_DARK_BROTHERHOOD", "Empêcher l'entrée au Sanctuaire de la Confrérie Noire")
 
 -- flying insects
 ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Gelée de Griffenoire")

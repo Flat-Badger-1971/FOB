@@ -159,6 +159,17 @@ local function FOBHandler(interactionPossible, _)
                     end
                 end
             end
+
+            if (FOB.Vars.PreventDarkBrotherhood) then
+                local activeCompanion = GetActiveCompanionDefId()
+
+                if (interactableName == GetString(_G.FOB_DARK_BROTHERHOOD)) then
+                    if (activeCompanion == MIRRI) then
+                        EndPendingInteraction()
+                        return endInteraction
+                    end
+                end
+            end
         end
 
         -- prevent fishing is Ember is out

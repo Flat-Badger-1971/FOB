@@ -18,7 +18,7 @@ ZO_CreateStringId("FOB_TALK", "Поговорить")
 ZO_CreateStringId("FOB_TAKE", "Взять")
 ZO_CreateStringId("FOB_CATCH", "Поймать")
 ZO_CreateStringId("FOB_OPEN", "Открыть")
-ZO_CreateStringId("FOB_USE", "Use")
+ZO_CreateStringId("FOB_USE", "Использовать")
 ZO_CreateStringId("FOB_COLLECT", "Взять")
 
 -- settings / настройки
@@ -26,10 +26,13 @@ ZO_CreateStringId("FOB_IGNORE_INSECTS", "Игнорировать летающи
 ZO_CreateStringId("FOB_IGNORE_MIRRI_INSECTS", "Собирать насекомых не влияющих на уровень отношений")
 ZO_CreateStringId("FOB_IGNORE_ALL_INSECTS", "Игнорируйте летающих насекомых все время")
 ZO_CreateStringId("FOB_PREVENT_CRIMINAL", "Блокировать преступную активность")
+ZO_CreateStringId("FOB_PREVENT_DARK_BROTHERHOOD", "Запретить вход в Убежище Темного Братства")
 
 -- interactable names
+ZO_CreateStringId("FOB_DARK_BROTHERHOOD", "Убежище Темного Братства")
 ZO_CreateStringId("FOB_THIEVES_DEN", "Логово воров")
-ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Убежище")
+ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Убежищещ")
+ZO_CreateStringId("FOB_OUTFIT_STATION", "Мастерская нарядов")
 
 -- flying insects / летающие насекомые (translations req.)
 ZO_CreateStringId("FOB_BLACKREACH_JELLY", "Медуза черного предела")
