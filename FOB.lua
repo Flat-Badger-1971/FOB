@@ -17,13 +17,10 @@ local companions = {
     [FOB.BASTIAN] = true,
     [FOB.MIRRI] = true,
     [FOB.EMBER] = true,
-    [FOB.ISOBEL] = true
+    [FOB.ISOBEL] = true,
+    [FOB.SHARPASNIGHT] = true,
+    [FOB.AZANDAR] = true
 }
-
-if (FOB.Necrom) then
-    companions[FOB.SHARPASNIGHT] = true
-    companions[FOB.AZANDAR] = true
-end
 
 local BASTIAN = 1 -- Bastian's Def Id
 local MIRRI = 2 -- Mirri's Def Id
@@ -60,8 +57,8 @@ local ILLEGAL = {
 }
 
 local OUTLAWS_REFUGE = {
-    [string.lower(GetString(_G.FOB_OUTLAWS_REFUGE))] = true,
-    [string.lower(GetString(_G.FOB_THIEVES_DEN))] = true
+    [GetString(_G.FOB_OUTLAWS_REFUGE):lower()] = true,
+    [GetString(_G.FOB_THIEVES_DEN):lower()] = true
 }
 
 local EXCEPTIONS = {}
@@ -84,7 +81,7 @@ local INTERACTION_TYPES = {
 -- have to check if the string contains the expected text instead
 local function PartialMatch(inputString, compareList)
     for key, value in pairs(compareList) do
-        if (string.find(inputString, key)) then
+        if (inputString:lower():find(key:lower())) then
             return value
         end
     end
@@ -150,7 +147,7 @@ local function FOBHandler(interactionPossible, _)
             if (FOB.Vars.PreventOutlawsRefuge) then
                 -- Exceptions to the rule
 
-                if (PartialMatch(string.lower(interactableName), OUTLAWS_REFUGE) and (not EXCEPTIONS[interactableName])) then
+                if (PartialMatch(interactableName, OUTLAWS_REFUGE) and (not EXCEPTIONS[interactableName])) then
                     local activeCompanion = GetActiveCompanionDefId()
 
                     if (activeCompanion == ISOBEL) then
@@ -172,7 +169,7 @@ local function FOBHandler(interactionPossible, _)
             end
         end
 
-        -- prevent fishing is Ember is out
+        -- prevent fishing if Ember is out
         if (additionalInfo == _G.ADDITIONAL_INTERACT_INFO_FISHING_NODE) then
             if (FOB.Vars.PreventFishing) then
                 local activeCompanion = GetActiveCompanionDefId()
@@ -264,12 +261,12 @@ local function CheckIngredients(recipeData, companion)
         local name, texturename = GetRecipeIngredientItemInfo(recipeData.recipeListIndex, recipeData.recipeIndex, idx)
         if (name ~= "") then
             --FOB.Log(texturename, "info")
-            if (string.find(texturename, "quest_trollfat_001") and companion == BASTIAN) then
+            if (texturename:find("quest_trollfat_001") and companion == BASTIAN) then
                 FOB.ShowAlert(FOB.Alert)
                 return true
             end
 
-            if (string.find(texturename, "crafting_coffee_beans") and companion == AZANDAR) then
+            if (texturename:find("crafting_coffee_beans") and companion == AZANDAR) then
                 FOB.ShowAlert(FOB.CoffeeAlert)
                 return true
             end
@@ -661,45 +658,43 @@ function FOB.OnAddonLoaded(_, addonName)
     SetupCoffeeAlert()
 
     -- handle damaged item tracking
-    if (FOB.Necrom) then
-        _G.SHARED_INVENTORY:RegisterCallback(
-            "SingleSlotInventoryUpdate",
-            function()
-                if (FOB.Vars.CheckDamage) then
-                    local activeCompanion = GetActiveCompanionDefId()
+    _G.SHARED_INVENTORY:RegisterCallback(
+        "SingleSlotInventoryUpdate",
+        function()
+            if (FOB.Vars.CheckDamage) then
+                local activeCompanion = GetActiveCompanionDefId()
 
-                    if (activeCompanion == SHARPASNIGHT) then
-                        local minDamage, itemName = FOB.CheckDurability()
+                if (activeCompanion == SHARPASNIGHT) then
+                    local minDamage, itemName = FOB.CheckDurability()
 
-                        if (minDamage < 5) then
-                            local announce = true
-                            local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
-                            local debounceTime = 300
+                    if (minDamage < 5) then
+                        local announce = true
+                        local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
+                        local debounceTime = 300
 
-                            if (os.time() - previousTime <= debounceTime) then
-                                announce = false
-                            end
+                        if (os.time() - previousTime <= debounceTime) then
+                            announce = false
+                        end
 
-                            if (announce == true) then
-                                FOB.Vars.PreviousAnnounceTime = os.time()
-                                FOB.Announce(
-                                    "|cff0000" .. GetString(_G.FOB_WARNING) .. "|r",
-                                    zo_strformat(
-                                        GetString(_G.FOB_DAMAGED),
-                                        "|cffd700" .. itemName .. "|r",
-                                        ZO_CachedStrFormat(
-                                            _G.SI_UNIT_NAME,
-                                            GetCollectibleInfo(GetCompanionCollectibleId(SHARPASNIGHT))
-                                        )
+                        if (announce == true) then
+                            FOB.Vars.PreviousAnnounceTime = os.time()
+                            FOB.Announce(
+                                "|cff0000" .. GetString(_G.FOB_WARNING) .. "|r",
+                                zo_strformat(
+                                    GetString(_G.FOB_DAMAGED),
+                                    "|cffd700" .. itemName .. "|r",
+                                    ZO_CachedStrFormat(
+                                        _G.SI_UNIT_NAME,
+                                        GetCollectibleInfo(GetCompanionCollectibleId(SHARPASNIGHT))
                                     )
                                 )
-                            end
+                            )
                         end
                     end
                 end
             end
-        )
-    end
+        end
+    )
 
     -- if Companion Frame is installed, let it handle the summoning frame
     if (not _G.CF) then

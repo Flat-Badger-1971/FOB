@@ -1,28 +1,26 @@
 local FOB = _G.FOB
-local version = "2.13.0"
+local version = "2.13.1"
 
 function FOB.GetFirstWord(text)
     local space = text:find(" ")
 
     if (not space) then
-        return text
-    else
-        return text:sub(1, space - 1)
+        space = text:find("-")
+
+        if (not space) then
+            return text
+        end
     end
+
+    return text:sub(1, space - 1)
 end
 
 FOB.BASTIAN = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(1)))
 FOB.MIRRI = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(2)))
 FOB.EMBER = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(5)))
 FOB.ISOBEL = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(6)))
-
-FOB.Necrom = GetCompanionCollectibleId(8) ~= 0
-
-if (FOB.Necrom) then
-    FOB.SHARPASNIGHT = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanionCollectibleId(8)))
-    FOB.AZANDAR =
-        ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(9))))
-end
+FOB.SHARPASNIGHT = ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(8))))
+FOB.AZANDAR = ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(9))))
 
 local fonts = {
     "Standard",
@@ -329,137 +327,135 @@ local options = {
     }
 }
 
-if (FOB.Necrom) then
-    options[#options + 1] = {
-        type = "header",
-        name = "|c9d840d" .. FOB.SHARPASNIGHT .. "|r",
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "header",
+    name = "|c9d840d" .. FOB.SHARPASNIGHT .. "|r",
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "checkbox",
-        name = GetString(_G.FOB_PREVENT_OUTFIT),
-        getFunc = function()
-            return FOB.Vars.PreventOutfit
-        end,
-        setFunc = function(value)
-            FOB.Vars.PreventOutfit = value
-        end,
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "checkbox",
+    name = GetString(_G.FOB_PREVENT_OUTFIT),
+    getFunc = function()
+        return FOB.Vars.PreventOutfit
+    end,
+    setFunc = function(value)
+        FOB.Vars.PreventOutfit = value
+    end,
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "checkbox",
-        name = GetString(_G.FOB_WARN_BROKEN),
-        getFunc = function()
-            return FOB.Vars.CheckDamage
-        end,
-        setFunc = function(value)
-            FOB.Vars.CheckDamage = value
-        end,
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "checkbox",
+    name = GetString(_G.FOB_WARN_BROKEN),
+    getFunc = function()
+        return FOB.Vars.CheckDamage
+    end,
+    setFunc = function(value)
+        FOB.Vars.CheckDamage = value
+    end,
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "header",
-        name = "|c9d840d" .. FOB.AZANDAR .. "|r",
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "header",
+    name = "|c9d840d" .. FOB.AZANDAR .. "|r",
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "checkbox",
-        name = GetString(_G.FOB_PREVENT_MUSHROOM),
-        getFunc = function()
-            return FOB.Vars.PreventMushroom
-        end,
-        setFunc = function(value)
-            FOB.Vars.PreventMushroom = value
-        end,
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "checkbox",
+    name = GetString(_G.FOB_PREVENT_MUSHROOM),
+    getFunc = function()
+        return FOB.Vars.PreventMushroom
+    end,
+    setFunc = function(value)
+        FOB.Vars.PreventMushroom = value
+    end,
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "checkbox",
-        name = GetString(_G.FOB_COFFEE_WARNING),
-        getFunc = function()
-            return FOB.Vars.CoffeeWarning
-        end,
-        setFunc = function(value)
-            FOB.Vars.CoffeeWarning = value
-            CALLBACK_MANAGER:FireCallbacks("LAM-RefreshPanel", FOB.OptionsPanel)
-        end,
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "checkbox",
+    name = GetString(_G.FOB_COFFEE_WARNING),
+    getFunc = function()
+        return FOB.Vars.CoffeeWarning
+    end,
+    setFunc = function(value)
+        FOB.Vars.CoffeeWarning = value
+        CALLBACK_MANAGER:FireCallbacks("LAM-RefreshPanel", FOB.OptionsPanel)
+    end,
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "dropdown",
-        name = GetString(_G.FOB_ALERT_FONT),
-        choices = fonts,
-        getFunc = function()
-            return FOB.Vars.CoffeeFont
-        end,
-        setFunc = function(value)
-            FOB.Vars.CoffeeFont = value
-            local font = FOB.GetFont(value, FOB.Vars.CoffeeFontSize, FOB.Vars.CoffeeFontShadow)
-            FOB.CoffeeAlert.Label:SetFont(font)
-        end,
-        disabled = function()
-            return FOB.Vars.CoffeeWarning == false
-        end,
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "dropdown",
+    name = GetString(_G.FOB_ALERT_FONT),
+    choices = fonts,
+    getFunc = function()
+        return FOB.Vars.CoffeeFont
+    end,
+    setFunc = function(value)
+        FOB.Vars.CoffeeFont = value
+        local font = FOB.GetFont(value, FOB.Vars.CoffeeFontSize, FOB.Vars.CoffeeFontShadow)
+        FOB.CoffeeAlert.Label:SetFont(font)
+    end,
+    disabled = function()
+        return FOB.Vars.CoffeeWarning == false
+    end,
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "colorpicker",
-        name = GetString(_G.FOB_ALERT_COLOUR),
-        getFunc = function()
-            return FOB.Vars.CoffeeFontColour.r, FOB.Vars.CoffeeFontColour.g, FOB.Vars.CoffeeFontColour.b, FOB.Vars.CoffeeFontColour.a
-        end,
-        setFunc = function(r, g, b, a)
-            FOB.Vars.CoffeeFontColour = {r = r, g = g, b = b, a = a}
-            FOB.CoffeeAlert.Label:SetColor(r, g, b, a)
-        end,
-        disabled = function()
-            return FOB.Vars.CoffeeWarning == false
-        end,
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "colorpicker",
+    name = GetString(_G.FOB_ALERT_COLOUR),
+    getFunc = function()
+        return FOB.Vars.CoffeeFontColour.r, FOB.Vars.CoffeeFontColour.g, FOB.Vars.CoffeeFontColour.b, FOB.Vars.CoffeeFontColour.a
+    end,
+    setFunc = function(r, g, b, a)
+        FOB.Vars.CoffeeFontColour = {r = r, g = g, b = b, a = a}
+        FOB.CoffeeAlert.Label:SetColor(r, g, b, a)
+    end,
+    disabled = function()
+        return FOB.Vars.CoffeeWarning == false
+    end,
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "checkbox",
-        name = GetString(_G.FOB_ALERT_SHADOW),
-        getFunc = function()
-            return FOB.Vars.CoffeeFontShadow
-        end,
-        setFunc = function(value)
-            FOB.Vars.CofeeFontShadow = value
-            local font = FOB.GetFont(FOB.Vars.CoffeeFont, FOB.Vars.CoffeeFontSize, FOB.Vars.CoffeeFontShadow)
-            FOB.CoffeeAlert.Label:SetFont(font)
-        end,
-        disabled = function()
-            return FOB.Vars.CoffeeWarning == false
-        end,
-        width = "full"
-    }
+options[#options + 1] = {
+    type = "checkbox",
+    name = GetString(_G.FOB_ALERT_SHADOW),
+    getFunc = function()
+        return FOB.Vars.CoffeeFontShadow
+    end,
+    setFunc = function(value)
+        FOB.Vars.CofeeFontShadow = value
+        local font = FOB.GetFont(FOB.Vars.CoffeeFont, FOB.Vars.CoffeeFontSize, FOB.Vars.CoffeeFontShadow)
+        FOB.CoffeeAlert.Label:SetFont(font)
+    end,
+    disabled = function()
+        return FOB.Vars.CoffeeWarning == false
+    end,
+    width = "full"
+}
 
-    options[#options + 1] = {
-        type = "iconpicker",
-        name = GetString(_G.FOB_ALERT_ICON),
-        getFunc = function()
-            return FOB.Vars.CoffeeIcon
-        end,
-        setFunc = function(value)
-            FOB.Vars.CoffeeIcon = value
-            FOB.CoffeeAlert.Texture:SetTexture(value)
-        end,
-        choices = coffeeIcons,
-        disabled = function()
-            return FOB.Vars.CoffeeWarning == false
-        end,
-        iconSize = 48,
-        width = "full"
-    }
-end
+options[#options + 1] = {
+    type = "iconpicker",
+    name = GetString(_G.FOB_ALERT_ICON),
+    getFunc = function()
+        return FOB.Vars.CoffeeIcon
+    end,
+    setFunc = function(value)
+        FOB.Vars.CoffeeIcon = value
+        FOB.CoffeeAlert.Texture:SetTexture(value)
+    end,
+    choices = coffeeIcons,
+    disabled = function()
+        return FOB.Vars.CoffeeWarning == false
+    end,
+    iconSize = 48,
+    width = "full"
+}
 
 function FOB.RegisterSettings()
     FOB.OptionsPanel = FOB.LAM:RegisterAddonPanel("FOBOptionsPanel", panel)
