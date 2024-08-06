@@ -190,11 +190,7 @@ local function FOBHandler(interactionPossible, _)
         -- are we trying to talk to someone?
         if (action == talk and FOB.Vars.DisableCompanionInteraction) then
             -- is it a companion?
-            local isCompanionAction = companions[interactableName] or false
-
-            if (FOB.UsingRuEso) then
-                isCompanionAction = PartialMatch(interactableName, companions)
-            end
+            local isCompanionAction = PartialMatch(interactableName, companions)
 
             if (isCompanionAction) then
                 -- companion detected - we don't want to talk to you, cancel the interaction
