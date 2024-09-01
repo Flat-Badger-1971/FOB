@@ -239,6 +239,11 @@ read_globals = {
     -- Zenimax objects
     "HUD_SCENE",
     "ZO_CachedStrFormat",
+    ["ZO_ColorDef"] = {
+        fields = {
+            New = {read_only = true}
+        }
+    },
     "ZO_CreateStringId",
 	"ZO_DeepTableCopy",
 	"ZO_Dialogs_RegisterCustomDialog",

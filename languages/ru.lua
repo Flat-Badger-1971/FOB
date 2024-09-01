@@ -31,7 +31,7 @@ ZO_CreateStringId("FOB_PREVENT_DARK_BROTHERHOOD", "Запретить вход �
 -- interactable names
 ZO_CreateStringId("FOB_DARK_BROTHERHOOD", "Убежище Темного Братства")
 ZO_CreateStringId("FOB_THIEVES_DEN", "Логово воров")
-ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Убежищещ")
+ZO_CreateStringId("FOB_OUTLAWS_REFUGE", "Убежище")
 ZO_CreateStringId("FOB_OUTFIT_STATION", "Мастерская нарядов")
 
 -- flying insects / летающие насекомые (translations req.)
@@ -53,7 +53,7 @@ ZO_CreateStringId("FOB_WINTER_MOTH", "Зимний мотылёк")
 -- mushrooms
 --ZO_CreateStringId("FOB_BLANCHED_RUSSULA_CAP", "Blanched Russula Cap")
 --ZO_CreateStringId("FOB_BLIGHT_BOG_MUSHROOM", "Blight Bog Mushroom")
-ZO_CreateStringId("FOB_BLUE_ENTOLOMA", "Голубая знтолома")
+ZO_CreateStringId("FOB_BLUE_ENTOLOMA", "Голубая энтолома")
 --ZO_CreateStringId("FOB_CALDERA_MUSHROOM", "Caldera Mushroom")
 --ZO_CreateStringId("FOB_CANIS_CAP_MUSHROOM", "Canis Cap Mushroom")
 --ZO_CreateStringId("FOB_DUSK_MUSHROOM", "Dusk Mushroom")

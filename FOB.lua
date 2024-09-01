@@ -611,6 +611,12 @@ function FOB.OnAddonLoaded(_, addonName)
         FOB.UsingRuEso = true
     end
 
+    FOB.COLOURS = {
+        GOLD = ZO_ColorDef:New("ffd700"),
+        MUSTARD = ZO_ColorDef:New("9d840d"),
+        RED = ZO_ColorDef:New("ff0000")
+    }
+
     --FOB.Log("Loaded", "info")
     EVENT_MANAGER:UnregisterForEvent(FOB.Name, _G.EVENT_ADD_ON_LOADED)
 
@@ -675,10 +681,10 @@ function FOB.OnAddonLoaded(_, addonName)
                         if (announce == true) then
                             FOB.Vars.PreviousAnnounceTime = os.time()
                             FOB.Announce(
-                                "|cff0000" .. GetString(_G.FOB_WARNING) .. "|r",
+                                FOB.COLOURS.RED:Colorize(GetString(_G.FOB_WARNING)),
                                 zo_strformat(
                                     GetString(_G.FOB_DAMAGED),
-                                    "|cffd700" .. itemName .. "|r",
+                                    FOB.COLOURS.GOLD:Colorize(itemName),
                                     ZO_CachedStrFormat(
                                         _G.SI_UNIT_NAME,
                                         GetCollectibleInfo(GetCompanionCollectibleId(SHARPASNIGHT))
