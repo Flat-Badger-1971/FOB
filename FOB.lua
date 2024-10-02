@@ -192,6 +192,13 @@ local function FOBHandler(interactionPossible, _)
             -- is it a companion?
             local isCompanionAction = PartialMatch(interactableName, companions)
 
+            -- handle issue in German client for Ember (Funke) being confused with a vendor (Funkelne Angebote)
+            if (language == "de" and isCompanionAction) then
+                if (GetActiveCompanionDefId() == EMBER) then
+                    isCompanionAction = interactableName == FOB.EMBER
+                end
+            end
+
             if (isCompanionAction) then
                 -- companion detected - we don't want to talk to you, cancel the interaction
                 EndPendingInteraction()

@@ -1,5 +1,5 @@
 local FOB = _G.FOB
-local version = "2.13.3"
+local version = "2.13.4"
 
 function FOB.GetFirstWord(text)
     local space = text:find(" ")
