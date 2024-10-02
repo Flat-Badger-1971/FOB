@@ -13,6 +13,7 @@ local catch = GetString(_G.FOB_CATCH)
 local open = GetString(_G.FOB_OPEN)
 local collect = GetString(_G.FOB_COLLECT)
 local use = GetString(_G.FOB_USE)
+local read = GetString(_G.FOB_READ)
 local companions = {
     [FOB.BASTIAN] = true,
     [FOB.MIRRI] = true,
@@ -28,6 +29,14 @@ local EMBER = 5 -- Ember's Def Id
 local ISOBEL = 6 -- Isobel's Def Id
 local SHARPASNIGHT = 8 -- Sharp as Night's Def Id
 local AZANDAR = 9 -- Azandar Al-Cybiades' Def Id
+local TANLORIN = 12 -- Tanlorin's Def Id
+local ZERITH = 13 -- Zerith-var's Def Id
+
+-- update 44
+if (_G.CURT_IMPERIAL_FRAGMENTS) then
+    companions[FOB.TANLORIN] = true
+    companions[FOB.ZERITH] = true
+end
 
 local language = GetCVar("language.2")
 
@@ -103,6 +112,10 @@ local function endInteraction()
     return true
 end
 
+local nirnroot = GetString(_G.FOB_NIRNROOT)
+local darkBrotherhood = GetString(_G.FOB_DARK_BROTHERHOOD)
+local magesGuild = GetString(_G.FOB_MAGES_GUILD)
+
 local function FOBHandler(interactionPossible, _)
     if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
@@ -140,6 +153,17 @@ local function FOBHandler(interactionPossible, _)
                     end
                 end
             end
+
+            if (FOB.Vars.PreventNirnroot) then
+                local activeCompanion = GetActiveCompanionDefId()
+
+                if (activeCompanion == TANLORIN) then
+                    if (PartialMatch(interactableName, nirnroot)) then
+                        EndPendingInteraction()
+                        return endInteraction
+                    end
+                end
+            end
         end
 
         -- prevent entry to the outlaw's refuge
@@ -160,8 +184,19 @@ local function FOBHandler(interactionPossible, _)
             if (FOB.Vars.PreventDarkBrotherhood) then
                 local activeCompanion = GetActiveCompanionDefId()
 
-                if (interactableName == GetString(_G.FOB_DARK_BROTHERHOOD)) then
+                if (interactableName == darkBrotherhood) then
                     if (activeCompanion == MIRRI) then
+                        EndPendingInteraction()
+                        return endInteraction
+                    end
+                end
+            end
+
+            if (FOB.Vars.PreventMagesGuild) then
+                local activeCompanion = GetActiveCompanionDefId()
+
+                if (interactableName == magesGuild) then
+                    if (activeCompanion == TANLORIN) then
                         EndPendingInteraction()
                         return endInteraction
                     end
@@ -227,6 +262,17 @@ local function FOBHandler(interactionPossible, _)
                 end
             end
         end
+
+        if (FOB.Vars.PreventLorebooks) then
+            local activeCompanion = GetActiveCompanionDefId()
+
+            if (activeCompanion == TANLORIN) then
+                EndPendingInteraction()
+                return endInteraction()
+            end
+        end
+
+        -- disable reading lorebooks if Tanloring is summoned
 
         -- disable criminal interactions if Bastian or Isobel is summoned
         --FOB.Log(isCriminalInteract, "warn")
@@ -649,7 +695,6 @@ function FOB.OnAddonLoaded(_, addonName)
 
     -- hook into the reticle interaction handler
     ZO_PreHook(RETICLE, "TryHandlingInteraction", FOBHandler)
-
     ZO_PreHook(ZO_Provisioner, "Create", FOBProvisionerHandler)
 
     if (_G.DailyProvisioning) then
