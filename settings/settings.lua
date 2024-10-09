@@ -22,14 +22,8 @@ FOB.ISOBEL = ZO_CachedStrFormat(_G.SI_UNIT_NAME, GetCollectibleInfo(GetCompanion
 FOB.SHARPASNIGHT =
     ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(8))))
 FOB.AZANDAR = ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(9))))
-
--- update 44
-if (_G.CURT_IMPERIAL_FRAGMENTS) then
-    FOB.TANLORIN =
-        ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(12))))
-    FOB.ZERITH =
-        ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(13))))
-end
+FOB.TANLORIN = ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(12))))
+FOB.ZERITH = ZO_CachedStrFormat(_G.SI_UNIT_NAME, FOB.GetFirstWord(GetCollectibleInfo(GetCompanionCollectibleId(13))))
 
 local fonts = {
     "Standard",
@@ -475,8 +469,8 @@ local function getOptions()
             width = "full"
         }
 
-    -- getting a bounty/assaulting someone, innocent with blade of woe, stealing medical, religious or sentimental items,
-    -- using pardon edict (71779) or leniency edict (73754), fencing stolen goods
+        -- getting a bounty/assaulting someone, innocent with blade of woe, stealing medical, religious or sentimental items,
+        -- using pardon edict (71779) or leniency edict (73754), fencing stolen goods
         options[#options + 1] = {
             type = "header",
             name = FOB.COLOURS.MUSTARD:Colorize(FOB.ZERITH),

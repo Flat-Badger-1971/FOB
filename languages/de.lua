@@ -66,6 +66,7 @@ ZO_CreateStringId("FOB_WINTER_MOTH", "Wintermotte")
 -- exceptions
 ZO_CreateStringId("FOB_LADY_LLARELS_SHELTER", "Fürstin Llarels Unterschlupf")
 ZO_CreateStringId("FOB_BLACKHEART_HAVEN", "Der Schwarzherz-Unterschlupf")
+ZO_CreateStringId("FOB_SHINYTRADE", "Funkelne Angebote")
 
 -- mushrooms
 --ZO_CreateStringId("FOB_BLANCHED_RUSSULA_CAP", "Blanched Russula Cap")

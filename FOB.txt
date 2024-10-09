@@ -1,8 +1,8 @@
 ## Title: |cdc143cFOB|r - Companion Helper
 ## Author: Flat Badger
-## APIVersion: 101043 101044
-## AddOnVersion: 2200
-## Version: 2.2.0
+## APIVersion: 101044
+## AddOnVersion: 3000
+## Version: 3.0.0
 ## SavedVariables: FOBSavedVars
 ## OptionalDependsOn: LibDebugLogger>=217 DailyProvisioning RuEso CompanionFrame
 ## DependsOn: LibChatMessage>=105 LibSavedVars>=60005 LibAddonMenu-2.0>=35
@@ -20,8 +20,15 @@
 languages/en.lua
 languages/$(language).lua
 
-data/flying-insects.lua
-data/mushrooms.lua
+data/constants.lua
+data/companions/azandar.lua
+data/companions/bastian.lua
+data/companions/ember.lua
+data/companions/isobel.lua
+data/companions/mirri.lua
+data/companions/sharp.lua
+data/companions/tanlorin.lua
+data/companions/zerith.lua
 settings/settings.lua
 
 FOB.lua

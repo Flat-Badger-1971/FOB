@@ -7,38 +7,17 @@ local enabledScenes = {
     ["hud"] = true,
     ["provisioner"] = true
 }
-local take = GetString(_G.FOB_TAKE)
-local talk = GetString(_G.FOB_TALK)
-local catch = GetString(_G.FOB_CATCH)
-local open = GetString(_G.FOB_OPEN)
-local collect = GetString(_G.FOB_COLLECT)
-local use = GetString(_G.FOB_USE)
-local read = GetString(_G.FOB_READ)
+
 local companions = {
     [FOB.BASTIAN] = true,
     [FOB.MIRRI] = true,
     [FOB.EMBER] = true,
     [FOB.ISOBEL] = true,
     [FOB.SHARPASNIGHT] = true,
-    [FOB.AZANDAR] = true
+    [FOB.AZANDAR] = true,
+    [FOB.TANLORIN] = true,
+    [FOB.ZERITH] = true
 }
-
-local BASTIAN = 1 -- Bastian's Def Id
-local MIRRI = 2 -- Mirri's Def Id
-local EMBER = 5 -- Ember's Def Id
-local ISOBEL = 6 -- Isobel's Def Id
-local SHARPASNIGHT = 8 -- Sharp as Night's Def Id
-local AZANDAR = 9 -- Azandar Al-Cybiades' Def Id
-local TANLORIN = 12 -- Tanlorin's Def Id
-local ZERITH = 13 -- Zerith-var's Def Id
-
--- update 44
-if (_G.CURT_IMPERIAL_FRAGMENTS) then
-    companions[FOB.TANLORIN] = true
-    companions[FOB.ZERITH] = true
-end
-
-local language = GetCVar("language.2")
 
 local fonts = {
     ["Standard"] = "$(MEDIUM_FONT)",
@@ -59,36 +38,15 @@ local ACTIVE_COMPANION_STATES = {
     [_G.COMPANION_STATE_ACTIVE] = true
 }
 
-local ILLEGAL = {
-    [GetString(_G.SI_GAMECAMERAACTIONTYPE20)] = true, -- Steal From
-    [GetString(_G.SI_GAMECAMERAACTIONTYPE21)] = true, -- Pickpocket
-    [GetString(_G.SI_GAMECAMERAACTIONTYPE23)] = true -- Trespass
-}
-
-local OUTLAWS_REFUGE = {
-    [GetString(_G.FOB_OUTLAWS_REFUGE):lower()] = true,
-    [GetString(_G.FOB_THIEVES_DEN):lower()] = true
-}
-
-local EXCEPTIONS = {}
-
-do
-    if (language == "de") then
-        EXCEPTIONS[GetString(_G.FOB_LADY_LLARELS_SHELTER)] = true
-        EXCEPTIONS[GetString(_G.FOB_BLACKHEART_HAVEN)] = true
-    end
-end
-
 local INTERACTION_TYPES = {
     _G.INTERACTION_NONE,
     _G.INTERACTION_FISH,
-    _G.INTERACTION_HARVEST
+    _G.INTERACTION_HARVEST,
+    _G.INTERACTION_LOOT,
+    _G.INTERACTION_BOOK
 }
 
--- slower matcher for users of RuEso
--- RuEso modifies the text so a direct comparison is not possible
--- have to check if the string contains the expected text instead
-local function PartialMatch(inputString, compareList)
+function FOB.PartialMatch(inputString, compareList)
     for key, value in pairs(compareList) do
         if (inputString:lower():find(key:lower())) then
             return value
@@ -112,182 +70,27 @@ local function endInteraction()
     return true
 end
 
-local nirnroot = GetString(_G.FOB_NIRNROOT)
-local darkBrotherhood = GetString(_G.FOB_DARK_BROTHERHOOD)
-local magesGuild = GetString(_G.FOB_MAGES_GUILD)
-
 local function FOBHandler(interactionPossible, _)
     if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
             GetGameCameraInteractableActionInfo()
 
-        -- prevent outfit station interaction
-        if (action == use) then
-            if (FOB.Vars.PreventOutfit) then
-                local activeCompanion = GetActiveCompanionDefId()
-
-                if (interactableName == ZO_CachedStrFormat("<<C:1>>", GetString(_G.SI_RESTYLE_STATION_MENU_ROOT_TITLE))) then
-                    if (activeCompanion == SHARPASNIGHT) then
-                        EndPendingInteraction()
-                        return endInteraction
-                    end
-                end
-            end
-        end
-
-        -- prevent mushroom gathering
-        if (action == collect) then
-            if (FOB.Vars.PreventMushroom) then
-                local activeCompanion = GetActiveCompanionDefId()
-
-                if (activeCompanion == AZANDAR) then
-                    local mushroomList = FOB.MUSHROOMS
-                    local ignoreMushrooms = mushroomList[interactableName] or false
-                    if (FOB.UsingRuEso) then
-                        ignoreMushrooms = PartialMatch(interactableName, mushroomList)
-                    end
-
-                    if (ignoreMushrooms) then
-                        EndPendingInteraction()
-                        return endInteraction
-                    end
-                end
-            end
-
-            if (FOB.Vars.PreventNirnroot) then
-                local activeCompanion = GetActiveCompanionDefId()
-
-                if (activeCompanion == TANLORIN) then
-                    if (PartialMatch(interactableName, nirnroot)) then
-                        EndPendingInteraction()
-                        return endInteraction
-                    end
-                end
-            end
-        end
-
-        -- prevent entry to the outlaw's refuge
-        if (action == open) then
-            if (FOB.Vars.PreventOutlawsRefuge) then
-                -- Exceptions to the rule
-
-                if (PartialMatch(interactableName, OUTLAWS_REFUGE) and (not EXCEPTIONS[interactableName])) then
-                    local activeCompanion = GetActiveCompanionDefId()
-
-                    if (activeCompanion == ISOBEL) then
-                        EndPendingInteraction()
-                        return endInteraction()
-                    end
-                end
-            end
-
-            if (FOB.Vars.PreventDarkBrotherhood) then
-                local activeCompanion = GetActiveCompanionDefId()
-
-                if (interactableName == darkBrotherhood) then
-                    if (activeCompanion == MIRRI) then
-                        EndPendingInteraction()
-                        return endInteraction
-                    end
-                end
-            end
-
-            if (FOB.Vars.PreventMagesGuild) then
-                local activeCompanion = GetActiveCompanionDefId()
-
-                if (interactableName == magesGuild) then
-                    if (activeCompanion == TANLORIN) then
-                        EndPendingInteraction()
-                        return endInteraction
-                    end
-                end
-            end
-        end
-
-        -- prevent fishing if Ember is out
-        if (additionalInfo == _G.ADDITIONAL_INTERACT_INFO_FISHING_NODE) then
-            if (FOB.Vars.PreventFishing) then
-                local activeCompanion = GetActiveCompanionDefId()
-
-                if (activeCompanion == EMBER) then
-                    if (_G.FISHING_MANAGER) then
-                        _G.FISHING_MANAGER:StopInteraction()
-                    else
-                        _G.INTERACTIVE_WHEEL_MANAGER:StopInteraction(_G.ZO_INTERACTIVE_WHEEL_TYPE_FISHING)
-                    end
-
-                    EndPendingInteraction()
-                    return endInteraction()
-                end
-            end
+        if (FOB.Dislikes[FOB.ActiveCompanionDefId](action, interactableName, isCriminalInteract, additionalInfo)) then
+            EndPendingInteraction()
+            return endInteraction
         end
 
         -- are we trying to talk to someone?
-        if (action == talk and FOB.Vars.DisableCompanionInteraction) then
+        if (action == FOB.Actions.Talk and FOB.Vars.DisableCompanionInteraction) then
             -- is it a companion?
-            local isCompanionAction = PartialMatch(interactableName, companions)
+            local isCompanionAction = FOB.PartialMatch(interactableName, companions)
 
             if (isCompanionAction) then
-                -- companion detected - we don't want to talk to you, cancel the interaction
-                EndPendingInteraction()
-                return endInteraction()
-            end
-        end
-
-        if (action == take or action == catch) then
-            if (FOB.Vars.IgnoreInsects or FOB.Vars.IgnoreAllInsects) then
-                local insectList = FOB.FLYING_INSECTS
-
-                if (FOB.Vars.IgnoreInsects) then
-                    local activeCompanion = GetActiveCompanionDefId()
-
-                    if (activeCompanion == MIRRI) then
-                        if (FOB.Vars.IgnoreMirriInsects) then
-                            insectList = FOB.MIRRI_INSECTS
-                        end
-                    else
-                        return false
-                    end
-                end
-
-                local ignoreInsects = insectList[interactableName] or false
-
-                if (FOB.UsingRuEso) then
-                    ignoreInsects = PartialMatch(interactableName, insectList)
-                end
-
-                if (ignoreInsects) then
+                if (not FOB.Exceptions[interactableName]) then
+                    -- companion detected - we don't want to talk to you, cancel the interaction
                     EndPendingInteraction()
                     return endInteraction()
                 end
-            end
-        end
-
-        if (FOB.Vars.PreventLorebooks) then
-            local activeCompanion = GetActiveCompanionDefId()
-
-            if (activeCompanion == TANLORIN) then
-                EndPendingInteraction()
-                return endInteraction()
-            end
-        end
-
-        -- disable reading lorebooks if Tanloring is summoned
-
-        -- disable criminal interactions if Bastian or Isobel is summoned
-        --FOB.Log(isCriminalInteract, "warn")
-        local activeCompanion = GetActiveCompanionDefId()
-        if
-            ((FOB.Vars.PreventCriminalBastian and activeCompanion == BASTIAN) or
-                (FOB.Vars.PreventCriminalIsobel and activeCompanion == ISOBEL))
-         then
-            if (isCriminalInteract ~= true and action) then
-                isCriminalInteract = PartialMatch(action, ILLEGAL)
-            end
-
-            if (isCriminalInteract) then
-                EndPendingInteraction()
-                return endInteraction()
             end
         end
 
@@ -303,12 +106,12 @@ local function CheckIngredients(recipeData, companion)
         local name, texturename = GetRecipeIngredientItemInfo(recipeData.recipeListIndex, recipeData.recipeIndex, idx)
         if (name ~= "") then
             --FOB.Log(texturename, "info")
-            if (texturename:find("quest_trollfat_001") and companion == BASTIAN) then
+            if (texturename:find("quest_trollfat_001") and companion == FOB.Bastian) then
                 FOB.ShowAlert(FOB.Alert)
                 return true
             end
 
-            if (texturename:find("crafting_coffee_beans") and companion == AZANDAR) then
+            if (texturename:find("crafting_coffee_beans") and companion == FOB.Azander) then
                 FOB.ShowAlert(FOB.CoffeeAlert)
                 return true
             end
@@ -320,27 +123,27 @@ end
 
 -- handler for built in provisioning interface
 local function FOBProvisionerHandler()
-    local check = FOB.Vars.CheeseWarning == true and GetActiveCompanionDefId() == BASTIAN
+    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
     local recipeData
 
     if (check) then
         recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
-        return CheckIngredients(recipeData, BASTIAN)
+        return CheckIngredients(recipeData, FOB.Bastian)
     end
 
-    check = FOB.Vars.CoffeeWarning == true and GetActiveCompanionDefId() == AZANDAR
+    check = FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanionDefId == FOB.Azander
 
     if (check) then
         recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
-        return CheckIngredients(recipeData, AZANDAR)
+        return CheckIngredients(recipeData, FOB.Azander)
     end
 end
 
 -- handle for DailyProvisioning addon, based on original code from that
 local function DailyProvisioningOverride()
-    local check = FOB.Vars.CheeseWarning == true and GetActiveCompanionDefId() == BASTIAN
+    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
 
-    check = check or (FOB.Vars.CoffeeWarning == true and GetActiveCompanionDefId() == AZANDAR)
+    check = check or (FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanion == FOB.Azander)
 
     if (not check) then
         return false
@@ -376,7 +179,7 @@ local function DailyProvisioningOverride()
                     recipeIndex = parameter.recipeIndex
                 }
 
-                return CheckIngredients(recipeData, GetActiveCompanionDefId())
+                return CheckIngredients(recipeData, FOB.ActiveCompanion)
             end
         end
     end
@@ -494,9 +297,8 @@ function FOB.CreateCompanionSummoningFrame()
 end
 
 local function DismissCompanion()
-    local defId = GetActiveCompanionDefId()
     local character = GetUnitName("player")
-    FOB.Vars.LastActiveCompanionId[character] = GetCompanionCollectibleId(defId)
+    FOB.Vars.LastActiveCompanionId[character] = GetCompanionCollectibleId(FOB.ActiveCompanion)
     UseCollectible(FOB.Vars.LastActiveCompanionId[character])
 end
 
@@ -525,7 +327,7 @@ function FOB.OnCompanionStateChanged(_, newState, _)
     if (PENDING_COMPANION_STATES[newState]) then
         HideDefaultCompanionFrame()
 
-        if (HasPendingCompanion()) and not IsCollectibleBlocked(GetCompanionCollectibleId(GetActiveCompanionDefId())) then
+        if (HasPendingCompanion()) and not IsCollectibleBlocked(GetCompanionCollectibleId(FOB.ActiveCompanion)) then
             local pendingCompanionDefId = GetPendingCompanionDefId()
             local pendingCompanionName = GetCompanionName(pendingCompanionDefId)
             local companionName = zo_strformat(_G.SI_COMPANION_NAME_FORMATTER, pendingCompanionName)
@@ -540,6 +342,7 @@ end
 
 function FOB.GetFont(fontName, fontSize, fontShadow)
     local hasShadow = fontShadow and "|soft-shadow-thick" or ""
+
     return fonts[fontName] .. "|" .. fontSize .. hasShadow
 end
 
@@ -558,22 +361,11 @@ function FOB.ShowAlert(alert)
     )
 end
 
--- unfortunately this doesn't correctly enable all functionality
--- when not called by ESO - disabling for now
---[[
-function FOB.ShowCompanionMenu()
-    if (HasActiveCompanion()) then
-        if (not IsInGamepadPreferredMode()) then
-            local sceneGroup = SCENE_MANAGER:GetSceneGroup("companionSceneGroup")
-            local specificScene = sceneGroup:GetActiveScene()
-            SCENE_MANAGER:Show(specificScene)
-        end
-    end
-end
---]]
 function FOB.ToggleDefaultInteraction()
     enabled = not enabled
+
     local message = GetString(enabled and _G.FOB_ENABLED or _G.FOB_DISABLED)
+
     FOB.Chat:SetTagColor("dc143c"):Print(message)
 end
 
@@ -709,9 +501,7 @@ function FOB.OnAddonLoaded(_, addonName)
         "SingleSlotInventoryUpdate",
         function()
             if (FOB.Vars.CheckDamage) then
-                local activeCompanion = GetActiveCompanionDefId()
-
-                if (activeCompanion == SHARPASNIGHT) then
+                if (FOB.ActiveCompanion == FOB.Sharp) then
                     local minDamage, itemName = FOB.CheckDurability()
 
                     if (minDamage < 5) then
@@ -748,9 +538,22 @@ function FOB.OnAddonLoaded(_, addonName)
         FOB.CreateCompanionSummoningFrame()
     end
 
-    if (FOB.Vars.UseCompanionSummmoningFrame) then
-        EVENT_MANAGER:RegisterForEvent(FOB.Name, _G.EVENT_ACTIVE_COMPANION_STATE_CHANGED, FOB.OnCompanionStateChanged)
-    end
+    EVENT_MANAGER:RegisterForEvent(
+        FOB.Name,
+        _G.EVENT_ACTIVE_COMPANION_STATE_CHANGED,
+        function()
+            zo_callLater(
+                function()
+                    FOB.ActiveCompanionDefId = GetActiveCompanionDefId()
+                end,
+                2000
+            )
+
+            if (FOB.Vars.UseCompanionSummmoningFrame) then
+                FOB.OnCompanionStateChanged()
+            end
+        end
+    )
 
     -- utiltity
     if (_G.SLASH_COMMANDS["/rl"] == nil) then

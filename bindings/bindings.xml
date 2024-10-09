@@ -1,11 +1,6 @@
 <Bindings>
     <Layer name="SI_KEYBINDINGS_LAYER_GENERAL">
         <Category name = "|cdc143cFOB|r">
-            <!--
-            <Action name="FOB_COMPANION_MENU">
-                <Down>FOB.ShowCompanionMenu()</Down>
-            </Action>
-            -->
              <Action name="FOB_TOGGLE">
                 <Down>FOB.ToggleDefaultInteraction()</Down>
             </Action>
