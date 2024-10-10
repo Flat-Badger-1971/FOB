@@ -1,78 +1,80 @@
-local FOB = _G.FOB
-local cid = GetCompanionCollectibleId(FOB.DefIds.Tanlorin)
-local name, _, icon = GetCollectibleInfo(cid)
+if (_G.CURT_IMPERIAL_FRAGMENTS) then
+    local FOB = _G.FOB
+    local cid = GetCompanionCollectibleId(FOB.DefIds.Tanlorin)
+    local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.DefIds.Tanlorin] = {
-    Sort = name,
-    Dislikes = function(action, interactableName)
-        if (FOB.Vars.PreventNirnroot) then
-            if (action == FOB.Actions.Collect) then
-                if (FOB.PartialMatch(interactableName, {[FOB.Nirnroot] = true})) then
+    FOB.Functions[FOB.DefIds.Tanlorin] = {
+        Sort = name,
+        Dislikes = function(action, interactableName)
+            if (FOB.Vars.PreventNirnroot) then
+                if (action == FOB.Actions.Collect) then
+                    if (FOB.PartialMatch(interactableName, {[FOB.Nirnroot] = true})) then
+                        return true
+                    end
+                end
+            end
+
+            if (FOB.Vars.PreventMagesGuild) then
+                if (action == FOB.Actions.Open) then
+                    if (interactableName == FOB.MagesGuild) then
+                        return true
+                    end
+                end
+            end
+
+            if (FOB.Vars.PreventLorebooks) then
+                if (action == FOB.Actions.Examine) then
                     return true
                 end
             end
-        end
 
-        if (FOB.Vars.PreventMagesGuild) then
-            if (action == FOB.Actions.Open) then
-                if (interactableName == FOB.MagesGuild) then
-                    return true
-                end
-            end
-        end
+            return false
+        end,
+        Settings = function(options)
+            name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
 
-        if (FOB.Vars.PreventLorebooks) then
-            if (action == FOB.Actions.Examine) then
-                return true
-            end
-        end
-
-        return false
-    end,
-    Settings = function(options)
-        name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
-
-        local submenu = {
-            [1] = {
-                type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_NIRNROOT),
-                getFunc = function()
-                    return FOB.Vars.PreventNirnroot
-                end,
-                setFunc = function(value)
-                    FOB.Vars.PreventNirnroot = value
-                end,
-                width = "full"
-            },
-            [2] = {
-                type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_MAGES_GUILD),
-                getFunc = function()
-                    return FOB.Vars.PreventMagesGuild
-                end,
-                setFunc = function(value)
-                    FOB.Vars.PreventMagesGuild = value
-                end,
-                width = "full"
-            },
-            [3] = {
-                type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_LOREBOOKS),
-                getFunc = function()
-                    return FOB.Vars.PreventLorebooks
-                end,
-                setFunc = function(value)
-                    FOB.Vars.PreventLorebooks = value
-                end,
-                width = "full"
+            local submenu = {
+                [1] = {
+                    type = "checkbox",
+                    name = GetString(_G.FOB_PREVENT_NIRNROOT),
+                    getFunc = function()
+                        return FOB.Vars.PreventNirnroot
+                    end,
+                    setFunc = function(value)
+                        FOB.Vars.PreventNirnroot = value
+                    end,
+                    width = "full"
+                },
+                [2] = {
+                    type = "checkbox",
+                    name = GetString(_G.FOB_PREVENT_MAGES_GUILD),
+                    getFunc = function()
+                        return FOB.Vars.PreventMagesGuild
+                    end,
+                    setFunc = function(value)
+                        FOB.Vars.PreventMagesGuild = value
+                    end,
+                    width = "full"
+                },
+                [3] = {
+                    type = "checkbox",
+                    name = GetString(_G.FOB_PREVENT_LOREBOOKS),
+                    getFunc = function()
+                        return FOB.Vars.PreventLorebooks
+                    end,
+                    setFunc = function(value)
+                        FOB.Vars.PreventLorebooks = value
+                    end,
+                    width = "full"
+                }
             }
-        }
 
-        options[#options + 1] = {
-            type = "submenu",
-            name = FOB.COLOURS.MUSTARD:Colorize(name),
-            controls = submenu,
-            icon = icon
-        }
-    end
-}
+            options[#options + 1] = {
+                type = "submenu",
+                name = FOB.COLOURS.MUSTARD:Colorize(name),
+                controls = submenu,
+                icon = icon
+            }
+        end
+    }
+end

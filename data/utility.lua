@@ -155,6 +155,7 @@ function FOB.GetAddonVersion()
 
         if (name == FOB.Name) then
             version = tostring(manager:GetAddOnVersion(addon))
+
             local major = tonumber(version:sub(1, 1))
             local minor = tonumber(version:sub(2, 2))
             local revision = tonumber(version:sub(3))

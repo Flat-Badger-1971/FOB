@@ -70,16 +70,22 @@ local function getOptions()
         }
     }
 
-    -- table.sort(
-    --     FOB.Functions,
-    --     function(a, b)
-    --         return FOB.GetFirstWord(a.Sort) < FOB.GetFirstWord(b.Sort)
-    --     end
-    -- )
+    local sorted = {}
 
-    for _, functions in pairs(FOB.Functions) do
-        if (functions.Settings) then
-            functions.Settings(options)
+    for id, functions in pairs(FOB.Functions) do
+        table.insert(sorted, {sort = functions.Sort, id = id})
+    end
+
+    table.sort(
+        sorted,
+        function(a, b)
+            return a.sort < b.sort
+        end
+    )
+
+    for _, companion in ipairs(sorted) do
+        if (FOB.Functions[companion.id].Settings) then
+            FOB.Functions[companion.id].Settings(options)
         end
     end
 

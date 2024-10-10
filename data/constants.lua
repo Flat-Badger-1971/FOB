@@ -1,4 +1,5 @@
 _G.FOB = {
+    Name = "FOB",
     FlyingInsects = {
         [GetString(_G.FOB_BLACKREACH_JELLY)] = true,
         [GetString(_G.FOB_BRIGHT_MOONS_LUNAR_MOTH)] = true,

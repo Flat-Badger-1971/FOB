@@ -1,6 +1,6 @@
 ## Title: |cdc143cFOB|r - Companion Helper
 ## Author: Flat Badger
-## APIVersion: 101044
+## APIVersion: 101043 101044
 ## AddOnVersion: 3000
 ## Version: 3.0.0
 ## SavedVariables: FOBSavedVars
