@@ -45,16 +45,17 @@ _G.FOB = {
         [GetString(_G.FOB_VIOLET_COPRINUS)] = true,
         [GetString(_G.FOB_WHITE_CAP)] = true
     },
-    -- Def Ids
-    Bastian = 1,
-    Mirri = 2,
-    Ember = 5,
-    Isobel = 6,
-    Sharp = 8,
-    Azander = 9,
-    Tanlorin = 12,
-    Zerith = 13,
-    Dislikes = {},
+    DefIds = {
+        Bastian = 1,
+        Mirri = 2,
+        Ember = 5,
+        Isobel = 6,
+        Sharp = 8,
+        Azander = 9,
+        Tanlorin = 12,
+        Zerith = 13
+    },
+    Functions = {},
     Actions = {
         Catch = GetString(_G.FOB_CATCH),
         Collect = GetString(_G.FOB_COLLECT),
@@ -80,5 +81,42 @@ _G.FOB = {
     },
     Nirnroot = GetString(_G.FOB_NIRNROOT),
     DarkBrotherhood = GetString(_G.FOB_DARK_BROTHERHOOD),
-    MagesGuild = GetString(_G.FOB_MAGES_GUILD)
+    MagesGuild = GetString(_G.FOB_MAGES_GUILD),
+    FontsDefs = {
+        ["Standard"] = "$(MEDIUM_FONT)",
+        ["ESO Bold"] = "$(BOLD_FONT)",
+        ["Antique"] = "$(ANTIQUE_FONT)",
+        ["Handwritten"] = "$(HANDWRITTEN_FONT)",
+        ["Trajan"] = "$(STONE_TABLET_FONT)",
+        ["Futura"] = "EsoUI/Common/Fonts/FuturaStd-CondensedLight.slug",
+        ["Futura Bold"] = "EsoUI/Common/Fonts/FuturaStd-Condensed.slug"
+    },
+    CheeseIcons = {
+        "/esoui/art/icons/housing_bre_inc_cheese001.dds",
+        "/esoui/art/icons/quest_trollfat_001.dds",
+        "/esoui/art/icons/quest_critter_001.dds",
+        "/esoui/art/icons/ability_1handed_004.dds",
+        "/esoui/art/icons/adornment_uni_radiusrebreather.dds"
+    },
+    CoffeeIcons = {
+        "/esoui/art/icons/crafting_coffee_beans.dds",
+        "/esoui/art/icons/housing_orc_inc_cupbone001.dds",
+        "/esoui/art/icons/crowncrate_magickahealth_drink.dds"
+    }
 }
+
+do
+    _G.FOB.Fonts = {}
+    _G.FOB.CompanionNames = {}
+
+    for fontName, _ in pairs(_G.FOB.FontDefs) do
+        table.insert(_G.FOB.Fonts, fontName)
+    end
+
+    for _, defId in pairs(_G.FOB.DefIds) do
+        local cid = GetCompanionCollectibleId(defId)
+        local name = GetCollectibleInfo(cid)
+
+        table.insert(_G.FOB.CompanionNames, ZO_CachedStrFormat(_G.SI_UNIT_NAME, name))
+    end
+end

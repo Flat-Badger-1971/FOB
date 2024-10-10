@@ -1,32 +1,10 @@
 _G.FOB.Name = "FOB"
 
 local FOB = _G.FOB
-local enabled = true
 local enabledForScene = true
 local enabledScenes = {
     ["hud"] = true,
     ["provisioner"] = true
-}
-
-local companions = {
-    [FOB.BASTIAN] = true,
-    [FOB.MIRRI] = true,
-    [FOB.EMBER] = true,
-    [FOB.ISOBEL] = true,
-    [FOB.SHARPASNIGHT] = true,
-    [FOB.AZANDAR] = true,
-    [FOB.TANLORIN] = true,
-    [FOB.ZERITH] = true
-}
-
-local fonts = {
-    ["Standard"] = "$(MEDIUM_FONT)",
-    ["ESO Bold"] = "$(BOLD_FONT)",
-    ["Antique"] = "$(ANTIQUE_FONT)",
-    ["Handwritten"] = "$(HANDWRITTEN_FONT)",
-    ["Trajan"] = "$(STONE_TABLET_FONT)",
-    ["Futura"] = "EsoUI/Common/Fonts/FuturaStd-CondensedLight.slug",
-    ["Futura Bold"] = "EsoUI/Common/Fonts/FuturaStd-Condensed.slug"
 }
 
 local PENDING_COMPANION_STATES = {
@@ -46,15 +24,7 @@ local INTERACTION_TYPES = {
     _G.INTERACTION_BOOK
 }
 
-function FOB.PartialMatch(inputString, compareList)
-    for key, value in pairs(compareList) do
-        if (inputString:lower():find(key:lower())) then
-            return value
-        end
-    end
-
-    return false
-end
+FOB.Enabled = true
 
 local function endInteraction()
     if (_G.INTERACTIVE_WHEEL_MANAGER) then
@@ -71,11 +41,18 @@ local function endInteraction()
 end
 
 local function FOBHandler(interactionPossible, _)
-    if (interactionPossible and enabled and enabledForScene and HasActiveCompanion()) then
+    if (interactionPossible and FOB.Enabled and enabledForScene and HasActiveCompanion()) then
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
             GetGameCameraInteractableActionInfo()
 
-        if (FOB.Dislikes[FOB.ActiveCompanionDefId](action, interactableName, isCriminalInteract, additionalInfo)) then
+        if
+            (FOB.Functions[FOB.ActiveCompanionDefId].Dislikes(
+                action,
+                interactableName,
+                isCriminalInteract,
+                additionalInfo
+            ))
+         then
             EndPendingInteraction()
             return endInteraction
         end
@@ -83,7 +60,7 @@ local function FOBHandler(interactionPossible, _)
         -- are we trying to talk to someone?
         if (action == FOB.Actions.Talk and FOB.Vars.DisableCompanionInteraction) then
             -- is it a companion?
-            local isCompanionAction = FOB.PartialMatch(interactableName, companions)
+            local isCompanionAction = FOB.PartialMatch(interactableName, FOB.CompanionNames)
 
             if (isCompanionAction) then
                 if (not FOB.Exceptions[interactableName]) then
@@ -98,29 +75,6 @@ local function FOBHandler(interactionPossible, _)
     end
 end
 
-local function CheckIngredients(recipeData, companion)
-    local maxIngredients = GetMaxRecipeIngredients()
-
-    -- check the texture name, should be safe enough
-    for idx = 1, maxIngredients do
-        local name, texturename = GetRecipeIngredientItemInfo(recipeData.recipeListIndex, recipeData.recipeIndex, idx)
-        if (name ~= "") then
-            --FOB.Log(texturename, "info")
-            if (texturename:find("quest_trollfat_001") and companion == FOB.Bastian) then
-                FOB.ShowAlert(FOB.Alert)
-                return true
-            end
-
-            if (texturename:find("crafting_coffee_beans") and companion == FOB.Azander) then
-                FOB.ShowAlert(FOB.CoffeeAlert)
-                return true
-            end
-        end
-    end
-
-    return false
-end
-
 -- handler for built in provisioning interface
 local function FOBProvisionerHandler()
     local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
@@ -128,14 +82,14 @@ local function FOBProvisionerHandler()
 
     if (check) then
         recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
-        return CheckIngredients(recipeData, FOB.Bastian)
+        return FOB.CheckIngredients(recipeData, FOB.Bastian)
     end
 
     check = FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanionDefId == FOB.Azander
 
     if (check) then
         recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
-        return CheckIngredients(recipeData, FOB.Azander)
+        return FOB.CheckIngredients(recipeData, FOB.Azander)
     end
 end
 
@@ -179,7 +133,7 @@ local function DailyProvisioningOverride()
                     recipeIndex = parameter.recipeIndex
                 }
 
-                return CheckIngredients(recipeData, FOB.ActiveCompanion)
+                return FOB.CheckIngredients(recipeData, FOB.ActiveCompanion)
             end
         end
     end
@@ -188,85 +142,6 @@ local function DailyProvisioningOverride()
 end
 
 ---- Alerts ----
-local function SetupAlert(name, icon, fontInfo, text)
-    local alert = WINDOW_MANAGER:CreateTopLevelWindow(name)
-
-    -- main window
-    alert:SetAnchor(CENTER, GuiRoot, CENTER, 0, 0)
-    alert:SetDimensions(256, 64)
-    alert:SetHidden(true)
-
-    -- icon
-    alert.Texture = WINDOW_MANAGER:CreateControl(name .. "_Texture", alert, CT_TEXTURE)
-    alert.Texture:SetTexture(icon)
-    alert.Texture:SetAnchor(LEFT, alert, LEFT)
-    alert.Texture:SetDimensions(64, 64)
-
-    -- label
-    local font = FOB.GetFont(fontInfo.font, fontInfo.size, fontInfo.shadow)
-
-    alert.Label = WINDOW_MANAGER:CreateControl(name .. "_Label", alert, CT_LABEL)
-    alert.Label:SetFont(font)
-    alert.Label:SetColor(fontInfo.colour.r, fontInfo.colour.g, fontInfo.colour.b, fontInfo.colour.a)
-    alert.Label:SetHorizontalAlignment(_G.TEXT_ALIGN_CENTER)
-    alert.Label:SetVerticalAlignment(_G.TEXT_ALIGN_CENTER)
-    alert.Label:SetText(GetString(text))
-    alert.Label:SetDimensions(184, 64)
-    alert.Label:SetAnchor(LEFT, alert.Texture, RIGHT)
-    alert.Label:SetHidden(false)
-
-    -- fade out animation
-    local fadeAnimation, fadeTimeline = CreateSimpleAnimation(_G.ANIMATION_ALPHA, alert)
-
-    fadeAnimation:SetAlphaValues(1, 0)
-    fadeAnimation:SetDuration(1000)
-    fadeAnimation:SetHandler(
-        "OnStop",
-        function()
-            FOB.Alert:SetHidden(true)
-        end
-    )
-
-    fadeTimeline:SetPlaybackType(_G.ANIMATION_PLAYBACK_ONE_SHOT)
-
-    alert.FadeAnimation = fadeTimeline
-
-    local animation, timeline = CreateSimpleAnimation(_G.ANIMATION_SCALE, alert)
-
-    -- scaling animation
-    animation:SetStartScale(1)
-    animation:SetEndScale(3)
-    animation:SetDuration(1500)
-
-    timeline:SetPlaybackType(_G.ANIMATION_PLAYBACK_ONE_SHOT)
-
-    alert.Animation = timeline
-    alert.FadeAnimation = fadeTimeline
-
-    return alert
-end
-
-local function SetupCheeseAlert()
-    local font = {
-        font = FOB.Vars.CheeseFont,
-        size = FOB.Vars.CheeseFontSize,
-        shadow = FOB.Vars.CheeseFontShadow,
-        colour = FOB.Vars.CheeseFontColour
-    }
-
-    FOB.Alert = SetupAlert("FOB_Cheese_Alert", FOB.Vars.CheeseIcon, font, _G.FOB_CHEESE_ALERT)
-end
-
-local function SetupCoffeeAlert()
-    local font = {
-        font = FOB.Vars.CoffeeFont,
-        size = FOB.Vars.CoffeeFontSize,
-        shadow = FOB.Vars.CoffeeFontShadow,
-        colour = FOB.Vars.CoffeeFontColour
-    }
-
-    FOB.CoffeeAlert = SetupAlert("FOB_Coffee_Alert", FOB.Vars.CoffeeIcon, font, _G.FOB_COFFEE_ALERT)
-end
 
 -- disable FOB in irrelevant scenes
 local function sceneHandler(_, newState)
@@ -275,43 +150,6 @@ local function sceneHandler(_, newState)
     if (newState == "showing") then
         enabledForScene = enabledScenes[scene] or false
     --FOB.Log(enabledForScene, "warn")
-    end
-end
-
--- companion summoning frame
-function FOB.CreateCompanionSummoningFrame()
-    local name = FOB.Name .. "_CompanionSummoningFrame"
-
-    FOB.SummoningFrame = _G[name] or WINDOW_MANAGER:CreateTopLevelWindow(name)
-    FOB.SummoningFrame:SetDimensions(GuiRoot:GetWidth() / 3, 30)
-    FOB.SummoningFrame:SetAnchor(CENTER, GuiRoot, CENTER)
-    FOB.SummoningFrame:SetDrawTier(DT_HIGH)
-
-    FOB.SummoningFrame.Message = WINDOW_MANAGER:CreateControl(name .. "_Message", FOB.SummoningFrame, CT_LABEL)
-    FOB.SummoningFrame.Message:SetDimensions(400, 30)
-    FOB.SummoningFrame.Message:SetAnchor(CENTER, FOB.SummoningFrame, CENTER, 0, (GuiRoot:GetHeight() / 4) * -1)
-    FOB.SummoningFrame.Message:SetFont(FOB.GetFont("ESO Bold", 28, true))
-    FOB.SummoningFrame.Message:SetHorizontalAlignment(CENTER)
-    FOB.SummoningFrame.Message:SetVerticalAlignment(CENTER)
-    FOB.SummoningFrame.Message:SetColor(157 / 255, 132 / 255, 13 / 255, 1)
-end
-
-local function DismissCompanion()
-    local character = GetUnitName("player")
-    FOB.Vars.LastActiveCompanionId[character] = GetCompanionCollectibleId(FOB.ActiveCompanion)
-    UseCollectible(FOB.Vars.LastActiveCompanionId[character])
-end
-
-local function SummonCompanion()
-    local character = GetUnitName("player")
-    if (FOB.Vars.LastActiveCompanionId[character] or 0 ~= 0) then
-        UseCollectible(FOB.Vars.LastActiveCompanionId[character])
-    end
-end
-
-local function HideDefaultCompanionFrame()
-    if (not IsUnitGrouped("player") and UNIT_FRAMES:GetFrame("companion") ~= nil) then
-        UNIT_FRAMES:GetFrame("companion"):SetHiddenForReason("disabled", true)
     end
 end
 
@@ -325,7 +163,7 @@ function FOB.OnCompanionStateChanged(_, newState, _)
     end
 
     if (PENDING_COMPANION_STATES[newState]) then
-        HideDefaultCompanionFrame()
+        FOB.HideDefaultCompanionFrame()
 
         if (HasPendingCompanion()) and not IsCollectibleBlocked(GetCompanionCollectibleId(FOB.ActiveCompanion)) then
             local pendingCompanionDefId = GetPendingCompanionDefId()
@@ -338,98 +176,6 @@ function FOB.OnCompanionStateChanged(_, newState, _)
             FOB.SummoningFrame:SetHidden(false)
         end
     end
-end
-
-function FOB.GetFont(fontName, fontSize, fontShadow)
-    local hasShadow = fontShadow and "|soft-shadow-thick" or ""
-
-    return fonts[fontName] .. "|" .. fontSize .. hasShadow
-end
-
-function FOB.ShowAlert(alert)
-    alert:SetAlpha(1)
-    alert:SetHidden(false)
-    alert.Animation:PlayFromStart()
-
-    PlaySound(_G.SOUNDS.QUEST_ABANDONED)
-
-    zo_callLater(
-        function()
-            alert.FadeAnimation:PlayFromStart()
-        end,
-        750
-    )
-end
-
-function FOB.ToggleDefaultInteraction()
-    enabled = not enabled
-
-    local message = GetString(enabled and _G.FOB_ENABLED or _G.FOB_DISABLED)
-
-    FOB.Chat:SetTagColor("dc143c"):Print(message)
-end
-
-function FOB.ToggleCompanion()
-    if (HasActiveCompanion()) then
-        DismissCompanion()
-    else
-        SummonCompanion()
-    end
-end
-
-local ignoreSlots = {
-    [_G.EQUIP_SLOT_NECK] = true,
-    [_G.EQUIP_SLOT_RING1] = true,
-    [_G.EQUIP_SLOT_RING2] = true,
-    [_G.EQUIP_SLOT_COSTUME] = true,
-    [_G.EQUIP_SLOT_POISON] = true,
-    [_G.EQUIP_SLOT_BACKUP_POISON] = true,
-    [_G.EQUIP_SLOT_MAIN_HAND] = true,
-    [_G.EQUIP_SLOT_BACKUP_MAIN] = true,
-    [_G.EQUIP_SLOT_BACKUP_OFF] = true
-}
-
-function FOB.CheckDurability()
-    local lowest = 100
-    local lowestName = ""
-
-    if (FOB.Vars.CheckDamage) then
-        for _, item in pairs(_G.SHARED_INVENTORY.bagCache[_G.BAG_WORN]) do
-            if (not ignoreSlots[item.slotIndex]) then
-                if (item.name ~= "") then
-                    if (lowest > item.condition) then
-                        lowest = item.condition
-                        lowestName = item.name
-                    end
-                end
-            end
-        end
-    end
-
-    return lowest, lowestName
-end
-
-function FOB.Log(message, severity)
-    if (FOB.Logger) then
-        if (severity == "info") then
-            FOB.Logger:Info(message)
-        elseif (severity == "warn") then
-            FOB.Logger:Warn(message)
-        elseif (severity == "debug") then
-            FOB.Logger:Debug(message)
-        end
-    end
-end
-
-function FOB.Announce(header, message)
-    local messageParams = CENTER_SCREEN_ANNOUNCE:CreateMessageParams(_G.CSA_CATEGORY_LARGE_TEXT)
-
-    messageParams:SetSound("Justice_NowKOS")
-    messageParams:SetText(header, message)
-    messageParams:SetLifespanMS(6000)
-    messageParams:SetCSAType(_G.CENTER_SCREEN_ANNOUNCE_TYPE_SYSTEM_BROADCAST)
-
-    CENTER_SCREEN_ANNOUNCE:AddMessageWithParams(messageParams)
 end
 
 function FOB.OnAddonLoaded(_, addonName)
@@ -468,20 +214,6 @@ function FOB.OnAddonLoaded(_, addonName)
         "Characters"
     )
 
-    -- update deprecated variable
-    if (FOB.Vars.PreventCriminal) then
-        FOB.Vars.PreventCriminalBastian = FOB.Vars.PreventCriminal
-        FOB.Vars.PreventCriminal = nil
-    end
-
-    -- reset the old account-wide companion information
-    if (type(FOB.Vars.LastActiveCompanionId) == "number") then
-        local character = GetUnitName("player")
-        local id = FOB.Vars.LastActiveCompanionId
-        FOB.Vars.LastActiveCompanionId = {}
-        FOB.Vars.LastActiveCompanionId[character] = id
-    end
-
     -- settings
     FOB.RegisterSettings()
 
@@ -493,8 +225,8 @@ function FOB.OnAddonLoaded(_, addonName)
         ZO_PreHook(_G.DailyProvisioning, "Crafting", DailyProvisioningOverride)
     end
 
-    SetupCheeseAlert()
-    SetupCoffeeAlert()
+    FOB.SetupCheeseAlert()
+    FOB.SetupCoffeeAlert()
 
     -- handle damaged item tracking
     _G.SHARED_INVENTORY:RegisterCallback(
@@ -522,7 +254,7 @@ function FOB.OnAddonLoaded(_, addonName)
                                     FOB.COLOURS.GOLD:Colorize(itemName),
                                     ZO_CachedStrFormat(
                                         _G.SI_UNIT_NAME,
-                                        GetCollectibleInfo(GetCompanionCollectibleId(SHARPASNIGHT))
+                                        GetCollectibleInfo(GetCompanionCollectibleId(FOB.Sharp))
                                     )
                                 )
                             )

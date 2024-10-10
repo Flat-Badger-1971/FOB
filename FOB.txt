@@ -21,6 +21,7 @@ languages/en.lua
 languages/$(language).lua
 
 data/constants.lua
+data/defaults.lua
 data/companions/azandar.lua
 data/companions/bastian.lua
 data/companions/ember.lua
