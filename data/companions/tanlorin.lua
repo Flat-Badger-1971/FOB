@@ -1,10 +1,13 @@
 local FOB = _G.FOB
+local cid = GetCompanionCollectibleId(FOB.DefIds.Tanlorin)
+local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.Tanlorin] = {
+FOB.Functions[FOB.DefIds.Tanlorin] = {
+    Sort = name,
     Dislikes = function(action, interactableName)
         if (FOB.Vars.PreventNirnroot) then
             if (action == FOB.Actions.Collect) then
-                if (FOB.PartialMatch(interactableName, FOB.Nirnroot)) then
+                if (FOB.PartialMatch(interactableName, {[FOB.Nirnroot] = true})) then
                     return true
                 end
             end
@@ -19,7 +22,7 @@ FOB.Functions[FOB.Tanlorin] = {
         end
 
         if (FOB.Vars.PreventLorebooks) then
-            if (action == FOB.Actions.Read) then
+            if (action == FOB.Actions.Examine) then
                 return true
             end
         end
@@ -27,9 +30,6 @@ FOB.Functions[FOB.Tanlorin] = {
         return false
     end,
     Settings = function(options)
-        local cid = GetCompanionCollectibleId(FOB.Tanlorin)
-        local name, _, icon = GetCollectibleInfo(cid)
-
         name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
 
         local submenu = {

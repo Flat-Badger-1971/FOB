@@ -59,10 +59,10 @@ _G.FOB = {
     Actions = {
         Catch = GetString(_G.FOB_CATCH),
         Collect = GetString(_G.FOB_COLLECT),
+        Examine = GetString(_G.FOB_EXAMINE),
         Take = GetString(_G.FOB_TAKE),
         Talk = GetString(_G.FOB_TALK),
         Open = GetString(_G.FOB_OPEN),
-        Read = GetString(_G.FOB_READ),
         Use = GetString(_G.FOB_USE)
     },
     Illegal = {
@@ -82,7 +82,7 @@ _G.FOB = {
     Nirnroot = GetString(_G.FOB_NIRNROOT),
     DarkBrotherhood = GetString(_G.FOB_DARK_BROTHERHOOD),
     MagesGuild = GetString(_G.FOB_MAGES_GUILD),
-    FontsDefs = {
+    FontDefs = {
         ["Standard"] = "$(MEDIUM_FONT)",
         ["ESO Bold"] = "$(BOLD_FONT)",
         ["Antique"] = "$(ANTIQUE_FONT)",
@@ -104,19 +104,3 @@ _G.FOB = {
         "/esoui/art/icons/crowncrate_magickahealth_drink.dds"
     }
 }
-
-do
-    _G.FOB.Fonts = {}
-    _G.FOB.CompanionNames = {}
-
-    for fontName, _ in pairs(_G.FOB.FontDefs) do
-        table.insert(_G.FOB.Fonts, fontName)
-    end
-
-    for _, defId in pairs(_G.FOB.DefIds) do
-        local cid = GetCompanionCollectibleId(defId)
-        local name = GetCollectibleInfo(cid)
-
-        table.insert(_G.FOB.CompanionNames, ZO_CachedStrFormat(_G.SI_UNIT_NAME, name))
-    end
-end

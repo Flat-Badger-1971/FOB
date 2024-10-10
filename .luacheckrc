@@ -143,6 +143,7 @@ read_globals = {
     "GetActiveCompanionRapport",
     "GetActiveCompanionRapportLevel",
     "GetActiveCompanionRapportLevelDescription",
+    "GetAddOnManager",
     "GetAllianceColor",
     "GetAllianceName",
     "GetAnimationManager",

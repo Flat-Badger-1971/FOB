@@ -1,6 +1,9 @@
 local FOB = _G.FOB
+local cid = GetCompanionCollectibleId(FOB.DefIds.Azander)
+local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.Azander] = {
+FOB.Functions[FOB.DefIds.Azander] = {
+    Sort = name,
     Dislikes = function(interactableName, action)
         if (FOB.Vars.PreventMushroom) then
             if (action == FOB.Actions.Collect) then
@@ -17,9 +20,6 @@ FOB.Functions[FOB.Azander] = {
         return false
     end,
     Settings = function(options)
-        local cid = GetCompanionCollectibleId(FOB.Azander)
-        local name, _, icon = GetCollectibleInfo(cid)
-
         name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
 
         local submenu = {

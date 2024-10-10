@@ -1,6 +1,9 @@
 local FOB = _G.FOB
+local cid = GetCompanionCollectibleId(FOB.DefIds.Mirri)
+local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.Mirri] = {
+FOB.Functions[FOB.DefIds.Mirri] = {
+    Sort = name,
     Dislikes = function(action, interactableName)
         if (FOB.Vars.PreventDarkBrotherhood) then
             if (action == FOB.Actions.Open) then
@@ -37,9 +40,6 @@ FOB.Functions[FOB.Mirri] = {
         return false
     end,
     Settings = function(options)
-        local cid = GetCompanionCollectibleId(FOB.Mirri)
-        local name, _, icon = GetCollectibleInfo(cid)
-
         name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
 
         local submenu = {

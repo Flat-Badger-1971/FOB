@@ -1,6 +1,9 @@
 local FOB = _G.FOB
+local cid = GetCompanionCollectibleId(FOB.DefIds.Sharp)
+local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.Sharp] = {
+FOB.Functions[FOB.DefIds.Sharp] = {
+    Sort = name,
     Dislikes = function(action, interactableName)
         if (FOB.Vars.PreventOutfit) then
             if (action == FOB.Actions.Use) then
@@ -13,9 +16,6 @@ FOB.Functions[FOB.Sharp] = {
         return false
     end,
     Settings = function(options)
-        local cid = GetCompanionCollectibleId(FOB.Sharp)
-        local name, _, icon = GetCollectibleInfo(cid)
-
         name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
 
         local submenu = {

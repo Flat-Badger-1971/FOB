@@ -1,19 +1,5 @@
 local FOB = _G.FOB
-local version = "2.2.0"
-
-function FOB.GetFirstWord(text)
-    local space = text:find(" ")
-
-    if (not space) then
-        space = text:find("-")
-
-        if (not space) then
-            return text
-        end
-    end
-
-    return text:sub(1, space - 1)
-end
+local version = FOB.GetAddonVersion()
 
 FOB.LAM = _G.LibAddonMenu2
 
@@ -83,6 +69,13 @@ local function getOptions()
             width = "full"
         }
     }
+
+    -- table.sort(
+    --     FOB.Functions,
+    --     function(a, b)
+    --         return FOB.GetFirstWord(a.Sort) < FOB.GetFirstWord(b.Sort)
+    --     end
+    -- )
 
     for _, functions in pairs(FOB.Functions) do
         if (functions.Settings) then

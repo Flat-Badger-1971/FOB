@@ -1,6 +1,9 @@
 local FOB = _G.FOB
+local cid = GetCompanionCollectibleId(FOB.DefIds.Ember)
+local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.Ember] = {
+FOB.Functions[FOB.DefIds.Ember] = {
+    Sort = name,
     Dislikes = function(_, _, _, additionalInfo)
         if (FOB.Vars.PreventFishing) then
             if (additionalInfo == _G.ADDITIONAL_INTERACT_INFO_FISHING_NODE) then
@@ -17,9 +20,6 @@ FOB.Functions[FOB.Ember] = {
         return false
     end,
     Settings = function(options)
-        local cid = GetCompanionCollectibleId(FOB.Ember)
-        local name, _, icon = GetCollectibleInfo(cid)
-
         name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
 
         local submenu = {

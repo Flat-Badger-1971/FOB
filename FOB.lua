@@ -42,6 +42,14 @@ end
 
 local function FOBHandler(interactionPossible, _)
     if (interactionPossible and FOB.Enabled and enabledForScene and HasActiveCompanion()) then
+        if (not FOB.ActiveCompanionDefId) then
+            FOB.ActiveCompanionDefId = GetActiveCompanionDefId()
+        end
+
+        if (not FOB.Functions[FOB.ActiveCompanionDefId]) then
+            return
+        end
+
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
             GetGameCameraInteractableActionInfo()
 
@@ -286,6 +294,8 @@ function FOB.OnAddonLoaded(_, addonName)
             end
         end
     )
+
+    FOB.ActiveCompanionDefId = GetActiveCompanionDefId()
 
     -- utiltity
     if (_G.SLASH_COMMANDS["/rl"] == nil) then

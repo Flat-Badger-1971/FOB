@@ -1,6 +1,9 @@
 local FOB = _G.FOB
+local cid = GetCompanionCollectibleId(FOB.DefIds.Isobel)
+local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.Isobel] = {
+FOB.Functions[FOB.DefIds.Isobel] = {
+    Sort = name,
     Dislikes = function(action, interactableName, isCriminalInteract)
         local isCriminal = isCriminalInteract
 
@@ -23,9 +26,6 @@ FOB.Functions[FOB.Isobel] = {
         return false
     end,
     Settings = function(options)
-        local cid = GetCompanionCollectibleId(FOB.Isobel)
-        local name, _, icon = GetCollectibleInfo(cid)
-
         name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
 
         local submenu = {

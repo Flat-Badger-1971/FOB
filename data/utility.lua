@@ -131,6 +131,42 @@ function FOB.Log(message, severity)
     end
 end
 
+function FOB.GetFirstWord(text)
+    local space = text:find(" ")
+
+    if (not space) then
+        space = text:find("-")
+
+        if (not space) then
+            return text
+        end
+    end
+
+    return text:sub(1, space - 1)
+end
+
+function FOB.GetAddonVersion()
+    local manager = GetAddOnManager()
+    local numAddons = manager:GetNumAddOns()
+    local version = "?"
+
+    for addon = 1, numAddons do
+        local name = manager:GetAddOnInfo(addon)
+
+        if (name == FOB.Name) then
+            version = tostring(manager:GetAddOnVersion(addon))
+            local major = tonumber(version:sub(1, 1))
+            local minor = tonumber(version:sub(2, 2))
+            local revision = tonumber(version:sub(3))
+
+            version = string.format("%d.%d.%d", major, minor, revision)
+            break
+        end
+    end
+
+    return version
+end
+
 -- UI
 function FOB.ShowAlert(alert)
     alert:SetAlpha(1)
@@ -243,4 +279,21 @@ function FOB.CreateCompanionSummoningFrame()
     FOB.SummoningFrame.Message:SetHorizontalAlignment(CENTER)
     FOB.SummoningFrame.Message:SetVerticalAlignment(CENTER)
     FOB.SummoningFrame.Message:SetColor(157 / 255, 132 / 255, 13 / 255, 1)
+end
+
+-- init
+do
+    _G.FOB.Fonts = {}
+    _G.FOB.CompanionNames = {}
+
+    for fontName, _ in pairs(_G.FOB.FontDefs) do
+        table.insert(_G.FOB.Fonts, fontName)
+    end
+
+    for _, defId in pairs(_G.FOB.DefIds) do
+        local cid = GetCompanionCollectibleId(defId)
+        local name = FOB.GetFirstWord(GetCollectibleInfo(cid))
+
+        _G.FOB.CompanionNames[name]=true
+    end
 end

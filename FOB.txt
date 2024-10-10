@@ -22,6 +22,7 @@ languages/$(language).lua
 
 data/constants.lua
 data/defaults.lua
+data/utility.lua
 data/companions/azandar.lua
 data/companions/bastian.lua
 data/companions/ember.lua
@@ -30,6 +31,7 @@ data/companions/mirri.lua
 data/companions/sharp.lua
 data/companions/tanlorin.lua
 data/companions/zerith.lua
+
 settings/settings.lua
 
 FOB.lua
