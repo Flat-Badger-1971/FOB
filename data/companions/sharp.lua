@@ -51,3 +51,40 @@ FOB.Functions[FOB.DefIds.Sharp] = {
         }
     end
 }
+
+-- handle damaged item tracking
+_G.SHARED_INVENTORY:RegisterCallback(
+    "SingleSlotInventoryUpdate",
+    function()
+        if (FOB.Vars.CheckDamage) then
+            if (FOB.ActiveCompanion == FOB.Sharp) then
+                local minDamage, itemName = FOB.CheckDurability()
+
+                if (minDamage < 5) then
+                    local announce = true
+                    local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
+                    local debounceTime = 300
+
+                    if (os.time() - previousTime <= debounceTime) then
+                        announce = false
+                    end
+
+                    if (announce == true) then
+                        FOB.Vars.PreviousAnnounceTime = os.time()
+                        FOB.Announce(
+                            FOB.COLOURS.RED:Colorize(GetString(_G.FOB_WARNING)),
+                            zo_strformat(
+                                GetString(_G.FOB_DAMAGED),
+                                FOB.COLOURS.GOLD:Colorize(itemName),
+                                ZO_CachedStrFormat(
+                                    _G.SI_UNIT_NAME,
+                                    GetCollectibleInfo(GetCompanionCollectibleId(FOB.Sharp))
+                                )
+                            )
+                        )
+                    end
+                end
+            end
+        end
+    end
+)

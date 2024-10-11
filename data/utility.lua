@@ -33,6 +33,71 @@ function FOB.CheckIngredients(recipeData, companion)
     return false
 end
 
+-- handler for built in provisioning interface
+function FOB.ProvisionerHandler()
+    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
+    local recipeData
+
+    if (check) then
+        recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
+        return FOB.CheckIngredients(recipeData, FOB.Bastian)
+    end
+
+    check = FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanionDefId == FOB.Azander
+
+    if (check) then
+        recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
+        return FOB.CheckIngredients(recipeData, FOB.Azander)
+    end
+end
+
+function FOB.DailyProvisioningOverride()
+    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
+
+    check = check or (FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanion == FOB.Azander)
+
+    if (not check) then
+        return false
+    end
+
+    local infos, hasMaster, hasDaily, hasEvent = _G.DailyProvisioning:GetQuestInfos()
+
+    if (not infos) or #infos == 0 then
+        return false
+    end
+
+    _G.DailyProvisioning.recipeList =
+        _G.DailyProvisioning.recipeList or _G.DailyProvisioning:GetRecipeList(hasMaster, hasDaily, hasEvent)
+    if (_G.DailyProvisioning.savedVariables.isDontKnow) then
+        if (_G.DailyProvisioning:ExistUnknownRecipe(infos)) then
+            return false
+        end
+    end
+
+    local parameter
+
+    for _, info in pairs(infos) do
+        info.convertedTxt =
+            _G.DailyProvisioning:IsValidConditions(info.convertedTxt, info.current, info.max, info.isVisible)
+        if (info.convertedTxt) then
+            parameter = _G.DailyProvisioning:CreateParameter(info)[1]
+
+            if (not parameter) then
+                return false
+            elseif (parameter.recipeLink) then
+                local recipeData = {
+                    recipeListIndex = parameter.listIndex,
+                    recipeIndex = parameter.recipeIndex
+                }
+
+                return FOB.CheckIngredients(recipeData, FOB.ActiveCompanion)
+            end
+        end
+    end
+
+    return false
+end
+
 function FOB.DismissCompanion()
     local character = GetUnitName("player")
 
@@ -169,6 +234,32 @@ function FOB.GetAddonVersion()
 end
 
 -- UI
+function FOB.CreateReticle()
+    local name = "FOB_Reticle"
+
+    FOB.Reticle = WINDOW_MANAGER:CreateControl(name, _G.ZO_ReticleContainer, CT_TEXTURE)
+    FOB.Reticle:SetAnchor(CENTER)
+    FOB.Reticle:SetDimensions(64, 64)
+    FOB.Reticle:SetTexture("FOB/assets/fobBlock.dds")
+    FOB.Reticle:SetHidden(true)
+end
+
+function FOB.ReplaceReticle()
+    if (not FOB.UsingFOBReticle) then
+        _G.ZO_ReticleContainerReticle:SetAlpha(0)
+        FOB.Reticle:SetHidden(false)
+        FOB.UsingFOBReticle = true
+    end
+end
+
+function FOB.RestoreReticle()
+    if (FOB.UsingFOBReticle) then
+        _G.ZO_ReticleContainerReticle:SetAlpha(1)
+        FOB.Reticle:SetHidden(true)
+        FOB.UsingFOBReticle = false
+    end
+end
+
 function FOB.ShowAlert(alert)
     alert:SetAlpha(1)
     alert:SetHidden(false)
@@ -295,6 +386,6 @@ do
         local cid = GetCompanionCollectibleId(defId)
         local name = FOB.GetFirstWord(GetCollectibleInfo(cid))
 
-        _G.FOB.CompanionNames[name]=true
+        _G.FOB.CompanionNames[name] = true
     end
 end

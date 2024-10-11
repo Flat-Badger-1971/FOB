@@ -61,6 +61,7 @@ local function FOBHandler(interactionPossible, _)
                 additionalInfo
             ))
          then
+            FOB.ReplaceReticle()
             EndPendingInteraction()
             return endInteraction
         end
@@ -79,77 +80,11 @@ local function FOBHandler(interactionPossible, _)
             end
         end
 
+        FOB.RestoreReticle()
+
         return false
     end
 end
-
--- handler for built in provisioning interface
-local function FOBProvisionerHandler()
-    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
-    local recipeData
-
-    if (check) then
-        recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
-        return FOB.CheckIngredients(recipeData, FOB.Bastian)
-    end
-
-    check = FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanionDefId == FOB.Azander
-
-    if (check) then
-        recipeData = _G.PROVISIONER.recipeTree:GetSelectedData()
-        return FOB.CheckIngredients(recipeData, FOB.Azander)
-    end
-end
-
--- handle for DailyProvisioning addon, based on original code from that
-local function DailyProvisioningOverride()
-    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
-
-    check = check or (FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanion == FOB.Azander)
-
-    if (not check) then
-        return false
-    end
-
-    local infos, hasMaster, hasDaily, hasEvent = _G.DailyProvisioning:GetQuestInfos()
-
-    if (not infos) or #infos == 0 then
-        return false
-    end
-
-    _G.DailyProvisioning.recipeList =
-        _G.DailyProvisioning.recipeList or _G.DailyProvisioning:GetRecipeList(hasMaster, hasDaily, hasEvent)
-    if (_G.DailyProvisioning.savedVariables.isDontKnow) then
-        if (_G.DailyProvisioning:ExistUnknownRecipe(infos)) then
-            return false
-        end
-    end
-
-    local parameter
-
-    for _, info in pairs(infos) do
-        info.convertedTxt =
-            _G.DailyProvisioning:IsValidConditions(info.convertedTxt, info.current, info.max, info.isVisible)
-        if (info.convertedTxt) then
-            parameter = _G.DailyProvisioning:CreateParameter(info)[1]
-
-            if (not parameter) then
-                return false
-            elseif (parameter.recipeLink) then
-                local recipeData = {
-                    recipeListIndex = parameter.listIndex,
-                    recipeIndex = parameter.recipeIndex
-                }
-
-                return FOB.CheckIngredients(recipeData, FOB.ActiveCompanion)
-            end
-        end
-    end
-
-    return false
-end
-
----- Alerts ----
 
 -- disable FOB in irrelevant scenes
 local function sceneHandler(_, newState)
@@ -227,51 +162,14 @@ function FOB.OnAddonLoaded(_, addonName)
 
     -- hook into the reticle interaction handler
     ZO_PreHook(RETICLE, "TryHandlingInteraction", FOBHandler)
-    ZO_PreHook(ZO_Provisioner, "Create", FOBProvisionerHandler)
+    ZO_PreHook(ZO_Provisioner, "Create", FOB.ProvisionerHandler)
 
     if (_G.DailyProvisioning) then
-        ZO_PreHook(_G.DailyProvisioning, "Crafting", DailyProvisioningOverride)
+        ZO_PreHook(_G.DailyProvisioning, "Crafting", FOB.DailyProvisioningOverride)
     end
 
     FOB.SetupCheeseAlert()
     FOB.SetupCoffeeAlert()
-
-    -- handle damaged item tracking
-    _G.SHARED_INVENTORY:RegisterCallback(
-        "SingleSlotInventoryUpdate",
-        function()
-            if (FOB.Vars.CheckDamage) then
-                if (FOB.ActiveCompanion == FOB.Sharp) then
-                    local minDamage, itemName = FOB.CheckDurability()
-
-                    if (minDamage < 5) then
-                        local announce = true
-                        local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
-                        local debounceTime = 300
-
-                        if (os.time() - previousTime <= debounceTime) then
-                            announce = false
-                        end
-
-                        if (announce == true) then
-                            FOB.Vars.PreviousAnnounceTime = os.time()
-                            FOB.Announce(
-                                FOB.COLOURS.RED:Colorize(GetString(_G.FOB_WARNING)),
-                                zo_strformat(
-                                    GetString(_G.FOB_DAMAGED),
-                                    FOB.COLOURS.GOLD:Colorize(itemName),
-                                    ZO_CachedStrFormat(
-                                        _G.SI_UNIT_NAME,
-                                        GetCollectibleInfo(GetCompanionCollectibleId(FOB.Sharp))
-                                    )
-                                )
-                            )
-                        end
-                    end
-                end
-            end
-        end
-    )
 
     -- if Companion Frame is installed, let it handle the summoning frame
     if (not _G.CF) then
