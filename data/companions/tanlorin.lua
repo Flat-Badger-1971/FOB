@@ -1,9 +1,10 @@
 if (_G.CURT_IMPERIAL_FRAGMENTS) then
     local FOB = _G.FOB
-    local cid = GetCompanionCollectibleId(FOB.DefIds.Tanlorin)
+    local defId = FOB.DefIds.Tanlorin
+    local cid = GetCompanionCollectibleId(defId)
     local name, _, icon = GetCollectibleInfo(cid)
 
-    FOB.Functions[FOB.DefIds.Tanlorin] = {
+    FOB.Functions[defId] = {
         Sort = name,
         Dislikes = function(action, interactableName)
             if (FOB.Vars.PreventNirnroot) then

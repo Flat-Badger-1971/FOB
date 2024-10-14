@@ -1,8 +1,9 @@
 local FOB = _G.FOB
-local cid = GetCompanionCollectibleId(FOB.DefIds.Bastian)
+local defId = FOB.DefIds.Bastian
+local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.DefIds.Bastian] = {
+FOB.Functions[defId] = {
     Sort = name,
     Dislikes = function(action, _, isCriminalInteract)
         local isCriminal = isCriminalInteract

@@ -127,6 +127,7 @@ end
 
 function FOB.ToggleDefaultInteraction()
     FOB.Enabled = not FOB.Enabled
+    FOB.RunCompanionFunctions()
 
     local message = GetString(FOB.Enabled and _G.FOB_ENABLED or _G.FOB_DISABLED)
 
@@ -234,21 +235,28 @@ function FOB.GetAddonVersion()
 end
 
 -- UI
-function FOB.CreateReticle()
-    local name = "FOB_Reticle"
+function FOB.CreateFOBLogo(parent)
+    local logo = WINDOW_MANAGER:CreateControl(nil, parent, CT_TEXTURE)
 
-    FOB.Reticle = WINDOW_MANAGER:CreateControl(name, _G.ZO_ReticleContainer, CT_TEXTURE)
-    FOB.Reticle:SetAnchor(CENTER)
-    FOB.Reticle:SetDimensions(64, 64)
-    FOB.Reticle:SetTexture("FOB/assets/fobBlock.dds")
-    FOB.Reticle:SetHidden(true)
+    logo:SetAnchor(CENTER)
+    logo:SetDimensions(64, 64)
+    logo:SetTexture(FOB.ReticlePath)
+    logo:SetHidden(true)
 end
 
 function FOB.ReplaceReticle()
-    if (not FOB.UsingFOBReticle) then
-        _G.ZO_ReticleContainerReticle:SetAlpha(0)
-        FOB.Reticle:SetHidden(false)
-        FOB.UsingFOBReticle = true
+    if (FOB.Vars.UseReticle) then
+        if (not FOB.Reticle) then
+            FOB.Reticle = FOB.CreateFOBLogo(_G.ZO_ReticleContainer)
+        end
+
+        if (not FOB.UsingFOBReticle) then
+            _G.ZO_ReticleContainerReticle:SetAlpha(0)
+            FOB.Reticle:SetHidden(false)
+            FOB.UsingFOBReticle = true
+        end
+    else
+        FOB.UsingFOBReticle = false
     end
 end
 
@@ -387,5 +395,11 @@ do
         local name = FOB.GetFirstWord(GetCollectibleInfo(cid))
 
         _G.FOB.CompanionNames[name] = true
+    end
+
+    if (_G.SLASH_COMMANDS["/rl"] == nil) then
+        _G.SLASH_COMMANDS["/rl"] = function()
+            ReloadUI()
+        end
     end
 end

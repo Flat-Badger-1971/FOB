@@ -1,5 +1,6 @@
 _G.FOB = {
     Name = "FOB",
+    LF = string.char(10),
     FlyingInsects = {
         [GetString(_G.FOB_BLACKREACH_JELLY)] = true,
         [GetString(_G.FOB_BRIGHT_MOONS_LUNAR_MOTH)] = true,
@@ -61,6 +62,7 @@ _G.FOB = {
         Catch = GetString(_G.FOB_CATCH),
         Collect = GetString(_G.FOB_COLLECT),
         Examine = GetString(_G.FOB_EXAMINE),
+        --Search
         Take = GetString(_G.FOB_TAKE),
         Talk = GetString(_G.FOB_TALK),
         Open = GetString(_G.FOB_OPEN),
@@ -103,5 +105,11 @@ _G.FOB = {
         "/esoui/art/icons/crafting_coffee_beans.dds",
         "/esoui/art/icons/housing_orc_inc_cupbone001.dds",
         "/esoui/art/icons/crowncrate_magickahealth_drink.dds"
-    }
+    },
+    Treasures = {
+        [GetString(_G.FOB_RITUAL)] = true,
+        [GetString(_G.FOB_MEDICAL)] = true,
+        -- [GetString(_G.FOB_SENTIMENTAL)] = true what are these?
+    },
+    ReticlePath = "FOB/assets/fobBlock.dds"
 }

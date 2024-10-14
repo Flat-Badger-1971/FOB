@@ -1,8 +1,9 @@
 local FOB = _G.FOB
-local cid = GetCompanionCollectibleId(FOB.DefIds.Mirri)
+local defId = FOB.DefIds.Mirri
+local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.DefIds.Mirri] = {
+FOB.Functions[defId] = {
     Sort = name,
     Dislikes = function(action, interactableName)
         if (FOB.Vars.PreventDarkBrotherhood) then
@@ -98,3 +99,5 @@ FOB.Functions[FOB.DefIds.Mirri] = {
         }
     end
 }
+
+-- blade of woe (ability 78219)

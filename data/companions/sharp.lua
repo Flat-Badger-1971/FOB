@@ -1,8 +1,9 @@
 local FOB = _G.FOB
-local cid = GetCompanionCollectibleId(FOB.DefIds.Sharp)
+local defId = FOB.DefIds.Sharp
+local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.DefIds.Sharp] = {
+FOB.Functions[defId] = {
     Sort = name,
     Dislikes = function(action, interactableName)
         if (FOB.Vars.PreventOutfit) then
@@ -49,42 +50,42 @@ FOB.Functions[FOB.DefIds.Sharp] = {
             controls = submenu,
             icon = icon
         }
-    end
-}
+    end,
+    OnSingleSlotInventoryUpdate = function()
+        if (FOB.Vars.CheckDamage and FOB.ActiveCompanionDefId == defId) then
+            local minDamage, itemName = FOB.CheckDurability()
 
--- handle damaged item tracking
-_G.SHARED_INVENTORY:RegisterCallback(
-    "SingleSlotInventoryUpdate",
-    function()
-        if (FOB.Vars.CheckDamage) then
-            if (FOB.ActiveCompanion == FOB.Sharp) then
-                local minDamage, itemName = FOB.CheckDurability()
+            if (minDamage < 5) then
+                local announce = true
+                local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
+                local debounceTime = 300
 
-                if (minDamage < 5) then
-                    local announce = true
-                    local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
-                    local debounceTime = 300
+                if (os.time() - previousTime <= debounceTime) then
+                    announce = false
+                end
 
-                    if (os.time() - previousTime <= debounceTime) then
-                        announce = false
-                    end
-
-                    if (announce == true) then
-                        FOB.Vars.PreviousAnnounceTime = os.time()
-                        FOB.Announce(
-                            FOB.COLOURS.RED:Colorize(GetString(_G.FOB_WARNING)),
-                            zo_strformat(
-                                GetString(_G.FOB_DAMAGED),
-                                FOB.COLOURS.GOLD:Colorize(itemName),
-                                ZO_CachedStrFormat(
-                                    _G.SI_UNIT_NAME,
-                                    GetCollectibleInfo(GetCompanionCollectibleId(FOB.Sharp))
-                                )
+                if (announce == true) then
+                    FOB.Vars.PreviousAnnounceTime = os.time()
+                    FOB.Announce(
+                        FOB.COLOURS.RED:Colorize(GetString(_G.FOB_WARNING)),
+                        zo_strformat(
+                            GetString(_G.FOB_DAMAGED),
+                            FOB.COLOURS.GOLD:Colorize(itemName),
+                            ZO_CachedStrFormat(
+                                _G.SI_UNIT_NAME,
+                                GetCollectibleInfo(GetCompanionCollectibleId(FOB.Sharp))
                             )
                         )
-                    end
+                    )
                 end
             end
         end
     end
-)
+}
+
+if (IsCollectibleUsable(GetCompanionCollectibleId(defId))) then
+    -- handle damaged item tracking
+    _G.SHARED_INVENTORY:RegisterCallback("SingleSlotInventoryUpdate", FOB.Functions[defId].OnSingleSlotInventoryUpdate)
+end
+
+-- destroy item worth over 20g

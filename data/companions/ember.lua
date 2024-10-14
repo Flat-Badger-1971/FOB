@@ -1,8 +1,9 @@
 local FOB = _G.FOB
-local cid = GetCompanionCollectibleId(FOB.DefIds.Ember)
+local defId = FOB.DefIds.Ember
+local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.DefIds.Ember] = {
+FOB.Functions[defId] = {
     Sort = name,
     Dislikes = function(_, _, _, additionalInfo)
         if (FOB.Vars.PreventFishing) then

@@ -1,8 +1,9 @@
 local FOB = _G.FOB
-local cid = GetCompanionCollectibleId(FOB.DefIds.Azander)
+local defId = FOB.DefIds.Azander
+local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
 
-FOB.Functions[FOB.DefIds.Azander] = {
+FOB.Functions[defId] = {
     Sort = name,
     Dislikes = function(interactableName, action)
         if (FOB.Vars.PreventMushroom) then

@@ -6,7 +6,7 @@ FOB.LAM = _G.LibAddonMenu2
 local panel = {
     type = "panel",
     name = "FOB - Companion Helper",
-    displayName = "|cdc143cFOB|r - Companion Helper",
+    displayName = zo_iconFormat(FOB.ReticlePath) .. "  |cdc143cFOB|r - Companion Helper" .. FOB.LF,
     author = "Flat Badger",
     version = version,
     slashCommand = "/fob",
@@ -65,6 +65,17 @@ local function getOptions()
             end,
             disabled = function()
                 return _G.CF ~= nil
+            end,
+            width = "full"
+        },
+        [4] = {
+            type = "checkbox",
+            name = GetString(_G.FOB_RETICAL),
+            getFunc = function()
+                return FOB.Vars.UseRetical or false
+            end,
+            setFunc = function(value)
+                FOB.Vars.UseRetical = value
             end,
             width = "full"
         }

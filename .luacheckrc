@@ -73,7 +73,8 @@ read_globals = {
     ["FENCE_MANAGER"] = {
         fields = {
             GetNumTotalTransactions = {read_only = true},
-            GetNumTransactionsUsed = {read_only = true}
+            GetNumTransactionsUsed = {read_only = true},
+            RegisterCallback = {read_only = true}
         }
     },
     ["FISHING_MANAGER"] = {
@@ -355,8 +356,11 @@ read_globals = {
     "GetHouseFoundInZoneId",
     "GetInfamy",
     "GetInfamyLevel",
+    "GetItemLinkNumItemTags",
+    "GetItemLinkItemTagInfo",
     "GetLFGActivityRewardDescriptionOverride",
     "GetLFGActivityRewardUINodeInfo",
+    "GetLootItemLink",
     "GetUIGlobalScale",
     "GetInteractionType",
     "GetInterfaceColor",

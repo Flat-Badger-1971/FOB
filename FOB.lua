@@ -96,27 +96,34 @@ local function sceneHandler(_, newState)
     end
 end
 
+function FOB.RunCompanionFunctions()
+    -- Zerith
+    _G.PLAYER_INVENTORY:RefreshAllInventorySlots(_G.INVENTORY_BACKPACK)
+end
+
 function FOB.OnCompanionStateChanged(_, newState, _)
-    if (_G.CF ~= nil) then
-        return
-    end
+    if (FOB.Vars.UseCompanionSummmoningFrame) then
+        if (_G.CF ~= nil) then
+            return
+        end
 
-    if (ACTIVE_COMPANION_STATES[newState]) then
-        FOB.SummoningFrame:SetHidden(true)
-    end
+        if (ACTIVE_COMPANION_STATES[newState]) then
+            FOB.SummoningFrame:SetHidden(true)
+        end
 
-    if (PENDING_COMPANION_STATES[newState]) then
-        FOB.HideDefaultCompanionFrame()
+        if (PENDING_COMPANION_STATES[newState]) then
+            FOB.HideDefaultCompanionFrame()
 
-        if (HasPendingCompanion()) and not IsCollectibleBlocked(GetCompanionCollectibleId(FOB.ActiveCompanion)) then
-            local pendingCompanionDefId = GetPendingCompanionDefId()
-            local pendingCompanionName = GetCompanionName(pendingCompanionDefId)
-            local companionName = zo_strformat(_G.SI_COMPANION_NAME_FORMATTER, pendingCompanionName)
-            local summoning = GetString(_G.SI_UNIT_FRAME_STATUS_SUMMONING)
-            local summoningText = companionName .. ". " .. summoning
+            if (HasPendingCompanion()) and not IsCollectibleBlocked(GetCompanionCollectibleId(FOB.ActiveCompanion)) then
+                local pendingCompanionDefId = GetPendingCompanionDefId()
+                local pendingCompanionName = GetCompanionName(pendingCompanionDefId)
+                local companionName = zo_strformat(_G.SI_COMPANION_NAME_FORMATTER, pendingCompanionName)
+                local summoning = GetString(_G.SI_UNIT_FRAME_STATUS_SUMMONING)
+                local summoningText = companionName .. ". " .. summoning
 
-            FOB.SummoningFrame.Message:SetText(summoningText)
-            FOB.SummoningFrame:SetHidden(false)
+                FOB.SummoningFrame.Message:SetText(summoningText)
+                FOB.SummoningFrame:SetHidden(false)
+            end
         end
     end
 end
@@ -183,24 +190,16 @@ function FOB.OnAddonLoaded(_, addonName)
             zo_callLater(
                 function()
                     FOB.ActiveCompanionDefId = GetActiveCompanionDefId()
+                    FOB.RunCompanionFunctions()
                 end,
                 2000
             )
 
-            if (FOB.Vars.UseCompanionSummmoningFrame) then
-                FOB.OnCompanionStateChanged()
-            end
+            FOB.OnCompanionStateChanged()
         end
     )
 
     FOB.ActiveCompanionDefId = GetActiveCompanionDefId()
-
-    -- utiltity
-    if (_G.SLASH_COMMANDS["/rl"] == nil) then
-        _G.SLASH_COMMANDS["/rl"] = function()
-            ReloadUI()
-        end
-    end
 end
 
 EVENT_MANAGER:RegisterForEvent(FOB.Name, _G.EVENT_ADD_ON_LOADED, FOB.OnAddonLoaded)

@@ -1,4 +1,5 @@
 _G.FOB.Defaults = {
+    -- BlockEdictDoubleClick = false,
     CheeseFont = "ESO Bold",
     CheeseFontColour = {r = 0.9, g = 0.8, b = 0.2, a = 1},
     CheeseFontShadow = true,
@@ -19,11 +20,15 @@ _G.FOB.Defaults = {
     PreventCriminalBastian = false,
     PreventCriminalIsobel = false,
     PreventDarkBrotherhood = false,
+    PreventEdicts = false,
+    PreventFence = false,
     PreventFishing = false,
     PreventLorebooks = false,
     PreventMagesGuild = false,
     PreventMushroom = false,
     PreventNirnroot = false,
     PreventOutlawsRefuge = false,
-    UseCompanionSummmoningFrame = true
+    PreventTreasure = false,
+    UseCompanionSummmoningFrame = true,
+    UseRetical = true
 }
