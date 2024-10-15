@@ -32,23 +32,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                     end,
                     width = "full"
                 },
-                -- [2] = {
-                --     type = "checkbox",
-                --     name = GetString(_G.FOB_PREVENT_EDICTS_DC),
-                --     warning = GetString(_G.FOB_PREVENT_EDICTS_DC_TT),
-                --     getFunc = function()
-                --         return FOB.Vars.BlockEdictDoubleClick or false
-                --     end,
-                --     setFunc = function(value)
-                --         FOB.Vars.BlockEdictDoubleClick = value
-                --         _G.PLAYER_INVENTORY:RefreshAllInventorySlots(_G.INVENTORY_BACKPACK)
-                --     end,
-                --     disabled = function()
-                --         return not FOB.Vars.PreventEdicts
-                --     end,
-                --     width = "full"
-                -- },
-                [3] = {
+                [2] = {
                     type = "checkbox",
                     name = GetString(_G.FOB_PREVENT_FENCE),
                     getFunc = function()
@@ -59,7 +43,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                     end,
                     width = "full"
                 },
-                [4] = {
+                [3] = {
                     type = "checkbox",
                     name = GetString(_G.FOB_PREVENT_TREASURES),
                     getFunc = function()
@@ -82,8 +66,6 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
         Other = function()
             if (FOB.Vars) then
                 if (FOB.Vars.PreventEdicts) then
-                    FOB.EdictHooks = FOB.EdictHooks or {}
-                    FOB.EdictControls = FOB.EdictControls or {}
                     for _, i in pairs(_G.PLAYER_INVENTORY.inventories) do
                         local listView = i.listView
 
@@ -117,24 +99,17 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                                                         slot.slotControl:GetNamedChild("Button")
                                                     )
 
-                                                    --rowControl:SetHandler("OnMouseEnter", nil)
-
-                                                    -- if (FOB.Vars.BlockEdictDoubleClick) then
-                                                         --rowControl:SetHandler("OnMouseDoubleClick", nil)
-                                                    -- end
-                                                    rowControl:SetEnabled(false)
+                                                    rowControl:SetMouseEnabled(false)
                                                     _G.PLAYER_INVENTORY.isListDirty[_G.INVENTORY_BACKPACK] = true
                                                 end
                                             else
                                                 info:Hide()
                                                 info:ClearIcons()
 
-                                                rowControl:SetEnabled(true)
+                                                rowControl:SetMouseEnabled(true)
                                                 _G.PLAYER_INVENTORY.isListDirty[_G.INVENTORY_BACKPACK] = true
                                             end
                                         end
-                                    else
-                                        FOB.EdictControls[slot.slotIndex] = false
                                     end
                                 end
                             end
@@ -178,29 +153,38 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                 500
             )
         end,
-        GetSortedLootDataOverride = function()
+        LootWatcher = function()
             local origFunction = _G.LOOT_SHARED.GetSortedLootData
 
             _G.LOOT_SHARED.GetSortedLootData = function()
                 local lootData = origFunction(_G.LOOT_SHARED)
-
-                if (_G.FOB.PreventTreasure and _G.FOB.Enabled and _G.FOB.ActiveCompanionDefId == defId) then
+                if (_G.FOB.Vars.PreventTreasure and _G.FOB.Enabled and _G.FOB.ActiveCompanionDefId == defId) then
                     for idx, data in ipairs(lootData) do
                         if (data.isStolen and _G.ITEMTYPE_TREASURE) then
                             local link = GetLootItemLink(data.lootId)
-
                             local numTags = GetItemLinkNumItemTags(link)
+                            local lootAll = _G.LOOT_WINDOW:GetButtonByKeybind("LOOT_ALL")
+                            local lootOne = _G.LOOT_WINDOW:GetButtonByKeybind()
+                            local disabled = false
 
                             for tag = 1, numTags do
                                 local desc = GetItemLinkItemTagInfo(link, tag)
 
                                 if (_G.FOB.Treasures[desc]) then
-                                    local lootAll = _G.LOOT_WINDOW:GetButtonByKeybind("LOOT_ALL")
-
                                     lootData[idx].icon = FOB.ReticlePath
-                                    lootData[idx].lootId = 0
+                                    lootData[idx].disable = true
                                     lootAll:SetEnabled(false)
+                                    disabled = true
+
+                                    if (#lootData == 1) then
+                                        lootOne:SetEnabled(false)
+                                    end
                                 end
+                            end
+
+                            if (not disabled) then
+                                lootAll:SetEnabled(true)
+                                lootOne:SetEnabled(true)
                             end
                         end
                     end
@@ -208,6 +192,30 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
 
                 return lootData
             end
+
+            SCENE_MANAGER:RegisterCallback(
+                "SceneStateChanged",
+                function(_, newState)
+                    local scene = SCENE_MANAGER:GetCurrentScene():GetName()
+
+                    if ((scene == "loot") and (newState == "showing")) then
+                        local rows = _G.ZO_LootAlphaContainerListContents:GetNumChildren()
+
+                        for rowNum = 1, rows do
+                            local row = _G.ZO_LootAlphaContainerListContents:GetChild(rowNum)
+
+                            local icons = row:GetNamedChild("MultiIcon")
+                            if (icons) then
+                                if (icons:HasIcon(FOB.ReticlePath)) then
+                                    row:SetMouseEnabled(false)
+                                else
+                                    row:SetMouseEnabled(true)
+                                end
+                            end
+                        end
+                    end
+                end
+            )
         end
     }
 end
@@ -216,5 +224,5 @@ if (IsCollectibleUsable(GetCompanionCollectibleId(defId))) then
     CALLBACK_MANAGER:RegisterCallback("BackpackFullUpdate", _G.FOB.Functions[defId].OnBackpackFullUpdate)
     SHARED_INVENTORY:RegisterCallback("SingleSlotInventoryUpdate", _G.FOB.Functions[defId].OnSingleSlotInventoryUpdate)
     FENCE_MANAGER:RegisterCallback("FenceOpened", _G.FOB.Functions[defId].OnFenceOpened)
-    _G.FOB.Functions[defId].GetSortedLootDataOverride()
+    _G.FOB.Functions[defId].LootWatcher()
 end

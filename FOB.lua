@@ -57,7 +57,7 @@ local function FOBHandler(interactionPossible, _)
 
             --if (qi) then d(qi) end
             --if (qt) then d(qt) end
-            d(GetGameCameraInteractableInfo())
+            --d(GetGameCameraInteractableInfo())
         if
             (FOB.Functions[FOB.ActiveCompanionDefId].Dislikes(
                 action,
