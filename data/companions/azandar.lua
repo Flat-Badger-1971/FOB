@@ -5,7 +5,7 @@ local name, _, icon = GetCollectibleInfo(cid)
 
 FOB.Functions[defId] = {
     Sort = name,
-    Dislikes = function(interactableName, action)
+    Dislikes = function(action, interactableName, _, _, interactionType)
         if (FOB.Vars.PreventMushroom) then
             if (action == FOB.Actions.Collect) then
                 local ignoreMushrooms = FOB.Mushrooms[interactableName] or false
@@ -18,6 +18,9 @@ FOB.Functions[defId] = {
             end
         end
 
+        if (action == FOB.Actions.Examine) then
+            --d(GetInteractionType())
+        end
         return false
     end,
     Settings = function(options)

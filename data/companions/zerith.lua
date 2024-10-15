@@ -117,40 +117,20 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                                                         slot.slotControl:GetNamedChild("Button")
                                                     )
 
-                                                    rowControl:SetHandler("OnMouseEnter", nil)
+                                                    --rowControl:SetHandler("OnMouseEnter", nil)
 
                                                     -- if (FOB.Vars.BlockEdictDoubleClick) then
-                                                    --     rowControl:SetHandler("OnMouseDoubleClick", nil)
+                                                         --rowControl:SetHandler("OnMouseDoubleClick", nil)
                                                     -- end
-
-                                                    FOB.EdictControls[slot.slotIndex] = true
+                                                    rowControl:SetEnabled(false)
                                                     _G.PLAYER_INVENTORY.isListDirty[_G.INVENTORY_BACKPACK] = true
                                                 end
                                             else
                                                 info:Hide()
                                                 info:ClearIcons()
 
-                                                if (rowControl:GetHandler("OnMouseEnter") == nil) then
-                                                    rowControl:SetHandler(
-                                                        "OnMouseEnter",
-                                                        function()
-                                                            _G.ZO_InventorySlot_OnMouseEnter(slot.slotControl)
-                                                        end
-                                                    )
-                                                end
-
-                                                FOB.EdictControls[slot.slotIndex] = false
+                                                rowControl:SetEnabled(true)
                                                 _G.PLAYER_INVENTORY.isListDirty[_G.INVENTORY_BACKPACK] = true
-                                            end
-
-                                            if (not FOB.EdictHooks[slot.slotIndex]) then
-                                                ZO_PreHookHandler(
-                                                    rowControl,
-                                                    "OnMouseDoubleClick",
-                                                    function()
-                                                        return FOB.EdictControls[slot.slotIndex] or false
-                                                    end
-                                                )
                                             end
                                         end
                                     else

@@ -89,7 +89,7 @@ ZO_CreateStringId("FOB_WHITE_CAP", "White Cap")
 
 -- misc
 ZO_CreateStringId("FOB_DAMAGED", "<<1>> is almost broken. If it breaks you will lose reputation with <<2>>.")
--- need translations:
+-- need translations: - check language files!
 ZO_CreateStringId("FOB_NIRNROOT", "Nirnroot")
 ZO_CreateStringId("FOB_MAGES_GUILD", "Mages Guild")
 ZO_CreateStringId("FOB_EXAMINE", "Examine")
@@ -104,5 +104,5 @@ ZO_CreateStringId("FOB_PREVENT_FENCE", "Prevent fencing stolen items")
 ZO_CreateStringId("FOB_PREVENT_TREASURES", "Prevent stealing certain treasures")
 ZO_CreateStringId("FOB_RITUAL", "Ritual Objects")
 ZO_CreateStringId("FOB_MEDICAL", "Medical Supplies")
-ZO_CreateStringId("FOB_RETICAL", "Use FOB retical")
+ZO_CreateStringId("FOB_Reticle", "Use FOB Reticle")
 -- ZO_CreateStringId("FOB_SENTIMENTAL", "Sentimental Items")

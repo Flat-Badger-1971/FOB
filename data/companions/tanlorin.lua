@@ -24,6 +24,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
             end
 
             if (FOB.Vars.PreventLorebooks) then
+                -- examine, read
                 if (action == FOB.Actions.Examine) then
                     return true
                 end

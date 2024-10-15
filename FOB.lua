@@ -53,6 +53,11 @@ local function FOBHandler(interactionPossible, _)
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
             GetGameCameraInteractableActionInfo()
 
+            --local qi, qt = select(3, GetGameCameraInteractableInfo())
+
+            --if (qi) then d(qi) end
+            --if (qt) then d(qt) end
+            d(GetGameCameraInteractableInfo())
         if
             (FOB.Functions[FOB.ActiveCompanionDefId].Dislikes(
                 action,

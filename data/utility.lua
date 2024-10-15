@@ -235,21 +235,19 @@ function FOB.GetAddonVersion()
 end
 
 -- UI
-function FOB.CreateFOBLogo(parent)
+function FOB.CreateLogo(parent)
     local logo = WINDOW_MANAGER:CreateControl(nil, parent, CT_TEXTURE)
 
     logo:SetAnchor(CENTER)
     logo:SetDimensions(64, 64)
     logo:SetTexture(FOB.ReticlePath)
     logo:SetHidden(true)
+
+    return logo
 end
 
 function FOB.ReplaceReticle()
     if (FOB.Vars.UseReticle) then
-        if (not FOB.Reticle) then
-            FOB.Reticle = FOB.CreateFOBLogo(_G.ZO_ReticleContainer)
-        end
-
         if (not FOB.UsingFOBReticle) then
             _G.ZO_ReticleContainerReticle:SetAlpha(0)
             FOB.Reticle:SetHidden(false)
@@ -402,4 +400,6 @@ do
             ReloadUI()
         end
     end
+
+    FOB.Reticle = FOB.CreateLogo(_G.ZO_ReticleContainer)
 end

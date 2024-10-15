@@ -30,5 +30,5 @@ _G.FOB.Defaults = {
     PreventOutlawsRefuge = false,
     PreventTreasure = false,
     UseCompanionSummmoningFrame = true,
-    UseRetical = true
+    UseReticle = true
 }

@@ -70,12 +70,12 @@ local function getOptions()
         },
         [4] = {
             type = "checkbox",
-            name = GetString(_G.FOB_RETICAL),
+            name = GetString(_G.FOB_Reticle),
             getFunc = function()
-                return FOB.Vars.UseRetical or false
+                return FOB.Vars.UseReticle or false
             end,
             setFunc = function(value)
-                FOB.Vars.UseRetical = value
+                FOB.Vars.UseReticle = value
             end,
             width = "full"
         }
