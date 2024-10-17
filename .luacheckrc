@@ -345,6 +345,7 @@ read_globals = {
     "GetFriendInfo",
     "GetFullBountyPayoffAmount",
     "GetGameCameraInteractableActionInfo",
+    "GetGameCameraInteractableInfo",
     "GetGameCameraPickpocketingBonusInfo",
     "GetGameTimeMilliseconds",
     "GetGameTimeSeconds",

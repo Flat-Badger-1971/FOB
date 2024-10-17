@@ -1,3 +1,7 @@
+local function L(k, v)
+    ZO_CreateStringId("FOB_" .. k, v)
+end
+
 -- German localisation
 ZO_CreateStringId("FOB_ALERT_COLOUR", "Alarm-Schriftfarbe")
 ZO_CreateStringId("FOB_ALERT_FONT", "Alarm-Schriftart")

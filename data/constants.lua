@@ -1,6 +1,45 @@
 _G.FOB = {
-    Name = "FOB",
-    LF = string.char(10),
+    -- for some reason using SI_GAMECAMERAACTIONTYPEs does not work in some languages
+    Actions = {
+        Catch = GetString(_G.FOB_CATCH),
+        Collect = GetString(_G.FOB_COLLECT),
+        Examine = GetString(_G.FOB_EXAMINE),
+        Search = GetString(_G.FOB_SEARCH),
+        Take = GetString(_G.FOB_TAKE),
+        Talk = GetString(_G.FOB_TALK),
+        Open = GetString(_G.FOB_OPEN),
+        Use = GetString(_G.FOB_USE)
+    },
+    BladeOfWoe = GetAbilityName(78219),
+    Bookshelf = GetString(_G.FOB_BOOKSHELF),
+    CheeseIcons = {
+        "/esoui/art/icons/housing_bre_inc_cheese001.dds",
+        "/esoui/art/icons/quest_trollfat_001.dds",
+        "/esoui/art/icons/quest_critter_001.dds",
+        "/esoui/art/icons/ability_1handed_004.dds",
+        "/esoui/art/icons/adornment_uni_radiusrebreather.dds"
+    },
+    CoffeeIcons = {
+        "/esoui/art/icons/crafting_coffee_beans.dds",
+        "/esoui/art/icons/housing_orc_inc_cupbone001.dds",
+        "/esoui/art/icons/crowncrate_magickahealth_drink.dds"
+    },
+    DarkBrotherhood = GetString(_G.FOB_DARK_BROTHERHOOD),
+    DefIds = {
+        Bastian = 1,
+        Mirri = 2,
+        Ember = 5,
+        Isobel = 6,
+        Sharp = 8,
+        Azander = 9,
+        Tanlorin = 12,
+        Zerith = 13
+    },
+    Exceptions = {
+        [GetString(_G.FOB_LADY_LLARELS_SHELTER) or "nil"] = true,
+        [GetString(_G.FOB_BLACKHEART_HAVEN) or "nil"] = true,
+        [GetString(_G.FOB_SHINYTRADE) or "nil"] = true
+    },
     FlyingInsects = {
         [GetString(_G.FOB_BLACKREACH_JELLY)] = true,
         [GetString(_G.FOB_BRIGHT_MOONS_LUNAR_MOTH)] = true,
@@ -19,6 +58,23 @@ _G.FOB = {
         [GetString(_G.FOB_WASP)] = true,
         [GetString(_G.FOB_WINTER_MOTH)] = true
     },
+    FontDefs = {
+        ["Standard"] = "$(MEDIUM_FONT)",
+        ["ESO Bold"] = "$(BOLD_FONT)",
+        ["Antique"] = "$(ANTIQUE_FONT)",
+        ["Handwritten"] = "$(HANDWRITTEN_FONT)",
+        ["Trajan"] = "$(STONE_TABLET_FONT)",
+        ["Futura"] = "EsoUI/Common/Fonts/FuturaStd-CondensedLight.slug",
+        ["Futura Bold"] = "EsoUI/Common/Fonts/FuturaStd-Condensed.slug"
+    },
+    Functions = {},
+    Illegal = {
+        [GetString(_G.SI_GAMECAMERAACTIONTYPE20)] = true, -- Steal From
+        [GetString(_G.SI_GAMECAMERAACTIONTYPE21)] = true, -- Pickpocket
+        [GetString(_G.SI_GAMECAMERAACTIONTYPE23)] = true -- Trespass
+    },
+    LF = string.char(10),
+    MagesGuild = GetString(_G.FOB_MAGES_GUILD),
     MirriInsects = {
         [GetString(_G.FOB_BUTTERFLY)] = true,
         [GetString(_G.FOB_TORCHBUG)] = true
@@ -47,69 +103,16 @@ _G.FOB = {
         [GetString(_G.FOB_VIOLET_COPRINUS)] = true,
         [GetString(_G.FOB_WHITE_CAP)] = true
     },
-    DefIds = {
-        Bastian = 1,
-        Mirri = 2,
-        Ember = 5,
-        Isobel = 6,
-        Sharp = 8,
-        Azander = 9,
-        Tanlorin = 12,
-        Zerith = 13
-    },
-    Functions = {},
-    Actions = {
-        Catch = GetString(_G.FOB_CATCH),
-        Collect = GetString(_G.FOB_COLLECT),
-        Examine = GetString(_G.FOB_EXAMINE),
-        --Search
-        Take = GetString(_G.FOB_TAKE),
-        Talk = GetString(_G.FOB_TALK),
-        Open = GetString(_G.FOB_OPEN),
-        Use = GetString(_G.FOB_USE)
-    },
-    Illegal = {
-        [GetString(_G.SI_GAMECAMERAACTIONTYPE20)] = true, -- Steal From
-        [GetString(_G.SI_GAMECAMERAACTIONTYPE21)] = true, -- Pickpocket
-        [GetString(_G.SI_GAMECAMERAACTIONTYPE23)] = true -- Trespass
-    },
-    Exceptions = {
-        [GetString(_G.FOB_LADY_LLARELS_SHELTER) or "nil"] = true,
-        [GetString(_G.FOB_BLACKHEART_HAVEN) or "nil"] = true,
-        [GetString(_G.FOB_SHINYTRADE) or "nil"] = true
-    },
+    Name = "FOB",
+    Nirnroot = GetString(_G.FOB_NIRNROOT),
     OutlawsRefuge = {
         [GetString(_G.FOB_OUTLAWS_REFUGE):lower()] = true,
         [GetString(_G.FOB_THIEVES_DEN):lower()] = true
     },
-    Nirnroot = GetString(_G.FOB_NIRNROOT),
-    DarkBrotherhood = GetString(_G.FOB_DARK_BROTHERHOOD),
-    MagesGuild = GetString(_G.FOB_MAGES_GUILD),
-    FontDefs = {
-        ["Standard"] = "$(MEDIUM_FONT)",
-        ["ESO Bold"] = "$(BOLD_FONT)",
-        ["Antique"] = "$(ANTIQUE_FONT)",
-        ["Handwritten"] = "$(HANDWRITTEN_FONT)",
-        ["Trajan"] = "$(STONE_TABLET_FONT)",
-        ["Futura"] = "EsoUI/Common/Fonts/FuturaStd-CondensedLight.slug",
-        ["Futura Bold"] = "EsoUI/Common/Fonts/FuturaStd-Condensed.slug"
-    },
-    CheeseIcons = {
-        "/esoui/art/icons/housing_bre_inc_cheese001.dds",
-        "/esoui/art/icons/quest_trollfat_001.dds",
-        "/esoui/art/icons/quest_critter_001.dds",
-        "/esoui/art/icons/ability_1handed_004.dds",
-        "/esoui/art/icons/adornment_uni_radiusrebreather.dds"
-    },
-    CoffeeIcons = {
-        "/esoui/art/icons/crafting_coffee_beans.dds",
-        "/esoui/art/icons/housing_orc_inc_cupbone001.dds",
-        "/esoui/art/icons/crowncrate_magickahealth_drink.dds"
-    },
+    ReticlePath = "FOB/assets/fobBlock.dds",
     Treasures = {
         [GetString(_G.FOB_RITUAL)] = true,
-        [GetString(_G.FOB_MEDICAL)] = true,
+        [GetString(_G.FOB_MEDICAL)] = true
         -- [GetString(_G.FOB_SENTIMENTAL)] = true what are these?
-    },
-    ReticlePath = "FOB/assets/fobBlock.dds"
+    }
 }

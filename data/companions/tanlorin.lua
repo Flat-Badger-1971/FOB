@@ -24,8 +24,17 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
             end
 
             if (FOB.Vars.PreventLorebooks) then
-                -- examine, read
+                -- examine
                 if (action == FOB.Actions.Examine) then
+                    local questInteraction = select(3, GetGameCameraInteractableInfo())
+
+                    if (not questInteraction) then
+                        return true
+                    end
+                end
+
+                -- search
+                if (action == FOB.Actions.Search and FOB.PartialMatch(interactableName, {[FOB.Bookshelf] = true})) then
                     return true
                 end
             end

@@ -89,3 +89,7 @@ if (IsCollectibleUsable(GetCompanionCollectibleId(defId))) then
 end
 
 -- destroy item worth over 20g
+
+--getunitcaption
+--getunitreaction UNIT_REACTION_HOSTILE
+-- no PP on beggers,labourers or fishers

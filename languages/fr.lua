@@ -1,3 +1,7 @@
+local function L(k, v)
+    ZO_CreateStringId("FOB_" .. k, v)
+end
+
 -- English localisation
 ZO_CreateStringId("FOB_DISMISS_COMPANION", "Ignorer le compagnon actif")
 ZO_CreateStringId("FOB_TOGGLE_COMPANION", "Alterner le compagnon")

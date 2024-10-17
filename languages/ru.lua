@@ -1,3 +1,7 @@
+local function L(k, v)
+    ZO_CreateStringId("FOB_" .. k, v)
+end
+
 -- Russian localisation / Русская локализация
 ZO_CreateStringId("FOB_DISMISS_COMPANION", "Отозвать активного компаньона")
 ZO_CreateStringId("FOB_TOGGLE_COMPANION", "Изменить компаньона")

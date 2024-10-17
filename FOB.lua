@@ -50,6 +50,11 @@ local function FOBHandler(interactionPossible, _)
             return
         end
 
+        local uc = GetUnitCaption("mouseover")
+
+        if (uc and uc ~= "") then
+            d(uc)
+        end
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
             GetGameCameraInteractableActionInfo()
 

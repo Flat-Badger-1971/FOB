@@ -131,6 +131,10 @@ function FOB.ToggleDefaultInteraction()
 
     local message = GetString(FOB.Enabled and _G.FOB_ENABLED or _G.FOB_DISABLED)
 
+    if (not FOB.Enabled) then
+        FOB.RestoreReticle()
+    end
+
     FOB.Chat:SetTagColor("dc143c"):Print(message)
 end
 
