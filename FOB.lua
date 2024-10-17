@@ -47,22 +47,12 @@ local function FOBHandler(interactionPossible, _)
         end
 
         if (not FOB.Functions[FOB.ActiveCompanionDefId]) then
-            return
+            return false
         end
 
-        local uc = GetUnitCaption("mouseover")
-
-        if (uc and uc ~= "") then
-            d(uc)
-        end
         local action, interactableName, _, _, additionalInfo, _, _, isCriminalInteract =
             GetGameCameraInteractableActionInfo()
 
-            --local qi, qt = select(3, GetGameCameraInteractableInfo())
-
-            --if (qi) then d(qi) end
-            --if (qt) then d(qt) end
-            --d(GetGameCameraInteractableInfo())
         if
             (FOB.Functions[FOB.ActiveCompanionDefId].Dislikes(
                 action,
@@ -80,7 +70,6 @@ local function FOBHandler(interactionPossible, _)
         if (action == FOB.Actions.Talk and FOB.Vars.DisableCompanionInteraction) then
             -- is it a companion?
             local isCompanionAction = FOB.PartialMatch(interactableName, FOB.CompanionNames)
-
             if (isCompanionAction) then
                 if (not FOB.Exceptions[interactableName]) then
                     -- companion detected - we don't want to talk to you, cancel the interaction
@@ -90,7 +79,7 @@ local function FOBHandler(interactionPossible, _)
             end
         end
 
-        FOB.RestoreReticle()
+         FOB.RestoreReticle()
 
         return false
     end

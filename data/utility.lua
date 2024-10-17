@@ -2,8 +2,10 @@ local FOB = _G.FOB
 
 function FOB.PartialMatch(inputString, compareList)
     for key, value in pairs(compareList) do
-        if (inputString:lower():find(key:lower())) then
-            return value
+        if (key ~= "") then
+            if (inputString:lower():find(key:lower())) then
+                return value
+            end
         end
     end
 
