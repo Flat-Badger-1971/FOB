@@ -53,6 +53,23 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                         FOB.Vars.PreventTreasure = value
                     end,
                     width = "full"
+                },
+                [4] = {
+                    type = "checkbox",
+                    name = GetString(_G.FOB_PREVENT_BLADE_OF_WOE),
+                    getFunc = function()
+                        return FOB.Vars.PreventBladeOfWoeZerith
+                    end,
+                    setFunc = function(value)
+                        FOB.Vars.PreventBladeOfWoeZerith = value
+
+                        if (value) then
+                            FOB.RegisterForBladeOfWoe(defId)
+                        else
+                            FOB.UnregisterForBladeOfWoe(defId)
+                        end
+                    end,
+                    width = "full"
                 }
             }
 

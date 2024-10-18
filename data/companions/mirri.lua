@@ -88,6 +88,23 @@ FOB.Functions[defId] = {
                     FOB.Vars.PreventDarkBrotherhood = value
                 end,
                 width = "full"
+            },
+            [4] = {
+                type = "checkbox",
+                name = GetString(_G.FOB_PREVENT_BLADE_OF_WOE),
+                getFunc = function()
+                    return FOB.Vars.PreventBladeOfWoeMirri
+                end,
+                setFunc = function(value)
+                    FOB.Vars.PreventBladeOfWoeMirri = value
+
+                    if (value) then
+                        FOB.RegisterForBladeOfWoe(defId)
+                    else
+                        FOB.UnregisterForBladeOfWoe(defId)
+                    end
+                end,
+                width = "full"
             }
         }
 

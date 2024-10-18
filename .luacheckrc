@@ -152,6 +152,15 @@ read_globals = {
             Show = {read_only = true}
         }
     },
+    ["SHARED_INFORMATION_AREA"] = {
+        fields = {
+            IsHidden = {read_only = true},
+            IsSuppressed = {read_only = true},
+            SetCategoriesSuppressed = {read_only = true},
+            SetHidden = {read_only = true},
+            SetSupressed = {read_only = true},
+        }
+    },
     ["SHARED_INVENTORY"] = {
         fields = {
             GenerateFullSlotData = {read_only = true},
@@ -256,6 +265,7 @@ read_globals = {
     "unpack",
     --API
     "AddMenuItem",
+    "ApplyTemplateToControl",
     "AssignTargetMarkerToReticleTarget",
     "ClearMenu",
     "CreateSimpleAnimation",
@@ -321,6 +331,7 @@ read_globals = {
     "GetCurrencyAmount",
     "GetCurrentCampaignId",
     "GetCurrentCharacterId",
+    "GetCurrentSynergyInfo",
     "GetCurrencyKeyboardIcon",
     "GetCurrencyName",
     "GetCurrencyPlayerStoredLocation",

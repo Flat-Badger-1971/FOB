@@ -1,5 +1,5 @@
 _G.FOB.Defaults = {
-    -- BlockEdictDoubleClick = false,
+    BoWCompanions = {},
     CheeseFont = "ESO Bold",
     CheeseFontColour = {r = 0.9, g = 0.8, b = 0.2, a = 1},
     CheeseFontShadow = true,
@@ -17,6 +17,8 @@ _G.FOB.Defaults = {
     IgnoreInsects = false,
     IgnoreMirriInsects = false,
     LastActiveCompanionId = {},
+    PreventBladeOfWoeMirri = false,
+    PreventBladeOfWoeZerith = false,
     PreventCriminalBastian = false,
     PreventCriminalIsobel = false,
     PreventDarkBrotherhood = false,
