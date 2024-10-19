@@ -5,12 +5,18 @@ local name, _, icon = GetCollectibleInfo(cid)
 
 FOB.Functions[defId] = {
     Sort = name,
-    Dislikes = function(action, interactableName)
+    Dislikes = function(action, interactableName, _, additionalInfo)
         if (FOB.Vars.PreventOutfit) then
             if (action == FOB.Actions.Use) then
                 if (interactableName == ZO_CachedStrFormat("<<C:1>>", GetString(_G.SI_RESTYLE_STATION_MENU_ROOT_TITLE))) then
                     return true
                 end
+            end
+        end
+
+        if (FOB.Vars.PreventPickpocketingSharp) then
+            if (additionalInfo == _G.ADDITIONAL_INTERACT_INFO_PICKPOCKET_CHANCE) then
+                return FOB.AllowPickPocketing()
             end
         end
 
@@ -39,6 +45,18 @@ FOB.Functions[defId] = {
                 end,
                 setFunc = function(value)
                     FOB.Vars.CheckDamage = value
+                end,
+                width = "full"
+            },
+            [3] = {
+                type = "checkbox",
+                name = GetString(_G.FOB_PREVENT_PICKPOCKETING),
+                tooltip = GetString(_G.FOB_PREVENT_SPECIFIC_TT),
+                getFunc = function()
+                    return FOB.Vars.PreventPickpocketingSharp or false
+                end,
+                setFunc = function(value)
+                    FOB.Vars.PreventPickpocketingSharp = value
                 end,
                 width = "full"
             }
@@ -88,6 +106,11 @@ if (IsCollectibleUsable(GetCompanionCollectibleId(defId))) then
     _G.SHARED_INVENTORY:RegisterCallback("SingleSlotInventoryUpdate", FOB.Functions[defId].OnSingleSlotInventoryUpdate)
 end
 
+FOB.NoPickPocketing[defId] = {
+    [_G.MONSTER_SOCIAL_CLASS_BEGGAR] = true,
+    [_G.MONSTER_SOCIAL_CLASS_FISHER] = true,
+    [_G.MONSTER_SOCIAL_CLASS_LABORER] = true
+}
 -- destroy item worth over 20g
 
 --getunitcaption

@@ -5,7 +5,7 @@ local name, _, icon = GetCollectibleInfo(cid)
 
 FOB.Functions[defId] = {
     Sort = name,
-    Dislikes = function(action, _, isCriminalInteract)
+    Dislikes = function(action, _, isCriminalInteract, additionalInfo)
         local isCriminal = isCriminalInteract
 
         if (FOB.Vars.PreventCriminalBastian) then
@@ -14,6 +14,10 @@ FOB.Functions[defId] = {
             end
 
             return isCriminal
+        elseif (FOB.Vars.PreventPickpocketingBastian) then
+            if (additionalInfo == _G.ADDITIONAL_INTERACT_INFO_PICKPOCKET_CHANCE) then
+                return true
+            end
         end
 
         return false
@@ -35,6 +39,20 @@ FOB.Functions[defId] = {
             },
             [2] = {
                 type = "checkbox",
+                name = GetString(_G.FOB_PREVENT_PICKPOCKETING),
+                getFunc = function()
+                    return FOB.Vars.PreventPickpocketingBastian or false
+                end,
+                setFunc = function(value)
+                    FOB.Vars.PreventPickpocketingBastian = value
+                end,
+                disabled = function()
+                    return FOB.Vars.PreventCriminalBastian
+                end,
+                width = "full"
+            },
+            [3] = {
+                type = "checkbox",
                 name = GetString(_G.FOB_CHEESE_WARNING),
                 getFunc = function()
                     return FOB.Vars.CheeseWarning
@@ -45,7 +63,7 @@ FOB.Functions[defId] = {
                 end,
                 width = "full"
             },
-            [3] = {
+            [4] = {
                 type = "dropdown",
                 name = GetString(_G.FOB_ALERT_FONT),
                 choices = FOB.Fonts,
@@ -62,7 +80,7 @@ FOB.Functions[defId] = {
                 end,
                 width = "full"
             },
-            [4] = {
+            [5] = {
                 type = "colorpicker",
                 name = GetString(_G.FOB_ALERT_COLOUR),
                 getFunc = function()
@@ -77,7 +95,7 @@ FOB.Functions[defId] = {
                 end,
                 width = "full"
             },
-            [5] = {
+            [6] = {
                 type = "checkbox",
                 name = GetString(_G.FOB_ALERT_SHADOW),
                 getFunc = function()
@@ -93,7 +111,7 @@ FOB.Functions[defId] = {
                 end,
                 width = "full"
             },
-            [6] = {
+            [7] = {
                 type = "iconpicker",
                 name = GetString(_G.FOB_ALERT_ICON),
                 getFunc = function()

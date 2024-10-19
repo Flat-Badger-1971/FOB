@@ -46,6 +46,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                 [3] = {
                     type = "checkbox",
                     name = GetString(_G.FOB_PREVENT_TREASURES),
+                    tooltip = GetString(_G.FOB_PREVENT_SPECIFIC_TT),
                     getFunc = function()
                         return FOB.Vars.PreventTreasure or false
                     end,

@@ -105,6 +105,7 @@ _G.FOB = {
     },
     Name = "FOB",
     Nirnroot = GetString(_G.FOB_NIRNROOT),
+    NoPickPocketing = {},
     OutlawsRefuge = {
         [GetString(_G.FOB_OUTLAWS_REFUGE):lower()] = true,
         [GetString(_G.FOB_THIEVES_DEN):lower()] = true

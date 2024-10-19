@@ -23,6 +23,7 @@ languages/$(language).lua
 data/constants.lua
 data/defaults.lua
 data/utility.lua
+data/ui.lua
 data/companions/azandar.lua
 data/companions/bastian.lua
 data/companions/ember.lua
