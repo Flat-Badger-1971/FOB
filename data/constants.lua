@@ -115,6 +115,5 @@ _G.FOB = {
     Treasures = {
         [GetString(_G.FOB_RITUAL)] = true,
         [GetString(_G.FOB_MEDICAL)] = true
-        -- [GetString(_G.FOB_SENTIMENTAL)] = true what are these?
     }
 }

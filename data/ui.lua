@@ -1,13 +1,18 @@
 local FOB = _G.FOB
 
 function FOB.CreateMultiIcon(name, parent, size)
-    local logo = WINDOW_MANAGER:CreateControlFromVirtual(name, parent, "ZO_MultiIcon")
+    local logo = WINDOW_MANAGER:CreateControl(name, parent, CT_TEXTURE)
+
+    FOB.MultiIconInitialise(logo)
 
     logo:SetAnchor(CENTER)
     logo:SetDimensions(size, size)
     logo:AddIcon(FOB.Logo)
     logo:AddIcon(FOB.LogoBlock)
+    logo:SetHandler("OnShow", FOB.MultiIconOnShow)
+    logo:SetHandler("OnHide", FOB.MultiIconOnHide)
     logo:Hide()
+
     -- logo:SetTexture(FOB.ReticlePath)
     -- logo:SetHidden(true)
 
@@ -199,7 +204,7 @@ do
         end
     end
 
-    FOB.Reticle = FOB.CreateLogo(_G.ZO_ReticleContainer)
+    FOB.Reticle = FOB.CreateMultiIcon(nil, _G.ZO_ReticleContainer, 64)
     FOB.BladeOfWoeFormatted = ZO_CachedStrFormat("<<C:1>>", FOB.BladeOfWoe)
 
     -- setup FOB information area

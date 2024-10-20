@@ -225,9 +225,13 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                             local row = _G.ZO_LootAlphaContainerListContents:GetChild(rowNum)
 
                             local icons = row:GetNamedChild("MultiIcon")
+
                             if (icons) then
                                 if (icons:HasIcon(FOB.Logo)) then
-                                    icons:Add(FOB.LogoBlock)
+                                    icons:ClearIcons()
+                                    icons:AddIcon(FOB.Logo)
+                                    icons:AddIcon(FOB.LogoBlock)
+                                    icons:Show()
                                     row:SetMouseEnabled(false)
                                 else
                                     row:SetMouseEnabled(true)
