@@ -74,6 +74,8 @@ _G.FOB = {
         [GetString(_G.SI_GAMECAMERAACTIONTYPE23)] = true -- Trespass
     },
     LF = string.char(10),
+    Logo = "FOB/assets/fob.dds",
+    LogoBlock = "FOB/assets/fobBlock.dds",
     MagesGuild = GetString(_G.FOB_MAGES_GUILD),
     MirriInsects = {
         [GetString(_G.FOB_BUTTERFLY)] = true,
@@ -110,7 +112,6 @@ _G.FOB = {
         [GetString(_G.FOB_OUTLAWS_REFUGE):lower()] = true,
         [GetString(_G.FOB_THIEVES_DEN):lower()] = true
     },
-    ReticlePath = "FOB/assets/fobBlock.dds",
     Treasures = {
         [GetString(_G.FOB_RITUAL)] = true,
         [GetString(_G.FOB_MEDICAL)] = true

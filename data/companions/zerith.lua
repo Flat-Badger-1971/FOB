@@ -104,8 +104,10 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
 
                                         if (info) then
                                             if (FOB.ActiveCompanionDefId == defId and FOB.Enabled) then
-                                                if (not info:HasIcon(FOB.ReticlePath)) then
-                                                    info:AddIcon(FOB.ReticlePath)
+                                                if (not info:HasIcon(FOB.Logo)) then
+                                                    info:ClearIcons()
+                                                    info:AddIcon(FOB.Logo)
+                                                    info:AddIcon(FOB.LogoBlock)
                                                     info:Show()
                                                     _G.ZO_PlayerInventorySlot_SetupUsableAndLockedColor(
                                                         slot.slotControl,
@@ -144,7 +146,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
 
                 if (sellButton:GetState() ~= _G.BSTATE_DISABLED) then
                     if (_G.FOB.Vars.PreventFence and _G.FOB.ActiveCompanionDefId == defId) then
-                        sellButton.m_buttonData.disabled = FOB.ReticlePath
+                        sellButton.m_buttonData.disabled = FOB.LogoBlock
                         menuBar:SetDescriptorEnabled(_G.SI_STORE_MODE_SELL, false)
 
                         zo_callLater(
@@ -189,7 +191,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                                 local desc = GetItemLinkItemTagInfo(link, tag)
 
                                 if (_G.FOB.Treasures[desc]) then
-                                    lootData[idx].icon = FOB.ReticlePath
+                                    lootData[idx].icon = FOB.Logo
                                     lootData[idx].disable = true
                                     lootAll:SetEnabled(false)
                                     disabled = true
@@ -224,7 +226,8 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
 
                             local icons = row:GetNamedChild("MultiIcon")
                             if (icons) then
-                                if (icons:HasIcon(FOB.ReticlePath)) then
+                                if (icons:HasIcon(FOB.Logo)) then
+                                    icons:Add(FOB.LogoBlock)
                                     row:SetMouseEnabled(false)
                                 else
                                     row:SetMouseEnabled(true)

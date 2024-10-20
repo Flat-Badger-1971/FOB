@@ -1,12 +1,15 @@
 local FOB = _G.FOB
 
-function FOB.CreateLogo(parent)
-    local logo = WINDOW_MANAGER:CreateControl(nil, parent, CT_TEXTURE)
+function FOB.CreateMultiIcon(name, parent, size)
+    local logo = WINDOW_MANAGER:CreateControlFromVirtual(name, parent, "ZO_MultiIcon")
 
     logo:SetAnchor(CENTER)
-    logo:SetDimensions(64, 64)
-    logo:SetTexture(FOB.ReticlePath)
-    logo:SetHidden(true)
+    logo:SetDimensions(size, size)
+    logo:AddIcon(FOB.Logo)
+    logo:AddIcon(FOB.LogoBlock)
+    logo:Hide()
+    -- logo:SetTexture(FOB.ReticlePath)
+    -- logo:SetHidden(true)
 
     return logo
 end
@@ -155,10 +158,11 @@ local function createFobInfoControl()
     control.container:SetResizeToFitPadding(10)
     control.container:SetAnchor(BOTTOM, control, BOTTOM, 0, _G.ZO_COMMON_INFO_DEFAULT_KEYBOARD_BOTTOM_OFFSET_Y)
 
-    control.icon = WINDOW_MANAGER:CreateControl(name .. "Icon", control.container, CT_TEXTURE)
+    control.icon = FOB.CreateMultiIcon(name .. "Icon", control.container, 50) --WINDOW_MANAGER:CreateControl(name .. "Icon", control.container, CT_TEXTURE)
+    control.icon:ClearAnchors()
     control.icon:SetAnchor(LEFT)
-    control.icon:SetDimensions(50, 50)
-    control.icon:SetTexture(FOB.ReticlePath)
+    --control.icon:SetDimensions(50, 50)
+    -- control.icon:SetTexture(FOB.ReticlePath)
 
     control.frame = WINDOW_MANAGER:CreateControl(name .. "Frame", control.icon, CT_TEXTURE)
     control.frame:SetTexture("esoui/art/actionbar/abilityFrame64_up.dds")
