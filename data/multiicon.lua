@@ -1,4 +1,5 @@
---can't seem to get ZO_MultiIcon to instantiate so ...
+-- can't seem to get ZO_MultiIcon to instantiate so ...
+-- pretty much verbatim from ZOS code
 local FOB = _G.FOB
 local MultiIconTimer = ZO_Object:Subclass()
 
