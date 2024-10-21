@@ -113,7 +113,7 @@ function FOB.OnCompanionStateChanged(_, newState, _)
         if (PENDING_COMPANION_STATES[newState]) then
             FOB.HideDefaultCompanionFrame()
 
-            if (HasPendingCompanion()) and not IsCollectibleBlocked(GetCompanionCollectibleId(FOB.ActiveCompanion)) then
+            if (HasPendingCompanion()) and not IsCollectibleBlocked(GetCompanionCollectibleId(FOB.ActiveCompanionDefId)) then
                 local pendingCompanionDefId = GetPendingCompanionDefId()
                 local pendingCompanionName = GetCompanionName(pendingCompanionDefId)
                 local companionName = zo_strformat(_G.SI_COMPANION_NAME_FORMATTER, pendingCompanionName)
