@@ -69,7 +69,8 @@ local function FOBHandler(interactionPossible, _)
         -- are we trying to talk to someone?
         if (action == FOB.Actions.Talk and FOB.Vars.DisableCompanionInteraction) then
             -- is it a companion?
-            local isCompanionAction = FOB.PartialMatch(interactableName, FOB.CompanionNames)
+            local isCompanionAction = FOB.LC.PartialMatch(interactableName, FOB.CompanionNames)
+
             if (isCompanionAction) then
                 if (not FOB.Exceptions[interactableName]) then
                     -- companion detected - we don't want to talk to you, cancel the interaction
@@ -79,7 +80,7 @@ local function FOBHandler(interactionPossible, _)
             end
         end
 
-         FOB.RestoreReticle()
+        FOB.RestoreReticle()
 
         return false
     end
@@ -131,6 +132,8 @@ function FOB.OnAddonLoaded(_, addonName)
     if (addonName ~= FOB.Name) then
         return
     end
+
+    FOB.LC = _G.LibFBCommon
 
     if (_G.LibDebugLogger ~= nil) then
         FOB.Logger = _G.LibDebugLogger(FOB.Name)

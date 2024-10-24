@@ -10,7 +10,7 @@ FOB.Functions[defId] = {
 
         if (FOB.Vars.PreventCriminalBastian) then
             if (isCriminal ~= true and action) then
-                isCriminal = FOB.PartialMatch(action, FOB.Illegal)
+                isCriminal = FOB.LC.PartialMatch(action, FOB.Illegal)
             end
 
             return isCriminal

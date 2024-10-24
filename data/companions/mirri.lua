@@ -29,7 +29,7 @@ FOB.Functions[defId] = {
                 local ignoreInsects = insectList[interactableName] or false
 
                 if (FOB.UsingRuEso) then
-                    ignoreInsects = FOB.PartialMatch(interactableName, insectList)
+                    ignoreInsects = FOB.LC.PartialMatch(interactableName, insectList)
                 end
 
                 if (ignoreInsects) then

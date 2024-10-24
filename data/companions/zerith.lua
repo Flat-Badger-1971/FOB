@@ -177,7 +177,9 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
             local origFunction = _G.LOOT_SHARED.GetSortedLootData
 
             _G.LOOT_SHARED.GetSortedLootData = function()
+                ---@diagnostic disable-next-line: redundant-parameter
                 local lootData = origFunction(_G.LOOT_SHARED)
+
                 if (_G.FOB.Vars.PreventTreasure and _G.FOB.Enabled and _G.FOB.ActiveCompanionDefId == defId) then
                     for idx, data in ipairs(lootData) do
                         if (data.isStolen and _G.ITEMTYPE_TREASURE) then

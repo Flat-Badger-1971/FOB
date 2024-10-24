@@ -193,7 +193,7 @@ do
 
     for _, defId in pairs(_G.FOB.DefIds) do
         local cid = GetCompanionCollectibleId(defId)
-        local name = FOB.GetFirstWord(GetCollectibleInfo(cid))
+        local name = FOB.LC.GetFirstWord(GetCollectibleInfo(cid))
 
         _G.FOB.CompanionNames[name] = true
     end

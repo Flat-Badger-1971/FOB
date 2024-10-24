@@ -84,7 +84,7 @@ FOB.Functions[defId] = {
 
                 if (announce == true) then
                     FOB.Vars.PreviousAnnounceTime = os.time()
-                    FOB.Announce(
+                    FOB.LC.Announce(
                         FOB.COLOURS.RED:Colorize(GetString(_G.FOB_WARNING)),
                         zo_strformat(
                             GetString(_G.FOB_DAMAGED),

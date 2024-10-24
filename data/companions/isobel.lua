@@ -10,7 +10,7 @@ FOB.Functions[defId] = {
 
         if (FOB.Vars.PreventCriminalIsobel) then
             if (isCriminal ~= true and action) then
-                isCriminal = FOB.PartialMatch(action, FOB.Illegal)
+                isCriminal = FOB.LC.PartialMatch(action, FOB.Illegal)
             end
 
             return isCriminal
@@ -18,7 +18,7 @@ FOB.Functions[defId] = {
 
         if (FOB.Vars.PreventOutlawsRefuge) then
             if (action == FOB.Actions.Open) then
-                if (FOB.PartialMatch(interactableName, FOB.OutlawsRefuge) and (not FOB.Exceptions[interactableName])) then
+                if (FOB.LC.PartialMatch(interactableName, FOB.OutlawsRefuge) and (not FOB.Exceptions[interactableName])) then
                     return true
                 end
             end

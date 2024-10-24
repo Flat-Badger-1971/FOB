@@ -1,17 +1,5 @@
 local FOB = _G.FOB
 
-function FOB.PartialMatch(inputString, compareList)
-    for key, value in pairs(compareList) do
-        if (key ~= "") then
-            if (inputString:lower():find(key:lower())) then
-                return value
-            end
-        end
-    end
-
-    return false
-end
-
 function FOB.CheckIngredients(recipeData, companion)
     local maxIngredients = GetMaxRecipeIngredients()
 
@@ -188,17 +176,6 @@ function FOB.CheckDurability()
     return lowest, lowestName
 end
 
-function FOB.Announce(header, message)
-    local messageParams = CENTER_SCREEN_ANNOUNCE:CreateMessageParams(_G.CSA_CATEGORY_LARGE_TEXT)
-
-    messageParams:SetSound("Justice_NowKOS")
-    messageParams:SetText(header, message)
-    messageParams:SetLifespanMS(6000)
-    messageParams:SetCSAType(_G.CENTER_SCREEN_ANNOUNCE_TYPE_SYSTEM_BROADCAST)
-
-    CENTER_SCREEN_ANNOUNCE:AddMessageWithParams(messageParams)
-end
-
 function FOB.Log(message, severity)
     if (FOB.Logger) then
         if (severity == "info") then
@@ -209,43 +186,6 @@ function FOB.Log(message, severity)
             FOB.Logger:Debug(message)
         end
     end
-end
-
-function FOB.GetFirstWord(text)
-    local space = text:find(" ")
-
-    if (not space) then
-        space = text:find("-")
-
-        if (not space) then
-            return text
-        end
-    end
-
-    return text:sub(1, space - 1)
-end
-
-function FOB.GetAddonVersion()
-    local manager = GetAddOnManager()
-    local numAddons = manager:GetNumAddOns()
-    local version = "?"
-
-    for addon = 1, numAddons do
-        local name = manager:GetAddOnInfo(addon)
-
-        if (name == FOB.Name) then
-            version = tostring(manager:GetAddOnVersion(addon))
-
-            local major = tonumber(version:sub(1, 1))
-            local minor = tonumber(version:sub(2, 2))
-            local revision = tonumber(version:sub(3))
-
-            version = string.format("%d.%d.%d", major, minor, revision)
-            break
-        end
-    end
-
-    return version
 end
 
 function FOB.RegisterForBladeOfWoe(companion)

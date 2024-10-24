@@ -1,5 +1,5 @@
 local FOB = _G.FOB
-local version = FOB.GetAddonVersion()
+local version = FOB.LC.GetAddonVersion(FOB.Name)
 
 FOB.LAM = _G.LibAddonMenu2
 

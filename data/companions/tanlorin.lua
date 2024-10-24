@@ -9,7 +9,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
         Dislikes = function(action, interactableName)
             if (FOB.Vars.PreventNirnroot) then
                 if (action == FOB.Actions.Collect) then
-                    if (FOB.PartialMatch(interactableName, {[FOB.Nirnroot] = true})) then
+                    if (FOB.LC.PartialMatch(interactableName, {[FOB.Nirnroot] = true})) then
                         return true
                     end
                 end
@@ -34,7 +34,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
                 end
 
                 -- search
-                if (action == FOB.Actions.Search and FOB.PartialMatch(interactableName, {[FOB.Bookshelf] = true})) then
+                if (action == FOB.Actions.Search and FOB.LC.PartialMatch(interactableName, {[FOB.Bookshelf] = true})) then
                     return true
                 end
             end

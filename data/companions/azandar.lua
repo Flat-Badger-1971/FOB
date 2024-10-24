@@ -11,7 +11,7 @@ FOB.Functions[defId] = {
                 local ignoreMushrooms = FOB.Mushrooms[interactableName] or false
 
                 if (FOB.UsingRuEso) then
-                    ignoreMushrooms = FOB.PartialMatch(interactableName, FOB.Mushrooms)
+                    ignoreMushrooms = FOB.LC.PartialMatch(interactableName, FOB.Mushrooms)
                 end
 
                 return ignoreMushrooms
