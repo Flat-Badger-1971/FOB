@@ -1,3 +1,10 @@
+[color=#ff9900][b]Version: 3.0.0 ---------------[/b][/color]
+Major code refactor for Patch 44
+FOB reticle/logo added
+Blade of Woe detection added
+Pickpocketing detection added
+Settings added for Tanlorin and Zerith-var
+
 [color=#ff9900][b]Version: 2.13.4 ---------------[/b][/color]
 Fixed an issue on the German client when Ember is out
 
@@ -16,7 +23,7 @@ Gold Road update
 Some translation updates
 Added prevent entering Dark Brotherhood Sanctuary for Mirri
 
-[color=#ff9900][b]Version: 2.12.1 ---------------[/b][/color]
+[color=#ff9900][b]Version: 2.12.1 ---------------[/b][/color
 Font update
 
 [color=#ff9900][b]Version: 2.12.0 ---------------[/b][/color]
