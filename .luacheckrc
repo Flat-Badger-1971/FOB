@@ -618,6 +618,7 @@ read_globals = {
     "ZO_MailSendBodyField",
     "ZO_MailSendSubjectField",
     "ZO_MailSendToField",
+    "ZO_MultiIcon_Initialize",
     ["ZO_Object"] = {
         fields = {
             New = {read_only = true},

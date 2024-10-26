@@ -22,7 +22,6 @@ languages/$(language).lua
 
 data/constants.lua
 data/defaults.lua
-data/multiicon.lua
 data/utility.lua
 data/ui.lua
 data/companions/azandar.lua
