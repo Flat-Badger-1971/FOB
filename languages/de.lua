@@ -115,3 +115,8 @@ L("DAMAGED", "<<1>> ist fast zerstört. Im Falle der Zerstörung, verliert Ihr E
 L("NIRNROOT", "Nirnwurz")
 L("RETICLE", "FOB-Absehen verwenden")
 L("WARN_BROKEN", "Warnen, wenn ein Gegenstand fast zerstört ist")
+
+L(
+    "LIB_TEXT",
+    "Dieses Add-on erfordert jetzt LibFBCommon. Bitte installieren Sie es und laden Sie es neu. Bitte ignorieren Sie alle Fehler, bis dies installiert wurde."
+)

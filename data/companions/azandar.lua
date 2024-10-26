@@ -120,7 +120,7 @@ FOB.Functions[defId] = {
 
         options[#options + 1] = {
             type = "submenu",
-            name = FOB.COLOURS.MUSTARD:Colorize(name),
+            name = FOB.LC.Mustard:Colorize(name),
             controls = submenu,
             icon = icon
         }

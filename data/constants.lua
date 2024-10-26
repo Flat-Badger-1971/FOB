@@ -1,3 +1,24 @@
+if (not _G.LibFBCommon) then
+    ZO_Dialogs_RegisterCustomDialog(
+        "FOBLibWarning",
+        {
+            title = {text = "|c4f34ebFOB|r"},
+            mainText = {
+                text = GetString(_G.FOB_LIB_TEXT)
+            },
+            buttons = {
+                {
+                    text = ZO_CachedStrFormat("<<C:1>>", GetString(_G.SI_DIALOG_CONFIRM)),
+                    callback = function()
+                    end
+                }
+            }
+        }
+    )
+
+    ZO_Dialogs_ShowDialog("FOBLibWarning")
+end
+
 _G.FOB = {
     -- for some reason using SI_GAMECAMERAACTIONTYPEs does not work in some languages
     Actions = {
@@ -73,6 +94,7 @@ _G.FOB = {
         [GetString(_G.SI_GAMECAMERAACTIONTYPE21)] = true, -- Pickpocket
         [GetString(_G.SI_GAMECAMERAACTIONTYPE23)] = true -- Trespass
     },
+    LC = _G.LibFBCommon,
     LF = string.char(10),
     Logo = "FOB/assets/fob.dds",
     LogoBlock = "FOB/assets/fobBlock.dds",
@@ -117,3 +139,4 @@ _G.FOB = {
         [GetString(_G.FOB_MEDICAL)] = true
     }
 }
+

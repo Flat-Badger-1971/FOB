@@ -76,7 +76,7 @@ if (_G.CURT_IMPERIAL_FRAGMENTS) then
 
             options[#options + 1] = {
                 type = "submenu",
-                name = FOB.COLOURS.MUSTARD:Colorize(name),
+                name = FOB.LC.Mustard:Colorize(name),
                 controls = submenu,
                 icon = icon
             }

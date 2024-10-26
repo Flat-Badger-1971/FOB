@@ -25,7 +25,7 @@ end
 
 -- handler for built in provisioning interface
 function FOB.ProvisionerHandler()
-    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
+    local check = FOB.Vars.CheeseWarning == true and FOB.DefId == FOB.Bastian
     local recipeData
 
     if (check) then
@@ -42,9 +42,9 @@ function FOB.ProvisionerHandler()
 end
 
 function FOB.DailyProvisioningOverride()
-    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanion == FOB.Bastian
+    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanionDefId == FOB.Bastian
 
-    check = check or (FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanion == FOB.Azander)
+    check = check or (FOB.Vars.CoffeeWarning == true and FOB.ActiveCompanionDefId == FOB.Azander)
 
     if (not check) then
         return false
@@ -80,7 +80,7 @@ function FOB.DailyProvisioningOverride()
                     recipeIndex = parameter.recipeIndex
                 }
 
-                return FOB.CheckIngredients(recipeData, FOB.ActiveCompanion)
+                return FOB.CheckIngredients(recipeData, FOB.ActiveCompanionDefId)
             end
         end
     end
@@ -91,7 +91,7 @@ end
 function FOB.DismissCompanion()
     local character = GetUnitName("player")
 
-    FOB.Vars.LastActiveCompanionId[character] = GetCompanionCollectibleId(FOB.ActiveCompanion)
+    FOB.Vars.LastActiveCompanionId[character] = GetCompanionCollectibleId(FOB.ActiveCompanionDefId)
     UseCollectible(FOB.Vars.LastActiveCompanionId[character])
 end
 

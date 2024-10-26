@@ -133,8 +133,6 @@ function FOB.OnAddonLoaded(_, addonName)
         return
     end
 
-    FOB.LC = _G.LibFBCommon
-
     if (_G.LibDebugLogger ~= nil) then
         FOB.Logger = _G.LibDebugLogger(FOB.Name)
     end
@@ -146,12 +144,6 @@ function FOB.OnAddonLoaded(_, addonName)
     if (_G.RuEsoVariables ~= nil) then
         FOB.UsingRuEso = true
     end
-
-    FOB.COLOURS = {
-        GOLD = ZO_ColorDef:New("ffd700"),
-        MUSTARD = ZO_ColorDef:New("9d840d"),
-        RED = ZO_ColorDef:New("ff0000")
-    }
 
     --FOB.Log("Loaded", "info")
     EVENT_MANAGER:UnregisterForEvent(FOB.Name, _G.EVENT_ADD_ON_LOADED)

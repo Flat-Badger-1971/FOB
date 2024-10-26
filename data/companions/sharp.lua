@@ -64,7 +64,7 @@ FOB.Functions[defId] = {
 
         options[#options + 1] = {
             type = "submenu",
-            name = FOB.COLOURS.MUSTARD:Colorize(name),
+            name = FOB.LC.Mustard:Colorize(name),
             controls = submenu,
             icon = icon
         }
@@ -85,10 +85,10 @@ FOB.Functions[defId] = {
                 if (announce == true) then
                     FOB.Vars.PreviousAnnounceTime = os.time()
                     FOB.LC.Announce(
-                        FOB.COLOURS.RED:Colorize(GetString(_G.FOB_WARNING)),
+                        FOB.LC.Red:Colorize(GetString(_G.FOB_WARNING)),
                         zo_strformat(
                             GetString(_G.FOB_DAMAGED),
-                            FOB.COLOURS.GOLD:Colorize(itemName),
+                            FOB.LC.ZOSGold:Colorize(itemName),
                             ZO_CachedStrFormat(
                                 _G.SI_UNIT_NAME,
                                 GetCollectibleInfo(GetCompanionCollectibleId(FOB.Sharp))
