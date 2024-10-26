@@ -1,9 +1,7 @@
 local FOB = _G.FOB
 
 function FOB.CreateMultiIcon(name, parent, size)
-    local logo = WINDOW_MANAGER:CreateControl(name, parent, CT_TEXTURE)
-
-    FOB.MultiIconInitialise(logo)
+    local logo = WINDOW_MANAGER:CreateControlFromVirtual(name, parent, "ZO_MultiIcon")
 
     logo:SetAnchor(CENTER)
     logo:SetDimensions(size, size)
@@ -12,9 +10,6 @@ function FOB.CreateMultiIcon(name, parent, size)
     logo:SetHandler("OnShow", FOB.MultiIconOnShow)
     logo:SetHandler("OnHide", FOB.MultiIconOnHide)
     logo:Hide()
-
-    -- logo:SetTexture(FOB.ReticlePath)
-    -- logo:SetHidden(true)
 
     return logo
 end
@@ -163,11 +158,9 @@ local function createFobInfoControl()
     control.container:SetResizeToFitPadding(10)
     control.container:SetAnchor(BOTTOM, control, BOTTOM, 0, _G.ZO_COMMON_INFO_DEFAULT_KEYBOARD_BOTTOM_OFFSET_Y)
 
-    control.icon = FOB.CreateMultiIcon(name .. "Icon", control.container, 50) --WINDOW_MANAGER:CreateControl(name .. "Icon", control.container, CT_TEXTURE)
+    control.icon = FOB.CreateMultiIcon(name .. "Icon", control.container, 50)
     control.icon:ClearAnchors()
     control.icon:SetAnchor(LEFT)
-    --control.icon:SetDimensions(50, 50)
-    -- control.icon:SetTexture(FOB.ReticlePath)
 
     control.frame = WINDOW_MANAGER:CreateControl(name .. "Frame", control.icon, CT_TEXTURE)
     control.frame:SetTexture("esoui/art/actionbar/abilityFrame64_up.dds")
