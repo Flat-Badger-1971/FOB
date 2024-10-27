@@ -110,9 +110,7 @@ function FOB.HideDefaultCompanionFrame()
 end
 
 function FOB.GetFont(fontName, fontSize, fontShadow)
-    local hasShadow = fontShadow and "|soft-shadow-thick" or ""
-
-    return FOB.FontDefs[fontName] .. "|" .. fontSize .. hasShadow
+    return FOB.LC.GetFont(fontName, fontSize, fontShadow and "Soft Shadow Thick")
 end
 
 function FOB.ToggleDefaultInteraction()
@@ -126,11 +124,7 @@ function FOB.ToggleDefaultInteraction()
     end
 
     if (FOB.FobInfo) then
-        --if (FOB.Enabled) then
         FOB.FobInfo:OnSynergyAbilityChanged()
-    --else
-    --FOB.FobInfo:SetHidden(true)
-    --end
     end
 
     FOB.Chat:SetTagColor("dc143c"):Print(message)

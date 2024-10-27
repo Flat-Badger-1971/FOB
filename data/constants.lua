@@ -79,15 +79,6 @@ _G.FOB = {
         [GetString(_G.FOB_WASP)] = true,
         [GetString(_G.FOB_WINTER_MOTH)] = true
     },
-    FontDefs = {
-        ["Standard"] = "$(MEDIUM_FONT)",
-        ["ESO Bold"] = "$(BOLD_FONT)",
-        ["Antique"] = "$(ANTIQUE_FONT)",
-        ["Handwritten"] = "$(HANDWRITTEN_FONT)",
-        ["Trajan"] = "$(STONE_TABLET_FONT)",
-        ["Futura"] = "EsoUI/Common/Fonts/FuturaStd-CondensedLight.slug",
-        ["Futura Bold"] = "EsoUI/Common/Fonts/FuturaStd-Condensed.slug"
-    },
     Functions = {},
     Illegal = {
         [GetString(_G.SI_GAMECAMERAACTIONTYPE20)] = true, -- Steal From

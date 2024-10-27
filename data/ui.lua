@@ -177,18 +177,14 @@ end
 
 -- init
 do
-    _G.FOB.Fonts = {}
-    _G.FOB.CompanionNames = {}
+    FOB.Fonts = FOB.LC.GetFontNamesAndStyles(true)
+    FOB.CompanionNames = {}
 
-    for fontName, _ in pairs(_G.FOB.FontDefs) do
-        table.insert(_G.FOB.Fonts, fontName)
-    end
-
-    for _, defId in pairs(_G.FOB.DefIds) do
+    for _, defId in pairs(FOB.DefIds) do
         local cid = GetCompanionCollectibleId(defId)
         local name = FOB.LC.GetFirstWord(GetCollectibleInfo(cid))
 
-        _G.FOB.CompanionNames[name] = true
+        FOB.CompanionNames[name] = true
     end
 
     if (_G.SLASH_COMMANDS["/rl"] == nil) then
