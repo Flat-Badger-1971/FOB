@@ -110,5 +110,3 @@ L("WHITE_CAP", "White Cap")
 L("DAMAGED", "<<1>> is almost broken. If it breaks you will lose reputation with <<2>>.")
 L("WARN_BROKEN", "Warn when an item is nearly broken")
 L("RETICLE", "Use FOB Reticle")
-
-L("LIB_TEXT","This addon now requires LibFBCommon. Please install it and reload. Please disregard any errors until this has been installed.")

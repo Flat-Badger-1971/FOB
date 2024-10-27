@@ -1,24 +1,3 @@
-if (not _G.LibFBCommon) then
-    ZO_Dialogs_RegisterCustomDialog(
-        "FOBLibWarning",
-        {
-            title = {text = "|c4f34ebFOB|r"},
-            mainText = {
-                text = GetString(_G.FOB_LIB_TEXT)
-            },
-            buttons = {
-                {
-                    text = ZO_CachedStrFormat("<<C:1>>", GetString(_G.SI_DIALOG_CONFIRM)),
-                    callback = function()
-                    end
-                }
-            }
-        }
-    )
-
-    ZO_Dialogs_ShowDialog("FOBLibWarning")
-end
-
 _G.FOB = {
     -- for some reason using SI_GAMECAMERAACTIONTYPEs does not work in some languages
     Actions = {

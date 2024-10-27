@@ -4,8 +4,8 @@
 ## AddOnVersion: 3000
 ## Version: 3.0.0
 ## SavedVariables: FOBSavedVars
-## OptionalDependsOn: LibFBCommon LibDebugLogger>=217 DailyProvisioning RuEso CompanionFrame
-## DependsOn: LibChatMessage>=105 LibSavedVars>=60005 LibAddonMenu-2.0>=35
+## DependsOn: LibFBCommon>=1000 LibChatMessage>=105 LibSavedVars>=60005 LibAddonMenu-2.0>=35
+## OptionalDependsOn: LibDebugLogger>=217 DailyProvisioning RuEso CompanionFrame
 
 # DISCLAIMER:
 #

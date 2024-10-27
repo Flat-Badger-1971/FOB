@@ -96,8 +96,3 @@ L("WHITE_CAP", "Chapeau blanc")
 -- misc
 L("NIRNROOT", "Nirnrave")
 L("RETICLE", "Utiliser le réticule FOB")
-
-L(
-    "LIB_TEXT",
-    "Ce module complémentaire nécessite désormais LibFBCommon. Veuillez l'installer et le recharger. Veuillez ignorer les erreurs éventuelles jusqu'à ce que ce module soit installé."
-)
