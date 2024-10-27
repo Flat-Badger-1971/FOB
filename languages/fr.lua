@@ -73,3 +73,5 @@ ZO_CreateStringId("FOB_NAMIRAS_ROT", "Truffe de Namira")
 ZO_CreateStringId("FOB_STINKHORN", "Mutinus elegans")
 ZO_CreateStringId("FOB_VIOLET_COPRINUS", "Coprin violet")
 ZO_CreateStringId("FOB_WHITE_CAP", "Chapeau blanc")
+
+ZO_CreateStringId("FOB_LFC", "La prochaine version de ce module complémentaire nécessitera LibFSCommon. Veuillez l'installer avant la prochaine version.")

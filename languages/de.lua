@@ -93,3 +93,5 @@ ZO_CreateStringId("FOB_WHITE_CAP", "Weißkappe")
 
 -- misc
 ZO_CreateStringId("FOB_DAMAGED", "<<1>> ist fast zerstört. Im Falle der Zerstörung, verliert Ihr Euren Ruf bei <<2>>.")
+
+ZO_CreateStringId("FOB_LFC", "Die nächste Version dieses Add-ons erfordert LibFSCommon. Bitte installieren Sie es vor der nächsten Veröffentlichung.")

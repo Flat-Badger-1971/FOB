@@ -720,6 +720,30 @@ function FOB.OnAddonLoaded(_, addonName)
             ReloadUI()
         end
     end
+
+    local libWarning = FOB.Vars.LibWarning
+
+    if (not _G.LibFBCommon and not libWarning) then
+        ZO_Dialogs_RegisterCustomDialog(
+            "FOBLibWarning",
+            {
+                title = {text = "|c4f34ebFOB|r"},
+                mainText = {
+                    text = GetString(_G.FOB_LFC)
+                },
+                buttons = {
+                    {
+                        text = ZO_CachedStrFormat("<<C:1>>", GetString(_G.SI_DIALOG_CONFIRM)),
+                        callback = function()
+                            FOB.Vars.LibWarning = true
+                        end
+                    }
+                }
+            }
+        )
+
+        ZO_Dialogs_ShowDialog("FOBLibWarning")
+    end
 end
 
 EVENT_MANAGER:RegisterForEvent(FOB.Name, _G.EVENT_ADD_ON_LOADED, FOB.OnAddonLoaded)

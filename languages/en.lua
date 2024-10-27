@@ -89,3 +89,5 @@ ZO_CreateStringId("FOB_WHITE_CAP", "White Cap")
 
 -- misc
 ZO_CreateStringId("FOB_DAMAGED", "<<1>> is almost broken. If it breaks you will lose reputation with <<2>>.")
+
+ZO_CreateStringId("FOB_LFC", "The next version of this addon will require LibFSCommon. Please install it before the next release.")

@@ -73,3 +73,5 @@ ZO_CreateStringId("FOB_NAMIRAS_ROT", "Гниль Намиры")
 ZO_CreateStringId("FOB_STINKHORN", "Цветохвостник")
 ZO_CreateStringId("FOB_VIOLET_COPRINUS", "Лиловый копринус")
 ZO_CreateStringId("FOB_WHITE_CAP", "Белянка")
+
+ZO_CreateStringId("FOB_LFC", "Следующая версия этого дополнения потребует LibFSCommon. Пожалуйста, установите его перед следующим релизом.")
