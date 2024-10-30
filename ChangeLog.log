@@ -1,3 +1,6 @@
+[color=#ff9900][b]Version: 3.0.3 ---------------[/b][/color]
+Fix cheese detection
+
 [color=#ff9900][b]Version: 3.0.2 ---------------[/b][/color]
 Now requires LibFBCommon
 Fixed an issue blocking item rows in the backpack

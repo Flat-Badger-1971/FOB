@@ -25,7 +25,7 @@ end
 
 -- handler for built in provisioning interface
 function FOB.ProvisionerHandler()
-    local check = FOB.Vars.CheeseWarning == true and FOB.DefId == FOB.Bastian
+    local check = FOB.Vars.CheeseWarning == true and FOB.ActiveCompanionDefId == FOB.Bastian
     local recipeData
 
     if (check) then
