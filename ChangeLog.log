@@ -1,12 +1,19 @@
+[color=#ff9900][b]Version: 3.0.2 ---------------[/b][/color]
+Now requires LibFBCommon
+Fixed an issue blocking item rows in the backpack
+Fixed (hopefully) an issue with AutoCategory compatibility
+Fixed a problem with companion detection on non-english clients
+Minor refactor
+
+[color=#ff9900][b]Version: 3.0.1 ---------------[/b][/color]
+Fixed companion detection bug
+
 [color=#ff9900][b]Version: 3.0.0 ---------------[/b][/color]
 Major code refactor for Patch 44
 FOB reticle/logo added
 Blade of Woe detection added
 Pickpocketing detection added
 Settings added for Tanlorin and Zerith-var
-
-[color=#ff9900][b]Version: 2.13.4 ---------------[/b][/color]
-Fixed an issue on the German client when Ember is out
 
 [color=#ff9900][b]Version: 2.13.3 ---------------[/b][/color]
 Ru translation fix

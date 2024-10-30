@@ -182,7 +182,7 @@ do
 
     for _, defId in pairs(FOB.DefIds) do
         local cid = GetCompanionCollectibleId(defId)
-        local name = FOB.LC.GetFirstWord(GetCollectibleInfo(cid))
+        local name = ZO_CachedStrFormat("<<C:1>>", FOB.LC.GetFirstWord(GetCollectibleInfo(cid)))
 
         FOB.CompanionNames[name] = true
     end

@@ -84,7 +84,7 @@ L("WINTER_MOTH", "Wintermotte")
 -- exceptions
 L("LADY_LLARELS_SHELTER", "Fürstin Llarels Unterschlupf")
 L("BLACKHEART_HAVEN", "Der Schwarzherz-Unterschlupf")
-L("SHINYTRADE", "Funkelne Angebote")
+L("SHINYTRADE", "Funkelnde-Angebote")
 
 -- mushrooms
 --L("BLANCHED_RUSSULA_CAP", "Blanched Russula Cap")

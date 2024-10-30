@@ -178,6 +178,11 @@ read_globals = {
             GetObject = {read_only = true}
         }
     },
+    ["TEXT_SEARCH_MANAGER"] = {
+        fields = {
+            RegisterCallback = {read_only = true}
+        }
+    },
     ["TIMED_ACTIVITIES_GAMEPAD"] = {
         fields = {
             GetCategoryData = {read_only = true}
