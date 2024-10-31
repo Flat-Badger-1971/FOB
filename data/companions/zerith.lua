@@ -2,7 +2,6 @@ local defId = _G.FOB.DefIds.Zerith
 local FOB = _G.FOB
 local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
-local lockedRow = {}
 
 FOB.Functions[defId] = {
     Sort = name,
@@ -120,16 +119,11 @@ FOB.Functions[defId] = {
 
                                                 rowControl:SetMouseEnabled(false)
                                                 _G.PLAYER_INVENTORY.isListDirty[_G.INVENTORY_BACKPACK] = true
-                                                lockedRow[rowControl:GetName()] = true
                                             end
                                         end
                                     end
-                                end
-
-                                if (not lockedRow[rowControl:GetName()]) then
-                                    if (not rowControl:IsMouseEnabled()) then
-                                        rowControl:SetMouseEnabled(true)
-                                    end
+                                else
+                                    rowControl:SetMouseEnabled(true)
                                 end
                             end
                         end
@@ -162,13 +156,11 @@ FOB.Functions[defId] = {
         end
     end,
     OnBackpackFullUpdate = function()
-        FOB.LC.Clear(lockedRow)
         FOB.Functions[defId].Other()
     end,
     OnSingleSlotInventoryUpdate = function()
         zo_callLater(
             function()
-                FOB.LC.Clear(lockedRow)
                 CALLBACK_MANAGER:FireCallbacks("BackpackFullUpdate")
             end,
             500

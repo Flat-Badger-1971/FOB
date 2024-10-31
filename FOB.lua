@@ -102,7 +102,7 @@ function FOB.RunCompanionFunctions()
 end
 
 function FOB.OnCompanionStateChanged(_, newState, _)
-    if (FOB.Vars.UseCompanionSummmoningFrame) then
+    if (FOB.Vars.UseCompanionSummoningFrame) then
         if (_G.CF ~= nil) then
             return
         end
@@ -180,7 +180,7 @@ function FOB.OnAddonLoaded(_, addonName)
     EVENT_MANAGER:RegisterForEvent(
         FOB.Name,
         _G.EVENT_ACTIVE_COMPANION_STATE_CHANGED,
-        function()
+        function(...)
             zo_callLater(
                 function()
                     FOB.ActiveCompanionDefId = GetActiveCompanionDefId()
@@ -189,7 +189,7 @@ function FOB.OnAddonLoaded(_, addonName)
                 2000
             )
 
-            FOB.OnCompanionStateChanged()
+            FOB.OnCompanionStateChanged(...)
         end
     )
 

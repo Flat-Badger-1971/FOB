@@ -66,7 +66,7 @@ _G.FOB = {
     },
     LC = _G.LibFBCommon,
     LF = string.char(10),
-    Logo = "FOB/assets/fob.dds",
+    Logo = "FOB/assets/FOB.dds",
     LogoBlock = "FOB/assets/fobBlock.dds",
     MagesGuild = GetString(_G.FOB_MAGES_GUILD),
     MirriInsects = {

@@ -33,6 +33,6 @@ _G.FOB.Defaults = {
     PreventPickpocketingBastian = false,
     PreventPickpocketingSharp = false,
     PreventTreasure = false,
-    UseCompanionSummmoningFrame = true,
+    UseCompanionSummoningFrame = true,
     UseReticle = true
 }

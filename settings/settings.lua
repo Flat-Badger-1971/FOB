@@ -47,10 +47,10 @@ local function getOptions()
             type = "checkbox",
             name = GetString(_G.FOB_SHOWSUMMONING),
             getFunc = function()
-                return FOB.Vars.UseCompanionSummmoningFrame
+                return FOB.Vars.UseCompanionSummoningFrame
             end,
             setFunc = function(value)
-                FOB.Vars.UseCompanionSummmoningFrame = value
+                FOB.Vars.UseCompanionSummoningFrame = value
 
                 if (value == true) then
                     EVENT_MANAGER:RegisterForEvent(

@@ -185,6 +185,15 @@ do
         local name = ZO_CachedStrFormat("<<C:1>>", FOB.LC.GetFirstWord(GetCollectibleInfo(cid)))
 
         FOB.CompanionNames[name] = true
+
+        -- handle a spelling mistake in the French client
+        if (GetCVar("language.2") == "fr") then
+            if (name:find("é")) then
+                name = name:gsub("é", "e")
+
+                FOB.CompanionNames[name] = true
+            end
+        end
     end
 
     if (_G.SLASH_COMMANDS["/rl"] == nil) then
