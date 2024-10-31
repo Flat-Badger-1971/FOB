@@ -7,8 +7,8 @@ function FOB.CreateMultiIcon(name, parent, size)
     logo:SetDimensions(size, size)
     logo:AddIcon(FOB.Logo)
     logo:AddIcon(FOB.LogoBlock)
-    logo:SetHandler("OnShow", FOB.MultiIconOnShow)
-    logo:SetHandler("OnHide", FOB.MultiIconOnHide)
+    logo:SetHandler("OnShow", ZO_MultiIcon_OnShow)
+    logo:SetHandler("OnHide", ZO_MultiIcon_OnHide)
     logo:Hide()
 
     return logo
