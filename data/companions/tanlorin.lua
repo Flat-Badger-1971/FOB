@@ -25,19 +25,16 @@ FOB.Functions[defId] = {
         if (FOB.Vars.PreventLorebooks) then
             -- examine
             if (action == FOB.Actions.Examine) then
-                local questInteraction = select(3, GetGameCameraInteractableInfo())
-                local writString = GetString(_G.SI_CUSTOMERSERVICESUBMITFEEDBACKSUBCATEGORIES212)
-                local isWrit =
-                    FOB.LC.PartialMatch(interactableName, {[ZO_CachedStrFormat("<<C:1>>", writString)] = true})
-
-                if (not questInteraction and not isWrit) then
+                if (FOB.IsFromShalidorsLibrary(interactableName)) then
                     return true
                 end
             end
 
-            -- search
-            if (action == FOB.Actions.Search and FOB.LC.PartialMatch(interactableName, {[FOB.Bookshelf] = true})) then
-                return true
+            -- search - block bookshelves, just in case
+            if (FOB.Vars.PreventBookshelves) then
+                if (action == FOB.Actions.Search and FOB.LC.PartialMatch(interactableName, {[FOB.Bookshelf] = true})) then
+                    return true
+                end
             end
         end
 
@@ -79,6 +76,20 @@ FOB.Functions[defId] = {
                     FOB.Vars.PreventLorebooks = value
                 end,
                 width = "full"
+            },
+            [4] = {
+                type = "checkbox",
+                name = GetString(_G.FOB_PREVENT_BOOKSHELVES),
+                getFunc = function()
+                    return FOB.Vars.PreventBookshelves
+                end,
+                setFunc = function(value)
+                    FOB.Vars.PreventBookshelves = value
+                end,
+                width = "full",
+                disabled = function()
+                    return not FOB.Vars.PreventLorebooks
+                end
             }
         }
 

@@ -1,3 +1,7 @@
+[color=#ff9900][b]Version: 3.0.7 ---------------[/b][/color]
+Tanlorin lorebook detection now only looks for Shalidor's library books
+Book shelf blocking added as an option
+
 [color=#ff9900][b]Version: 3.0.6 ---------------[/b][/color]
 Reduce false positives for Tanlorin lorebook detection
 Prevent interaction with Cadwell for Zerith-var

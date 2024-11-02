@@ -204,3 +204,24 @@ function FOB.AllowPickPocketing()
 
     return block
 end
+
+function FOB.IsFromShalidorsLibrary(bookTitle)
+    local SHALIDORS_LIBRARY = 1
+
+    local _, numCollections = GetLoreCategoryInfo(SHALIDORS_LIBRARY)
+
+    for collectionIndex = 1, numCollections do
+        local _, _, _, totalBooks, hidden = GetLoreCollectionInfo(SHALIDORS_LIBRARY, collectionIndex)
+        if not hidden then
+            for bookIndex = 1, totalBooks do
+                local title = GetLoreBookInfo(SHALIDORS_LIBRARY, collectionIndex, bookIndex)
+
+                if (ZO_CachedStrFormat("<<C:1>>", title) == bookTitle) then
+                    return true
+                end
+            end
+        end
+    end
+
+    return false
+end
