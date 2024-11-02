@@ -5,7 +5,14 @@ local name, _, icon = GetCollectibleInfo(cid)
 
 FOB.Functions[defId] = {
     Sort = name,
-    Dislikes = function()
+    Dislikes = function(action, interactableName)
+        if (FOB.Vars.PreventCadwell) then
+            if (action == FOB.Actions.Talk) then
+                if (FOB.LC.PartialMatch(interactableName, {[GetString(_G.FOB_CADWELL)] = true})) then
+                    return true
+                end
+            end
+        end
         return false
     end,
     Settings = function(options)
@@ -67,6 +74,17 @@ FOB.Functions[defId] = {
                     else
                         FOB.UnregisterForBladeOfWoe(defId)
                     end
+                end,
+                width = "full"
+            },
+            [5] = {
+                type = "checkbox",
+                name = GetString(_G.FOB_PREVENT_CADWELL),
+                getFunc = function()
+                    return FOB.Vars.PreventCadwell
+                end,
+                setFunc = function(value)
+                    FOB.Vars.PreventCadwell = value
                 end,
                 width = "full"
             }

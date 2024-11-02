@@ -1,8 +1,8 @@
 ## Title: |cdc143cFOB|r - Companion Helper
 ## Author: Flat Badger
 ## APIVersion: 101044
-## AddOnVersion: 3005
-## Version: 3.0.5
+## AddOnVersion: 3006
+## Version: 3.0.6
 ## SavedVariables: FOBSavedVars
 ## DependsOn: LibFBCommon>=1001 LibChatMessage>=105 LibSavedVars>=60005 LibAddonMenu-2.0>=35
 ## OptionalDependsOn: LibDebugLogger>=217 DailyProvisioning RuEso CompanionFrame

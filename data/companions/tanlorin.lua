@@ -26,8 +26,11 @@ FOB.Functions[defId] = {
             -- examine
             if (action == FOB.Actions.Examine) then
                 local questInteraction = select(3, GetGameCameraInteractableInfo())
+                local writString = GetString(_G.SI_CUSTOMERSERVICESUBMITFEEDBACKSUBCATEGORIES212)
+                local isWrit =
+                    FOB.LC.PartialMatch(interactableName, {[ZO_CachedStrFormat("<<C:1>>", writString)] = true})
 
-                if (not questInteraction) then
+                if (not questInteraction and not isWrit) then
                     return true
                 end
             end
