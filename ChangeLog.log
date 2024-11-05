@@ -1,3 +1,6 @@
+[color=#ff9900][b]Version: 3.0.8 ---------------[/b][/color]
+Fixed an issue with prevent edicts blocking at the wrong time
+
 [color=#ff9900][b]Version: 3.0.7 ---------------[/b][/color]
 Tanlorin lorebook detection now only looks for Shalidor's library books
 Book shelf blocking added as an option

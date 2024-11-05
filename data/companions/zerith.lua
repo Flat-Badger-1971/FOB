@@ -99,51 +99,47 @@ FOB.Functions[defId] = {
     end,
     Other = function()
         if (FOB.Vars) then
-            if (FOB.Vars.PreventEdicts) then
-                if (FOB.ActiveCompanionDefId == defId and FOB.Enabled) then
-                    for _, i in pairs(_G.PLAYER_INVENTORY.inventories) do
-                        local listView = i.listView
+            for _, i in pairs(_G.PLAYER_INVENTORY.inventories) do
+                local listView = i.listView
 
-                        if (listView and listView.dataTypes and listView.dataTypes[1]) then
-                            local originalCall = listView.dataTypes[1].setupCallback
+                if (listView and listView.dataTypes and listView.dataTypes[1]) then
+                    local originalCall = listView.dataTypes[1].setupCallback
 
-                            listView.dataTypes[1].setupCallback = function(rowControl, slot, ...)
-                                originalCall(rowControl, slot, ...)
+                    listView.dataTypes[1].setupCallback = function(rowControl, slot, ...)
+                        originalCall(rowControl, slot, ...)
 
-                                local info = rowControl:GetNamedChild("TraitInfo")
+                        local info = rowControl:GetNamedChild("TraitInfo")
+                        local block = FOB.Vars.PreventEdicts and FOB.ActiveCompanionDefId == defId and FOB.Enabled
+                        if
+                            (block and slot.itemType == _G.ITEMTYPE_TROPHY and
+                                slot.specializedItemType == _G.SPECIALIZED_ITEMTYPE_TROPHY_SCROLL)
+                         then
+                            local id = GetItemId(slot.bagId, slot.slotIndex)
 
-                                if
-                                    (slot.itemType == _G.ITEMTYPE_TROPHY and
-                                        slot.specializedItemType == _G.SPECIALIZED_ITEMTYPE_TROPHY_SCROLL)
-                                 then
-                                    local id = GetItemId(slot.bagId, slot.slotIndex)
+                            if (id == 71779 or id == 73754) then
+                                if (info) then
+                                    if (not info:HasIcon(FOB.Logo)) then
+                                        info:ClearIcons()
+                                        info:AddIcon(FOB.Logo)
+                                        info:AddIcon(FOB.LogoBlock)
+                                        info:Show()
+                                        _G.ZO_PlayerInventorySlot_SetupUsableAndLockedColor(
+                                            slot.slotControl,
+                                            false,
+                                            true
+                                        )
+                                        CALLBACK_MANAGER:FireCallbacks(
+                                            "InventorySlotUpdate",
+                                            slot.slotControl:GetNamedChild("Button")
+                                        )
 
-                                    if (id == 71779 or id == 73754) then
-                                        if (info) then
-                                            if (not info:HasIcon(FOB.Logo)) then
-                                                info:ClearIcons()
-                                                info:AddIcon(FOB.Logo)
-                                                info:AddIcon(FOB.LogoBlock)
-                                                info:Show()
-                                                _G.ZO_PlayerInventorySlot_SetupUsableAndLockedColor(
-                                                    slot.slotControl,
-                                                    false,
-                                                    true
-                                                )
-                                                CALLBACK_MANAGER:FireCallbacks(
-                                                    "InventorySlotUpdate",
-                                                    slot.slotControl:GetNamedChild("Button")
-                                                )
-
-                                                rowControl:SetMouseEnabled(false)
-                                                _G.PLAYER_INVENTORY.isListDirty[_G.INVENTORY_BACKPACK] = true
-                                            end
-                                        end
+                                        rowControl:SetMouseEnabled(false)
+                                        _G.PLAYER_INVENTORY.isListDirty[_G.INVENTORY_BACKPACK] = true
                                     end
-                                else
-                                    rowControl:SetMouseEnabled(true)
                                 end
                             end
+                        else
+                            rowControl:SetMouseEnabled(true)
                         end
                     end
                 end
