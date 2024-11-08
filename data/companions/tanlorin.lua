@@ -90,7 +90,24 @@ FOB.Functions[defId] = {
                 disabled = function()
                     return not FOB.Vars.PreventLorebooks
                 end
-            }
+            },
+            [5] = {
+                type = "checkbox",
+                name = GetString(_G.FOB_PREVENT_BLADE_OF_WOE),
+                getFunc = function()
+                    return FOB.Vars.PreventBladeOfWoeTanlorin
+                end,
+                setFunc = function(value)
+                    FOB.Vars.PreventBladeOfWoeTanlorin = value
+
+                    if (value) then
+                        FOB.RegisterForBladeOfWoe(defId)
+                    else
+                        FOB.UnregisterForBladeOfWoe(defId)
+                    end
+                end,
+                width = "full"
+            },
         }
 
         options[#options + 1] = {
