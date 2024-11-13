@@ -38,6 +38,12 @@ FOB.Functions[defId] = {
             end
         end
 
+        if (FOB.Vars.PreventPsijic) then
+            if (action == FOB.Actions.Loot and FOB.LC.PartialMatch(interactableName, {[FOB.PsijicPortal] = true})) then
+                return true
+            end
+        end
+
         return false
     end,
     Settings = function(options)
@@ -108,6 +114,17 @@ FOB.Functions[defId] = {
                 end,
                 width = "full"
             },
+            [6] = {
+                type = "checkbox",
+                name = GetString(_G.FOB_PREVENT_PSIJIC),
+                getFunc = function()
+                    return FOB.Vars.PreventPsijic
+                end,
+                setFunc = function(value)
+                    FOB.Vars.PreventPsijic = value
+                end,
+                width = "full"
+            }
         }
 
         options[#options + 1] = {

@@ -184,6 +184,7 @@ function FOB.OnAddonLoaded(_, addonName)
             zo_callLater(
                 function()
                     FOB.ActiveCompanionDefId = GetActiveCompanionDefId()
+                    FOB.RestoreReticle()
                     FOB.RunCompanionFunctions()
                 end,
                 2000

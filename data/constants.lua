@@ -4,10 +4,11 @@ _G.FOB = {
         Catch = GetString(_G.FOB_CATCH),
         Collect = GetString(_G.FOB_COLLECT),
         Examine = GetString(_G.FOB_EXAMINE),
+        Loot = GetString(_G.FOB_LOOT),
+        Open = GetString(_G.FOB_OPEN),
         Search = GetString(_G.FOB_SEARCH),
         Take = GetString(_G.FOB_TAKE),
         Talk = GetString(_G.FOB_TALK),
-        Open = GetString(_G.FOB_OPEN),
         Use = GetString(_G.FOB_USE)
     },
     BladeOfWoe = GetAbilityName(78219),
@@ -104,9 +105,9 @@ _G.FOB = {
         [GetString(_G.FOB_OUTLAWS_REFUGE):lower()] = true,
         [GetString(_G.FOB_THIEVES_DEN):lower()] = true
     },
+    PsijicPortal = GetString(_G.FOB_PSIJIC_PORTAL),
     Treasures = {
         [GetString(_G.FOB_RITUAL)] = true,
         [GetString(_G.FOB_MEDICAL)] = true
     }
 }
-

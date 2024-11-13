@@ -21,6 +21,7 @@ L("ALERT_ICON", "Значок предупреждения")
 L("TALK", "Поговорить")
 L("TAKE", "Взять")
 L("CATCH", "Поймать")
+L("LOOT", "Обыскать")
 L("OPEN", "Открыть")
 L("USE", "Использовать")
 L("COLLECT", "Взять")
@@ -31,12 +32,14 @@ L("IGNORE_MIRRI_INSECTS", "Собирать насекомых не влияющ
 L("IGNORE_ALL_INSECTS", "Игнорируйте летающих насекомых все время")
 L("PREVENT_CRIMINAL", "Блокировать преступную активность")
 L("PREVENT_DARK_BROTHERHOOD", "Запретить вход в Убежище Темного Братства")
+L("PREVENT_PSIJIC", "Предотвратить появление порталов Псиджиков")
 
 -- interactable names
 L("DARK_BROTHERHOOD", "Убежище Темного Братства")
 L("THIEVES_DEN", "Логово воров")
 L("OUTLAWS_REFUGE", "Убежище")
 L("OUTFIT_STATION", "Мастерская нарядов")
+L("PSIJIC_PORTAL", "Портал Псиджиков")
 L("CADWELL", "Кэдвелл")
 
 -- flying insects / летающие насекомые (translations req.)
