@@ -70,31 +70,33 @@ FOB.Functions[defId] = {
         }
     end,
     OnSingleSlotInventoryUpdate = function()
-        if (FOB.Vars.CheckDamage and FOB.ActiveCompanionDefId == defId) then
-            local minDamage, itemName = FOB.CheckDurability()
+        if (FOB.Vars) then
+            if (FOB.Vars.CheckDamage and FOB.ActiveCompanionDefId == defId) then
+                local minDamage, itemName = FOB.CheckDurability()
 
-            if (minDamage < 5) then
-                local announce = true
-                local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
-                local debounceTime = 300
+                if (minDamage < 5) then
+                    local announce = true
+                    local previousTime = FOB.Vars.PreviousAnnounceTime or (os.time() - 301)
+                    local debounceTime = 300
 
-                if (os.time() - previousTime <= debounceTime) then
-                    announce = false
-                end
+                    if (os.time() - previousTime <= debounceTime) then
+                        announce = false
+                    end
 
-                if (announce == true) then
-                    FOB.Vars.PreviousAnnounceTime = os.time()
-                    FOB.LC.Announce(
-                        FOB.LC.Red:Colorize(GetString(_G.FOB_WARNING)),
-                        zo_strformat(
-                            GetString(_G.FOB_DAMAGED),
-                            FOB.LC.ZOSGold:Colorize(itemName),
-                            ZO_CachedStrFormat(
-                                _G.SI_UNIT_NAME,
-                                GetCollectibleInfo(GetCompanionCollectibleId(FOB.Sharp))
+                    if (announce == true) then
+                        FOB.Vars.PreviousAnnounceTime = os.time()
+                        FOB.LC.ScreenAnnounce(
+                            FOB.LC.Red:Colorize(GetString(_G.FOB_WARNING)),
+                            zo_strformat(
+                                GetString(_G.FOB_DAMAGED),
+                                FOB.LC.ZOSGold:Colorize(itemName),
+                                ZO_CachedStrFormat(
+                                    _G.SI_UNIT_NAME,
+                                    GetCollectibleInfo(GetCompanionCollectibleId(FOB.Sharp))
+                                )
                             )
                         )
-                    )
+                    end
                 end
             end
         end
@@ -111,8 +113,3 @@ FOB.NoPickPocketing[defId] = {
     [_G.MONSTER_SOCIAL_CLASS_FISHER] = true,
     [_G.MONSTER_SOCIAL_CLASS_LABORER] = true
 }
--- destroy item worth over 20g
-
---getunitcaption
---getunitreaction UNIT_REACTION_HOSTILE
--- no PP on beggers,labourers or fishers

@@ -6,9 +6,9 @@ local name, _, icon = GetCollectibleInfo(cid)
 FOB.Functions[defId] = {
     Sort = name,
     Dislikes = function(action, interactableName)
-        if (FOB.Vars.PreventCadwell) then
+        if (FOB.Vars.PreventCadwell and (FOB.ActiveCompanionDefId == defId)) then
             if (action == FOB.Actions.Talk) then
-                if (FOB.LC.PartialMatch(interactableName, {[GetString(_G.FOB_CADWELL)] = true})) then
+                if (FOB.LC.PartialMatch(interactableName, { [GetString(_G.FOB_CADWELL)] = true })) then
                     return true
                 end
             end
@@ -113,7 +113,7 @@ FOB.Functions[defId] = {
                         if
                             (block and slot.itemType == _G.ITEMTYPE_TROPHY and
                                 slot.specializedItemType == _G.SPECIALIZED_ITEMTYPE_TROPHY_SCROLL)
-                         then
+                        then
                             local id = GetItemId(slot.bagId, slot.slotIndex)
 
                             if (id == 71779 or id == 73754) then
@@ -147,25 +147,27 @@ FOB.Functions[defId] = {
         end
     end,
     OnFenceOpened = function()
-        if (FOB.Enabled) then
+        if (FOB.Enabled and (FOB.ActiveCompanionDefId == defId)) then
             local modeBar = _G.FENCE_KEYBOARD.modeBar
             local menuBar = modeBar.menuBar.m_object
             local sellButton = menuBar:ButtonObjectForDescriptor(_G.SI_STORE_MODE_SELL)
 
-            if (sellButton:GetState() ~= _G.BSTATE_DISABLED) then
-                if (FOB.Vars.PreventFence and FOB.ActiveCompanionDefId == defId) then
-                    sellButton.m_buttonData.disabled = FOB.LogoBlock
-                    menuBar:SetDescriptorEnabled(_G.SI_STORE_MODE_SELL, false)
+            if (sellButton) then
+                if (sellButton:GetState() ~= _G.BSTATE_DISABLED) then
+                    if (FOB.Vars.PreventFence and FOB.ActiveCompanionDefId == defId) then
+                        sellButton.m_buttonData.disabled = FOB.LogoBlock
+                        menuBar:SetDescriptorEnabled(_G.SI_STORE_MODE_SELL, false)
 
-                    zo_callLater(
-                        function()
-                            _G.FENCE_KEYBOARD.modeBar:SelectFragment(_G.SI_FENCE_LAUNDER_TAB)
-                        end,
-                        500
-                    )
+                        zo_callLater(
+                            function()
+                                _G.FENCE_KEYBOARD.modeBar:SelectFragment(_G.SI_FENCE_LAUNDER_TAB)
+                            end,
+                            500
+                        )
+                    end
+                else
+                    menuBar:SetDescriptorEnabled(_G.SI_STORE_MODE_SELL)
                 end
-            else
-                menuBar:SetDescriptorEnabled(_G.SI_STORE_MODE_SELL)
             end
         end
     end,
