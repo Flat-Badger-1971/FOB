@@ -188,8 +188,8 @@ do
 
         -- handle a spelling mistake in the French client
         if (GetCVar("language.2") == "fr") then
-            if (name:find("é")) then
-                name = name:gsub("é", "e")
+            if (zo_strfind(name, "é")) then
+                name = zo_strgsub(name, "é", "e")
 
                 FOB.CompanionNames[name] = true
             end

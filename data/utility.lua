@@ -8,12 +8,12 @@ function FOB.CheckIngredients(recipeData, companion)
         local name, texturename = GetRecipeIngredientItemInfo(recipeData.recipeListIndex, recipeData.recipeIndex, idx)
         if (name ~= "") then
             --FOB.Log(texturename, "info")
-            if (texturename:find("quest_trollfat_001") and companion == FOB.Bastian) then
+            if (zo_strfind(texturename, "quest_trollfat_001") and companion == FOB.Bastian) then
                 FOB.ShowAlert(FOB.Alert)
                 return true
             end
 
-            if (texturename:find("crafting_coffee_beans") and companion == FOB.Azander) then
+            if (zo_strfind(texturename, "crafting_coffee_beans") and companion == FOB.Azander) then
                 FOB.ShowAlert(FOB.CoffeeAlert)
                 return true
             end

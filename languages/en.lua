@@ -116,3 +116,6 @@ L("WHITE_CAP", "White Cap")
 L("DAMAGED", "<<1>> is almost broken. If it breaks you will lose reputation with <<2>>.")
 L("WARN_BROKEN", "Warn when an item is nearly broken")
 L("RETICLE", "Use FOB Reticle")
+
+-- exceptions
+L("SEBASTIAN_BRUTYA", "Sebastian Brutya")

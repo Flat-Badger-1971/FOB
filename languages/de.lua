@@ -91,6 +91,7 @@ L("WINTER_MOTH", "Wintermotte")
 L("LADY_LLARELS_SHELTER", "Fürstin Llarels Unterschlupf")
 L("BLACKHEART_HAVEN", "Der Schwarzherz-Unterschlupf")
 L("SHINYTRADE", "Funkelnde-Angebote")
+L("SEBASTIAN_BRUTYA", "Sebastian Brutya")
 
 -- mushrooms
 --L("BLANCHED_RUSSULA_CAP", "Blanched Russula Cap")

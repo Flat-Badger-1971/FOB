@@ -39,7 +39,8 @@ _G.FOB = {
     Exceptions = {
         [GetString(_G.FOB_LADY_LLARELS_SHELTER) or "nil"] = true,
         [GetString(_G.FOB_BLACKHEART_HAVEN) or "nil"] = true,
-        [GetString(_G.FOB_SHINYTRADE) or "nil"] = true
+        [GetString(_G.FOB_SHINYTRADE) or "nil"] = true,
+        [GetString(_G.FOB_SEBASTIAN_BRUTYA or "nil")] = true
     },
     FlyingInsects = {
         [GetString(_G.FOB_BLACKREACH_JELLY)] = true,
@@ -102,8 +103,8 @@ _G.FOB = {
     Nirnroot = GetString(_G.FOB_NIRNROOT),
     NoPickPocketing = {},
     OutlawsRefuge = {
-        [GetString(_G.FOB_OUTLAWS_REFUGE):lower()] = true,
-        [GetString(_G.FOB_THIEVES_DEN):lower()] = true
+        [zo_strlower(GetString(_G.FOB_OUTLAWS_REFUGE))] = true,
+        [zo_strlower(GetString(_G.FOB_THIEVES_DEN))] = true
     },
     PsijicPortal = GetString(_G.FOB_PSIJIC_PORTAL),
     Treasures = {

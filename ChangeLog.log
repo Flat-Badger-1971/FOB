@@ -1,3 +1,6 @@
+[color=#ff9900][b]Version: 3.0.11 ---------------[/b][/color]
+Fix false positives for Sebastian Brutya
+refactor
 [color=#ff9900][b]Version: 3.0.10 ---------------[/b][/color]
 Bugfix for Sharp as night announcements
 Bugfix for fence check firing for invalid companions

@@ -102,3 +102,6 @@ L("WHITE_CAP", "Chapeau blanc")
 -- misc
 L("NIRNROOT", "Nirnrave")
 L("RETICLE", "Utiliser le réticule FOB")
+
+-- exceptions
+L("SEBASTIAN_BRUTYA", "Sebastian Brutya")
