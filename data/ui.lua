@@ -1,7 +1,5 @@
-local FOB = _G.FOB
-
 function FOB.CreateMultiIcon(name, parent, size)
-    local logo = WINDOW_MANAGER:CreateControlFromVirtual(name, parent, "ZO_MultiIcon")
+    local logo = CreateControlFromVirtual(name, parent, "ZO_MultiIcon")
 
     logo:SetAnchor(CENTER)
     logo:SetDimensions(size, size)
@@ -16,11 +14,9 @@ end
 
 function FOB.ReplaceReticle()
     if (FOB.Vars.UseReticle) then
-        if (not FOB.UsingFOBReticle) then
-            _G.ZO_ReticleContainerReticle:SetAlpha(0)
-            FOB.Reticle:SetHidden(false)
-            FOB.UsingFOBReticle = true
-        end
+        ZO_ReticleContainerReticle:SetAlpha(0)
+        FOB.Reticle:SetHidden(false)
+        FOB.UsingFOBReticle = true
     else
         FOB.UsingFOBReticle = false
     end
@@ -28,7 +24,10 @@ end
 
 function FOB.RestoreReticle()
     if (FOB.UsingFOBReticle) then
-        _G.ZO_ReticleContainerReticle:SetAlpha(1)
+        if (ZO_ReticleContainerReticle) then
+            ZO_ReticleContainerReticle:SetAlpha(1)
+        end
+
         FOB.Reticle:SetHidden(true)
         FOB.UsingFOBReticle = false
     end
@@ -39,7 +38,7 @@ function FOB.ShowAlert(alert)
     alert:SetHidden(false)
     alert.Animation:PlayFromStart()
 
-    PlaySound(_G.SOUNDS.QUEST_ABANDONED)
+    PlaySound(SOUNDS.QUEST_ABANDONED)
 
     zo_callLater(
         function()
@@ -57,7 +56,7 @@ function FOB.SetupCheeseAlert()
         colour = FOB.Vars.CheeseFontColour
     }
 
-    FOB.Alert = FOB.SetupAlert("FOB_Cheese_Alert", FOB.Vars.CheeseIcon, font, _G.FOB_CHEESE_ALERT)
+    FOB.Alert = FOB.SetupAlert("FOB_Cheese_Alert", FOB.Vars.CheeseIcon, font, FOB_CHEESE_ALERT)
 end
 
 function FOB.SetupCoffeeAlert()
@@ -68,11 +67,11 @@ function FOB.SetupCoffeeAlert()
         colour = FOB.Vars.CoffeeFontColour
     }
 
-    FOB.CoffeeAlert = FOB.SetupAlert("FOB_Coffee_Alert", FOB.Vars.CoffeeIcon, font, _G.FOB_COFFEE_ALERT)
+    FOB.CoffeeAlert = FOB.SetupAlert("FOB_Coffee_Alert", FOB.Vars.CoffeeIcon, font, FOB_COFFEE_ALERT)
 end
 
 function FOB.SetupAlert(name, icon, fontInfo, text)
-    local alert = WINDOW_MANAGER:CreateTopLevelWindow(name)
+    local alert = CreateTopLevelWindow(name)
 
     -- main window
     alert:SetAnchor(CENTER, GuiRoot, CENTER, 0, 0)
@@ -80,7 +79,7 @@ function FOB.SetupAlert(name, icon, fontInfo, text)
     alert:SetHidden(true)
 
     -- icon
-    alert.Texture = WINDOW_MANAGER:CreateControl(name .. "_Texture", alert, CT_TEXTURE)
+    alert.Texture = CreateControl(name .. "_Texture", alert, CT_TEXTURE)
     alert.Texture:SetTexture(icon)
     alert.Texture:SetAnchor(LEFT, alert, LEFT)
     alert.Texture:SetDimensions(64, 64)
@@ -88,18 +87,18 @@ function FOB.SetupAlert(name, icon, fontInfo, text)
     -- label
     local font = FOB.GetFont(fontInfo.font, fontInfo.size, fontInfo.shadow)
 
-    alert.Label = WINDOW_MANAGER:CreateControl(name .. "_Label", alert, CT_LABEL)
+    alert.Label = CreateControl(name .. "_Label", alert, CT_LABEL)
     alert.Label:SetFont(font)
     alert.Label:SetColor(fontInfo.colour.r, fontInfo.colour.g, fontInfo.colour.b, fontInfo.colour.a)
-    alert.Label:SetHorizontalAlignment(_G.TEXT_ALIGN_CENTER)
-    alert.Label:SetVerticalAlignment(_G.TEXT_ALIGN_CENTER)
+    alert.Label:SetHorizontalAlignment(TEXT_ALIGN_CENTER)
+    alert.Label:SetVerticalAlignment(TEXT_ALIGN_CENTER)
     alert.Label:SetText(GetString(text))
     alert.Label:SetDimensions(184, 64)
     alert.Label:SetAnchor(LEFT, alert.Texture, RIGHT)
     alert.Label:SetHidden(false)
 
     -- fade out animation
-    local fadeAnimation, fadeTimeline = CreateSimpleAnimation(_G.ANIMATION_ALPHA, alert)
+    local fadeAnimation, fadeTimeline = CreateSimpleAnimation(ANIMATION_ALPHA, alert)
 
     fadeAnimation:SetAlphaValues(1, 0)
     fadeAnimation:SetDuration(1000)
@@ -110,18 +109,18 @@ function FOB.SetupAlert(name, icon, fontInfo, text)
         end
     )
 
-    fadeTimeline:SetPlaybackType(_G.ANIMATION_PLAYBACK_ONE_SHOT)
+    fadeTimeline:SetPlaybackType(ANIMATION_PLAYBACK_ONE_SHOT, 0)
 
     alert.FadeAnimation = fadeTimeline
 
-    local animation, timeline = CreateSimpleAnimation(_G.ANIMATION_SCALE, alert)
+    local animation, timeline = CreateSimpleAnimation(ANIMATION_SCALE, alert)
 
     -- scaling animation
     animation:SetStartScale(1)
     animation:SetEndScale(3)
     animation:SetDuration(1500)
 
-    timeline:SetPlaybackType(_G.ANIMATION_PLAYBACK_ONE_SHOT)
+    timeline:SetPlaybackType(ANIMATION_PLAYBACK_ONE_SHOT, 0)
 
     alert.Animation = timeline
     alert.FadeAnimation = fadeTimeline
@@ -133,30 +132,33 @@ end
 function FOB.CreateCompanionSummoningFrame()
     local name = FOB.Name .. "_CompanionSummoningFrame"
 
-    FOB.SummoningFrame = _G[name] or WINDOW_MANAGER:CreateTopLevelWindow(name)
+    FOB.SummoningFrame = _G[name] or CreateTopLevelWindow(name)
     FOB.SummoningFrame:SetDimensions(GuiRoot:GetWidth() / 3, 30)
     FOB.SummoningFrame:SetAnchor(CENTER, GuiRoot, CENTER)
     FOB.SummoningFrame:SetDrawTier(DT_HIGH)
 
-    FOB.SummoningFrame.Message = WINDOW_MANAGER:CreateControl(name .. "_Message", FOB.SummoningFrame, CT_LABEL)
+    --- @diagnostic disable: inject-field
+    FOB.SummoningFrame.Message = CreateControl(name .. "_Message", FOB.SummoningFrame, CT_LABEL)
     FOB.SummoningFrame.Message:SetDimensions(400, 30)
     FOB.SummoningFrame.Message:SetAnchor(CENTER, FOB.SummoningFrame, CENTER, 0, (GuiRoot:GetHeight() / 4) * -1)
     FOB.SummoningFrame.Message:SetFont(FOB.GetFont("ESO Bold", 28, true))
     FOB.SummoningFrame.Message:SetHorizontalAlignment(CENTER)
     FOB.SummoningFrame.Message:SetVerticalAlignment(CENTER)
     FOB.SummoningFrame.Message:SetColor(157 / 255, 132 / 255, 13 / 255, 1)
+    --- @diagnostic enable: inject-field
 end
 
 local function createFobInfoControl()
     local name = "FOB_INFO"
-    local control = WINDOW_MANAGER:CreateTopLevelWindow(name)
+    local control = CreateTopLevelWindow(name)
 
     control:SetAnchorFill()
 
+    --- @diagnostic disable: inject-field
     control.container = WINDOW_MANAGER:CreateControl(name .. "Container", control, CT_CONTROL)
     control.container:SetResizeToFitDescendents(true)
-    control.container:SetResizeToFitPadding(10)
-    control.container:SetAnchor(BOTTOM, control, BOTTOM, 0, _G.ZO_COMMON_INFO_DEFAULT_KEYBOARD_BOTTOM_OFFSET_Y)
+    control.container:SetResizeToFitPadding(10, nil)
+    control.container:SetAnchor(BOTTOM, control, BOTTOM, 0, ZO_COMMON_INFO_DEFAULT_KEYBOARD_BOTTOM_OFFSET_Y)
 
     control.icon = FOB.CreateMultiIcon(name .. "Icon", control.container, 50)
     control.icon:ClearAnchors()
@@ -164,13 +166,14 @@ local function createFobInfoControl()
 
     control.frame = WINDOW_MANAGER:CreateControl(name .. "Frame", control.icon, CT_TEXTURE)
     control.frame:SetTexture("esoui/art/actionbar/abilityFrame64_up.dds")
-    control.frame:SetDrawLayer(_G.CONTROLS)
+    control.frame:SetDrawLayer(DL_CONTROLS)
 
     control.action = WINDOW_MANAGER:CreateControl(name .. "Action", control.container, CT_LABEL)
     control.action:SetFont("ZoInteractionPrompt")
     control.action:SetHorizontalAlignment(CENTER)
     control.action:SetAnchor(LEFT, control.icon, RIGHT, 15, 0)
     control.action:SetText(FOB.BladeOfWoeFormatted)
+    --- @diagnostic enable: inject-field
 
     return control
 end
@@ -189,20 +192,20 @@ do
         -- handle a spelling mistake in the French client
         if (GetCVar("language.2") == "fr") then
             if (zo_strfind(name, "é")) then
-                name = zo_strgsub(name, "é", "e")
+                name = zo_strgsub(name, "é", "e") or ""
 
                 FOB.CompanionNames[name] = true
             end
         end
     end
 
-    if (_G.SLASH_COMMANDS["/rl"] == nil) then
-        _G.SLASH_COMMANDS["/rl"] = function()
+    if (SLASH_COMMANDS["/rl"] == nil) then
+        SLASH_COMMANDS["/rl"] = function()
             ReloadUI()
         end
     end
 
-    FOB.Reticle = FOB.CreateMultiIcon(nil, _G.ZO_ReticleContainer, 64)
+    FOB.Reticle = FOB.CreateMultiIcon(nil, ZO_ReticleContainer, 64)
     FOB.BladeOfWoeFormatted = ZO_CachedStrFormat("<<C:1>>", FOB.BladeOfWoe)
 
     -- setup FOB information area
@@ -212,6 +215,7 @@ do
     function fobInfo:New(control)
         local fi = ZO_Object.New(self)
 
+        --- @diagnostic disable-next-line: undefined-field
         fi:Initialise(control)
 
         return self
@@ -227,30 +231,30 @@ do
             self:OnSynergyAbilityChanged()
         end
 
-        self.control:RegisterForEvent(_G.EVENT_PLAYER_ACTIVATED, onSynergyAbilityChanged)
-        self.control:RegisterForEvent(_G.EVENT_SYNERGY_ABILITY_CHANGED, onSynergyAbilityChanged)
+        self.control:RegisterForEvent(EVENT_PLAYER_ACTIVATED, onSynergyAbilityChanged)
+        self.control:RegisterForEvent(EVENT_SYNERGY_ABILITY_CHANGED, onSynergyAbilityChanged)
 
-        _G.SHARED_INFORMATION_AREA.prioritizedVisibility:Add(self, priority, category, "FobInfo")
+        SHARED_INFORMATION_AREA.prioritizedVisibility:Add(self, priority, category, "FobInfo")
 
         self.container = self.control.container
         self.action = self.control.action
         self.icon = self.control.icon
         self.frame = self.control.frame
 
-        _G.ZO_PlatformStyle:New(
+        ZO_PlatformStyle:New(
             function(constants)
                 self:ApplyTextStyle(constants)
             end,
             {
                 FONT = "ZoInteractionPrompt",
                 TEMPLATE = "ZO_KeybindButton_Keyboard_Template",
-                OFFSET_Y = _G.ZO_COMMON_INFO_DEFAULT_KEYBOARD_BOTTOM_OFFSET_Y,
+                OFFSET_Y = ZO_COMMON_INFO_DEFAULT_KEYBOARD_BOTTOM_OFFSET_Y,
                 FRAME_TEXTURE = "esoui/art/actionbar/abilityframe64_up.dds"
             },
             {
                 FONT = "ZoFontGamepad42",
                 TEMPLATE = "ZO_KeybindButton_Gamepad_Template",
-                OFFSET_Y = _G.ZO_COMMON_INFO_DEFAULT_GAMEPAD_BOTTOM_OFFSET_Y,
+                OFFSET_Y = ZO_COMMON_INFO_DEFAULT_GAMEPAD_BOTTOM_OFFSET_Y,
                 FRAME_TEXTURE = "esoui/art/actionbar/gamepad/gp_abilityframe64.dds"
             }
         )
@@ -267,13 +271,13 @@ do
     function fobInfo:ShowInfo()
         SHARED_INFORMATION_AREA:SetCategoriesSuppressed(
             true,
-            _G.ZO_SHARED_INFORMATION_AREA_SUPPRESSION_CATEGORIES.HAS_KEYBINDS,
+            ZO_SHARED_INFORMATION_AREA_SUPPRESSION_CATEGORIES.HAS_KEYBINDS,
             "Synergy"
         )
 
         self.lastSynergyName = FOB.BladeOfWoe
 
-        if (_G.SHARED_INFORMATION_AREA.prioritizedVisibility:GetObjectInfo(self)) then
+        if (SHARED_INFORMATION_AREA.prioritizedVisibility:GetObjectInfo(self)) then
             SHARED_INFORMATION_AREA:SetHidden(self, false)
         end
     end
@@ -281,7 +285,7 @@ do
     function fobInfo:HideInfo()
         SHARED_INFORMATION_AREA:SetCategoriesSuppressed(
             false,
-            _G.ZO_SHARED_INFORMATION_AREA_SUPPRESSION_CATEGORIES.HAS_KEYBINDS,
+            ZO_SHARED_INFORMATION_AREA_SUPPRESSION_CATEGORIES.HAS_KEYBINDS,
             "Synergy"
         )
 

@@ -1,4 +1,3 @@
-local FOB = _G.FOB
 local defId = FOB.DefIds.Azander
 local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
@@ -21,12 +20,12 @@ FOB.Functions[defId] = {
         return false
     end,
     Settings = function(options)
-        name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
+        name = ZO_CachedStrFormat(SI_UNIT_NAME, name)
 
         local submenu = {
             [1] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_MUSHROOM),
+                name = GetString(FOB_PREVENT_MUSHROOM),
                 getFunc = function()
                     return FOB.Vars.PreventMushroom
                 end,
@@ -37,7 +36,7 @@ FOB.Functions[defId] = {
             },
             [2] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_COFFEE_WARNING),
+                name = GetString(FOB_COFFEE_WARNING),
                 getFunc = function()
                     return FOB.Vars.CoffeeWarning
                 end,
@@ -49,7 +48,7 @@ FOB.Functions[defId] = {
             },
             [3] = {
                 type = "dropdown",
-                name = GetString(_G.FOB_ALERT_FONT),
+                name = GetString(FOB_ALERT_FONT),
                 choices = FOB.Fonts,
                 getFunc = function()
                     return FOB.Vars.CoffeeFont
@@ -68,12 +67,13 @@ FOB.Functions[defId] = {
             },
             [4] = {
                 type = "colorpicker",
-                name = GetString(_G.FOB_ALERT_COLOUR),
+                name = GetString(FOB_ALERT_COLOUR),
                 getFunc = function()
-                    return FOB.Vars.CoffeeFontColour.r, FOB.Vars.CoffeeFontColour.g, FOB.Vars.CoffeeFontColour.b, FOB.Vars.CoffeeFontColour.a
+                    return FOB.Vars.CoffeeFontColour.r, FOB.Vars.CoffeeFontColour.g, FOB.Vars.CoffeeFontColour.b,
+                        FOB.Vars.CoffeeFontColour.a
                 end,
                 setFunc = function(r, g, b, a)
-                    FOB.Vars.CoffeeFontColour = {r = r, g = g, b = b, a = a}
+                    FOB.Vars.CoffeeFontColour = { r = r, g = g, b = b, a = a }
                     FOB.CoffeeAlert.Label:SetColor(r, g, b, a)
                 end,
                 disabled = function()
@@ -83,7 +83,7 @@ FOB.Functions[defId] = {
             },
             [5] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_ALERT_SHADOW),
+                name = GetString(FOB_ALERT_SHADOW),
                 getFunc = function()
                     return FOB.Vars.CoffeeFontShadow
                 end,
@@ -101,7 +101,7 @@ FOB.Functions[defId] = {
             },
             [6] = {
                 type = "iconpicker",
-                name = GetString(_G.FOB_ALERT_ICON),
+                name = GetString(FOB_ALERT_ICON),
                 getFunc = function()
                     return FOB.Vars.CoffeeIcon
                 end,

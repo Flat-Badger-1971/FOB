@@ -1,4 +1,3 @@
-local FOB = _G.FOB
 local defId = FOB.DefIds.Mirri
 local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
@@ -41,12 +40,12 @@ FOB.Functions[defId] = {
         return false
     end,
     Settings = function(options)
-        name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
+        name = ZO_CachedStrFormat(SI_UNIT_NAME, name)
 
         local submenu = {
             [1] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_IGNORE_INSECTS),
+                name = GetString(FOB_IGNORE_INSECTS),
                 getFunc = function()
                     return FOB.Vars.IgnoreInsects
                 end,
@@ -66,7 +65,7 @@ FOB.Functions[defId] = {
             },
             [2] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_IGNORE_MIRRI_INSECTS),
+                name = GetString(FOB_IGNORE_MIRRI_INSECTS),
                 getFunc = function()
                     return FOB.Vars.IgnoreMirriInsects
                 end,
@@ -80,7 +79,7 @@ FOB.Functions[defId] = {
             },
             [3] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_DARK_BROTHERHOOD),
+                name = GetString(FOB_PREVENT_DARK_BROTHERHOOD),
                 getFunc = function()
                     return FOB.Vars.PreventDarkBrotherhood
                 end,
@@ -91,7 +90,7 @@ FOB.Functions[defId] = {
             },
             [4] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_BLADE_OF_WOE),
+                name = GetString(FOB_PREVENT_BLADE_OF_WOE),
                 getFunc = function()
                     return FOB.Vars.PreventBladeOfWoeMirri
                 end,

@@ -1,7 +1,6 @@
-local FOB = _G.FOB
 local version = FOB.LC.GetAddonVersion(FOB.Name)
 
-FOB.LAM = _G.LibAddonMenu2
+FOB.LAM = LibAddonMenu2
 
 local panel = {
     type = "panel",
@@ -17,7 +16,7 @@ local function getOptions()
     local options = {
         [1] = {
             type = "checkbox",
-            name = GetString(_G.FOB_DISABLE_COMPANION_INTERACTION),
+            name = GetString(FOB_DISABLE_COMPANION_INTERACTION),
             getFunc = function()
                 return FOB.Vars.DisableCompanionInteraction
             end,
@@ -28,7 +27,7 @@ local function getOptions()
         },
         [2] = {
             type = "checkbox",
-            name = GetString(_G.FOB_IGNORE_ALL_INSECTS),
+            name = GetString(FOB_IGNORE_ALL_INSECTS),
             getFunc = function()
                 return FOB.Vars.IgnoreAllInsects
             end,
@@ -45,7 +44,7 @@ local function getOptions()
         },
         [3] = {
             type = "checkbox",
-            name = GetString(_G.FOB_SHOWSUMMONING),
+            name = GetString(FOB_SHOWSUMMONING),
             getFunc = function()
                 return FOB.Vars.UseCompanionSummoningFrame
             end,
@@ -55,22 +54,22 @@ local function getOptions()
                 if (value == true) then
                     EVENT_MANAGER:RegisterForEvent(
                         FOB.Name,
-                        _G.EVENT_ACTIVE_COMPANION_STATE_CHANGED,
+                        EVENT_ACTIVE_COMPANION_STATE_CHANGED,
                         FOB.OnCompanionStateChanged
                     )
                 else
-                    EVENT_MANAGER:UnregisterForEvent(FOB.Name, _G.EVENT_ACTIVE_COMPANION_STATE_CHANGED)
+                    EVENT_MANAGER:UnregisterForEvent(FOB.Name, EVENT_ACTIVE_COMPANION_STATE_CHANGED)
                     UNIT_FRAMES:GetFrame("companion"):SetHiddenForReason("disabled", false)
                 end
             end,
             disabled = function()
-                return _G.CF ~= nil
+                return CF ~= nil
             end,
             width = "full"
         },
         [4] = {
             type = "checkbox",
-            name = GetString(_G.FOB_RETICLE),
+            name = GetString(FOB_RETICLE),
             getFunc = function()
                 return FOB.Vars.UseReticle or false
             end,
@@ -84,7 +83,7 @@ local function getOptions()
     local sorted = {}
 
     for id, functions in pairs(FOB.Functions) do
-        table.insert(sorted, {sort = functions.Sort, id = id})
+        table.insert(sorted, { sort = functions.Sort, id = id })
     end
 
     table.sort(

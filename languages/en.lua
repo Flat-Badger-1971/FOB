@@ -53,7 +53,7 @@ L("IGNORE_MIRRI_INSECTS", "Allow insects that don't decrease rapport")
 L("IGNORE_ALL_INSECTS", "Ignore flying insects all the time")
 L("PREVENT_BLADE_OF_WOE", "Prevent using Blade of Woe")
 L("PREVENT_BOOKSHELVES", "Prevent using bookshelves")
-L("PREVENT_CADWELL","Prevent interaction with Cadwell")
+L("PREVENT_CADWELL", "Prevent interaction with Cadwell")
 L("PREVENT_CRIMINAL", "Prevent criminal interactions")
 L("PREVENT_DARK_BROTHERHOOD", "Prevent entry to Dark Brotherhood Sanctuary")
 L("PREVENT_EDICTS", "Prevent using edicts")
@@ -119,3 +119,4 @@ L("RETICLE", "Use FOB Reticle")
 
 -- exceptions
 L("SEBASTIAN_BRUTYA", "Sebastian Brutya")
+L("MAZZA_MIRRI", "Mazza-Mirri")

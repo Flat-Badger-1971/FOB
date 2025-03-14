@@ -1,4 +1,3 @@
-local FOB = _G.FOB
 local defId = FOB.DefIds.Bastian
 local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
@@ -15,7 +14,7 @@ FOB.Functions[defId] = {
 
             return isCriminal
         elseif (FOB.Vars.PreventPickpocketingBastian) then
-            if (additionalInfo == _G.ADDITIONAL_INTERACT_INFO_PICKPOCKET_CHANCE) then
+            if (additionalInfo == ADDITIONAL_INTERACT_INFO_PICKPOCKET_CHANCE) then
                 return true
             end
         end
@@ -23,12 +22,12 @@ FOB.Functions[defId] = {
         return false
     end,
     Settings = function(options)
-        name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
+        name = ZO_CachedStrFormat(SI_UNIT_NAME, name)
 
         local submenu = {
             [1] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_CRIMINAL),
+                name = GetString(FOB_PREVENT_CRIMINAL),
                 getFunc = function()
                     return FOB.Vars.PreventCriminalBastian
                 end,
@@ -39,7 +38,7 @@ FOB.Functions[defId] = {
             },
             [2] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_PICKPOCKETING),
+                name = GetString(FOB_PREVENT_PICKPOCKETING),
                 getFunc = function()
                     return FOB.Vars.PreventPickpocketingBastian or false
                 end,
@@ -53,7 +52,7 @@ FOB.Functions[defId] = {
             },
             [3] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_CHEESE_WARNING),
+                name = GetString(FOB_CHEESE_WARNING),
                 getFunc = function()
                     return FOB.Vars.CheeseWarning
                 end,
@@ -65,7 +64,7 @@ FOB.Functions[defId] = {
             },
             [4] = {
                 type = "dropdown",
-                name = GetString(_G.FOB_ALERT_FONT),
+                name = GetString(FOB_ALERT_FONT),
                 choices = FOB.Fonts,
                 getFunc = function()
                     return FOB.Vars.CheeseFont
@@ -82,12 +81,13 @@ FOB.Functions[defId] = {
             },
             [5] = {
                 type = "colorpicker",
-                name = GetString(_G.FOB_ALERT_COLOUR),
+                name = GetString(FOB_ALERT_COLOUR),
                 getFunc = function()
-                    return FOB.Vars.CheeseFontColour.r, FOB.Vars.CheeseFontColour.g, FOB.Vars.CheeseFontColour.b, FOB.Vars.CheeseFontColour.a
+                    return FOB.Vars.CheeseFontColour.r, FOB.Vars.CheeseFontColour.g, FOB.Vars.CheeseFontColour.b,
+                        FOB.Vars.CheeseFontColour.a
                 end,
                 setFunc = function(r, g, b, a)
-                    FOB.Vars.CheeseFontColour = {r = r, g = g, b = b, a = a}
+                    FOB.Vars.CheeseFontColour = { r = r, g = g, b = b, a = a }
                     FOB.Alert.Label:SetColor(r, g, b, a)
                 end,
                 disabled = function()
@@ -97,7 +97,7 @@ FOB.Functions[defId] = {
             },
             [6] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_ALERT_SHADOW),
+                name = GetString(FOB_ALERT_SHADOW),
                 getFunc = function()
                     return FOB.Vars.CheeseFontShadow
                 end,
@@ -113,7 +113,7 @@ FOB.Functions[defId] = {
             },
             [7] = {
                 type = "iconpicker",
-                name = GetString(_G.FOB_ALERT_ICON),
+                name = GetString(FOB_ALERT_ICON),
                 getFunc = function()
                     return FOB.Vars.CheeseIcon
                 end,

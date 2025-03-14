@@ -1,4 +1,3 @@
-local FOB = _G.FOB
 local defId = FOB.DefIds.Isobel
 local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
@@ -27,12 +26,12 @@ FOB.Functions[defId] = {
         return false
     end,
     Settings = function(options)
-        name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
+        name = ZO_CachedStrFormat(SI_UNIT_NAME, name)
 
         local submenu = {
             [1] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_CRIMINAL),
+                name = GetString(FOB_PREVENT_CRIMINAL),
                 getFunc = function()
                     return FOB.Vars.PreventCriminalIsobel
                 end,
@@ -43,7 +42,7 @@ FOB.Functions[defId] = {
             },
             [2] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_OUTLAW),
+                name = GetString(FOB_PREVENT_OUTLAW),
                 getFunc = function()
                     return FOB.Vars.PreventOutlawsRefuge
                 end,

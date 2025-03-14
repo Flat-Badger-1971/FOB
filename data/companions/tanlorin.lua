@@ -1,4 +1,3 @@
-local FOB = _G.FOB
 local defId = FOB.DefIds.Tanlorin
 local cid = GetCompanionCollectibleId(defId)
 local name, _, icon = GetCollectibleInfo(cid)
@@ -8,7 +7,7 @@ FOB.Functions[defId] = {
     Dislikes = function(action, interactableName)
         if (FOB.Vars.PreventNirnroot) then
             if (action == FOB.Actions.Collect) then
-                if (FOB.LC.PartialMatch(interactableName, {[FOB.Nirnroot] = true})) then
+                if (FOB.LC.PartialMatch(interactableName, { [FOB.Nirnroot] = true })) then
                     return true
                 end
             end
@@ -32,14 +31,14 @@ FOB.Functions[defId] = {
 
             -- search - block bookshelves, just in case
             if (FOB.Vars.PreventBookshelves) then
-                if (action == FOB.Actions.Search and FOB.LC.PartialMatch(interactableName, {[FOB.Bookshelf] = true})) then
+                if (action == FOB.Actions.Search and FOB.LC.PartialMatch(interactableName, { [FOB.Bookshelf] = true })) then
                     return true
                 end
             end
         end
 
         if (FOB.Vars.PreventPsijic) then
-            if (action == FOB.Actions.Loot and FOB.LC.PartialMatch(interactableName, {[FOB.PsijicPortal] = true})) then
+            if (action == FOB.Actions.Loot and FOB.LC.PartialMatch(interactableName, { [FOB.PsijicPortal] = true })) then
                 return true
             end
         end
@@ -47,12 +46,12 @@ FOB.Functions[defId] = {
         return false
     end,
     Settings = function(options)
-        name = ZO_CachedStrFormat(_G.SI_UNIT_NAME, name)
+        name = ZO_CachedStrFormat(SI_UNIT_NAME, name)
 
         local submenu = {
             [1] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_NIRNROOT),
+                name = GetString(FOB_PREVENT_NIRNROOT),
                 getFunc = function()
                     return FOB.Vars.PreventNirnroot
                 end,
@@ -63,7 +62,7 @@ FOB.Functions[defId] = {
             },
             [2] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_MAGES_GUILD),
+                name = GetString(FOB_PREVENT_MAGES_GUILD),
                 getFunc = function()
                     return FOB.Vars.PreventMagesGuild
                 end,
@@ -74,7 +73,7 @@ FOB.Functions[defId] = {
             },
             [3] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_LOREBOOKS),
+                name = GetString(FOB_PREVENT_LOREBOOKS),
                 getFunc = function()
                     return FOB.Vars.PreventLorebooks
                 end,
@@ -85,7 +84,7 @@ FOB.Functions[defId] = {
             },
             [4] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_BOOKSHELVES),
+                name = GetString(FOB_PREVENT_BOOKSHELVES),
                 getFunc = function()
                     return FOB.Vars.PreventBookshelves
                 end,
@@ -99,7 +98,7 @@ FOB.Functions[defId] = {
             },
             [5] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_BLADE_OF_WOE),
+                name = GetString(FOB_PREVENT_BLADE_OF_WOE),
                 getFunc = function()
                     return FOB.Vars.PreventBladeOfWoeTanlorin
                 end,
@@ -116,7 +115,7 @@ FOB.Functions[defId] = {
             },
             [6] = {
                 type = "checkbox",
-                name = GetString(_G.FOB_PREVENT_PSIJIC),
+                name = GetString(FOB_PREVENT_PSIJIC),
                 getFunc = function()
                     return FOB.Vars.PreventPsijic
                 end,
