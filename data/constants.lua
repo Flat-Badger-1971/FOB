@@ -43,6 +43,8 @@ FOB = {
         [GetString(FOB_SHINYTRADE) or "nil"] = true,
         [GetString(FOB_SEBASTIAN_BRUTYA or "nil")] = true,
         [GetString(FOB_MAZZA_MIRRI or "nil")] = true,
+        [GetString(FOB_EVELI_SHARP_ARROW or "nil")] = true,
+        [GetString(FOB_LERISA_DIE_GERISSENE or "nil")] = true,
     },
     FlyingInsects = {
         [GetString(FOB_BLACKREACH_JELLY)] = true,

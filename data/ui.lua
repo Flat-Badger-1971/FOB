@@ -14,6 +14,7 @@ end
 
 function FOB.ReplaceReticle()
     if (FOB.Vars.UseReticle) then
+        --- @diagnostic disable-next-line: undefined-global
         ZO_ReticleContainerReticle:SetAlpha(0)
         FOB.Reticle:SetHidden(false)
         FOB.UsingFOBReticle = true
@@ -24,7 +25,9 @@ end
 
 function FOB.RestoreReticle()
     if (FOB.UsingFOBReticle) then
+        --- @diagnostic disable-next-line: undefined-global
         if (ZO_ReticleContainerReticle) then
+            --- @diagnostic disable-next-line: undefined-global
             ZO_ReticleContainerReticle:SetAlpha(1)
         end
 
@@ -109,7 +112,9 @@ function FOB.SetupAlert(name, icon, fontInfo, text)
         end
     )
 
-    fadeTimeline:SetPlaybackType(ANIMATION_PLAYBACK_ONE_SHOT, 0)
+    if (fadeTimeline) then
+        fadeTimeline:SetPlaybackType(ANIMATION_PLAYBACK_ONE_SHOT, 0)
+    end
 
     alert.FadeAnimation = fadeTimeline
 
@@ -120,7 +125,9 @@ function FOB.SetupAlert(name, icon, fontInfo, text)
     animation:SetEndScale(3)
     animation:SetDuration(1500)
 
-    timeline:SetPlaybackType(ANIMATION_PLAYBACK_ONE_SHOT, 0)
+    if (timeline) then
+        timeline:SetPlaybackType(ANIMATION_PLAYBACK_ONE_SHOT, 0)
+    end
 
     alert.Animation = timeline
     alert.FadeAnimation = fadeTimeline
@@ -205,11 +212,13 @@ do
         end
     end
 
+    --- @diagnostic disable-next-line: undefined-global
     FOB.Reticle = FOB.CreateMultiIcon(nil, ZO_ReticleContainer, 64)
     FOB.BladeOfWoeFormatted = ZO_CachedStrFormat("<<C:1>>", FOB.BladeOfWoe)
 
     -- setup FOB information area
     local fobControl = createFobInfoControl()
+    --- @class FobInfo
     local fobInfo = ZO_Object:Subclass()
 
     function fobInfo:New(control)
@@ -234,6 +243,7 @@ do
         self.control:RegisterForEvent(EVENT_PLAYER_ACTIVATED, onSynergyAbilityChanged)
         self.control:RegisterForEvent(EVENT_SYNERGY_ABILITY_CHANGED, onSynergyAbilityChanged)
 
+        ---@diagnostic disable-next-line: undefined-field
         SHARED_INFORMATION_AREA.prioritizedVisibility:Add(self, priority, category, "FobInfo")
 
         self.container = self.control.container
@@ -245,12 +255,14 @@ do
             function(constants)
                 self:ApplyTextStyle(constants)
             end,
+            ---@diagnostic disable-next-line: redundant-parameter
             {
                 FONT = "ZoInteractionPrompt",
                 TEMPLATE = "ZO_KeybindButton_Keyboard_Template",
                 OFFSET_Y = ZO_COMMON_INFO_DEFAULT_KEYBOARD_BOTTOM_OFFSET_Y,
                 FRAME_TEXTURE = "esoui/art/actionbar/abilityframe64_up.dds"
             },
+            ---@diagnostic disable-next-line: redundant-parameter
             {
                 FONT = "ZoFontGamepad42",
                 TEMPLATE = "ZO_KeybindButton_Gamepad_Template",
@@ -263,6 +275,8 @@ do
     function fobInfo:ApplyTextStyle(constants)
         self.frame:SetTexture(constants.FRAME_TEXTURE)
         self.action:SetFont(constants.FONT)
+
+        ---@diagnostic disable-next-line: undefined-field
         ApplyTemplateToControl(self.key, constants.TEMPLATE)
         self.container:ClearAnchors()
         self.container:SetAnchor(BOTTOM, nil, BOTTOM, 0, constants.OFFSET_Y)
@@ -277,6 +291,7 @@ do
 
         self.lastSynergyName = FOB.BladeOfWoe
 
+        --- @diagnostic disable-next-line: undefined-field
         if (SHARED_INFORMATION_AREA.prioritizedVisibility:GetObjectInfo(self)) then
             SHARED_INFORMATION_AREA:SetHidden(self, false)
         end

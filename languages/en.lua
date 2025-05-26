@@ -120,3 +120,4 @@ L("RETICLE", "Use FOB Reticle")
 -- exceptions
 L("SEBASTIAN_BRUTYA", "Sebastian Brutya")
 L("MAZZA_MIRRI", "Mazza-Mirri")
+L("EVELI_SHARP_ARROW", "Eveli Sharp-Arrow")

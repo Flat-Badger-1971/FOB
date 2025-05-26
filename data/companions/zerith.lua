@@ -108,7 +108,10 @@ FOB.Functions[defId] = {
                         originalCall(rowControl, slot, ...)
 
                         local info = rowControl:GetNamedChild("TraitInfo")
-                        local block = FOB.Vars.PreventEdicts and FOB.ActiveCompanionDefId == defId and FOB.Enabled
+                        local exception = IsBankOpen() or IsGuildBankOpen() or ZO_Store_IsShopping()
+                        local block = FOB.Vars.PreventEdicts and FOB.ActiveCompanionDefId == defId and FOB.Enabled and
+                            (not exception)
+
                         if
                             (block and slot.itemType == ITEMTYPE_TROPHY and
                                 slot.specializedItemType == SPECIALIZED_ITEMTYPE_TROPHY_SCROLL)
@@ -230,9 +233,11 @@ FOB.Functions[defId] = {
                 local scene = SCENE_MANAGER:GetCurrentScene():GetName()
 
                 if ((scene == "loot") and (newState == "showing")) then
+                    --- @diagnostic disable-next-line: undefined-global
                     local rows = ZO_LootAlphaContainerListContents:GetNumChildren()
 
                     for rowNum = 1, rows do
+                        --- @diagnostic disable-next-line: undefined-global
                         local row = ZO_LootAlphaContainerListContents:GetChild(rowNum)
 
                         if (row) then

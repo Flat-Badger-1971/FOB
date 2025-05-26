@@ -1,3 +1,7 @@
+[color=#ff9900][b]Version: 3.1.1 ---------------[/b][/color]
+Handle false detection of Eveli Sharp-Arrow and Lerisa die Gerissene
+Edicts are no longer blocked with Zerith-var active when at the bank or a vendor
+
 [color=#ff9900][b]Version: 3.1.0 ---------------[/b][/color]
 Update 45 changes
 Handle false detection of Mazza-Mirri reported by vampire1326

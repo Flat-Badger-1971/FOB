@@ -7,11 +7,7 @@ FOB.Functions[defId] = {
     Dislikes = function(_, _, _, additionalInfo)
         if (FOB.Vars.PreventFishing) then
             if (additionalInfo == ADDITIONAL_INTERACT_INFO_FISHING_NODE) then
-                if (FISHING_MANAGER) then
-                    FISHING_MANAGER:StopInteraction()
-                else
-                    INTERACTIVE_WHEEL_MANAGER:StopInteraction(ZO_INTERACTIVE_WHEEL_TYPE_FISHING)
-                end
+                INTERACTIVE_WHEEL_MANAGER:StopInteraction(ZO_INTERACTIVE_WHEEL_TYPE_FISHING)
 
                 return true
             end

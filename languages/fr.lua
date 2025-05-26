@@ -46,7 +46,7 @@ L("IGNORE_MIRRI_INSECTS", "Autoriser les insectes qui ne diminuent pas le rappor
 L("IGNORE_ALL_INSECTS", "Ignorer les insectes volants tout le temps")
 L("PREVENT_BLADE_OF_WOE", "Empêcher l'utilisation de Lame de Malheur")
 L("PREVENT_BOOKSHELVES", "Empêcher l'utilisation des bibliothèques")
-L("PREVENT_CADWELL","Empêcher l'interaction avec Cadwell")
+L("PREVENT_CADWELL", "Empêcher l'interaction avec Cadwell")
 L("PREVENT_CRIMINAL", "Empêcher les interactions criminelles")
 L("PREVENT_DARK_BROTHERHOOD", "Empêcher l'entrée au Sanctuaire de la Confrérie Noire")
 L("PREVENT_EDICTS", "Empêcher l'utilisation des édits")
