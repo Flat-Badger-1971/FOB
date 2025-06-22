@@ -10,6 +10,11 @@ RuEsoVariables = {}
 
 ZO_SHARED_INFORMATION_AREA_SUPPRESSION_CATEGORIES = {}
 
+--- @param recipeListIndex luaindex
+--- @param recipeIndex luaindex
+--- @param numIterations? integer
+function CraftProvisionerItem(recipeListIndex, recipeIndex, numIterations) end
+
 --- @param namespace string
 --- @param func function
 function CALLBACK_MANAGER:UnregisterCallback(namespace, func) end
@@ -142,3 +147,7 @@ FOB_MAZZA_MIRRI = 0
 FOB_LADY_LLARELS_SHELTER = 0
 FOB_BLACKHEART_HAVEN = 0
 FOB_SHINYTRADE = 0
+FOB_EVELI_SHARP_ARROW = 0
+FOB_LERISA_DIE_GERISSENE = 0
+
+DP_BULK_HEADER = 0
