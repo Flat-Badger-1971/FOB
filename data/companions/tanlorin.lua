@@ -7,7 +7,7 @@ FOB.Functions[defId] = {
     Dislikes = function(action, interactableName)
         if (FOB.Vars.PreventNirnroot) then
             if (action == FOB.Actions.Collect) then
-                if (FOB.LC.PartialMatch(interactableName, { [FOB.Nirnroot] = true })) then
+                if (FOB.LC.PartialMatch(interactableName, FOB.Nirnroot)) then
                     return true
                 end
             end
